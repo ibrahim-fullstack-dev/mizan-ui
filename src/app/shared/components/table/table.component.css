@@ -1,199 +1,208 @@
 /* ==========================================================================
-   Custom Table Component Styles (Clean & Compact)
+   1. الحاوية الرئيسية (Main Container)
    ========================================================================== */
-
-/* 1. Containers & Layout */
 .table-container {
   width: 100%;
-  height: auto;
   display: flex;
   flex-direction: column;
-  background: #fff;
+  background-color: #ffffff;
   border: 1px solid #eaecf0;
   border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(16, 24, 40, 0.1);
-  overflow: auto;
+  box-shadow:
+    0px 1px 3px rgba(16, 24, 40, 0.1),
+    0px 1px 2px rgba(16, 24, 40, 0.06);
+  overflow: hidden;
+  font-family: inherit;
 }
 
+/* ==========================================================================
+   2. منطقة التمرير المستقلة (Scrollable Body Container)
+   ========================================================================== */
 .table-responsive {
-  flex: 1;
-  min-height: 0;
+  width: 100%;
+  max-height: 500px; /* الارتفاع الأقصى للتمرير العمودي */
+  overflow-x: auto;
+  overflow-y: auto;
   position: relative;
+  background-color: #ffffff;
 }
 
-/* 2. Table Core & Base Cells */
+/* ==========================================================================
+   3. هيكل الجدول ورأس الجدول الثابت (Sticky Header)
+   ========================================================================== */
 .custom-table {
   width: 100%;
-  border-collapse: separate;
+  border-collapse: separate; /* ضروري لعمل Sticky Header بشكل صحيح */
   border-spacing: 0;
   text-align: left;
   font-size: 0.875rem;
   color: #344054;
 }
 
-.custom-table th,
-.custom-table td {
-  padding: 12px 24px;
-  border-bottom: 1px solid #eaecf0;
-  white-space: nowrap;
-  vertical-align: middle;
-}
-
-/* 3. Header */
+/* التثبيت العلوي لرأس الجدول */
 .custom-table thead {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: #f9fafb;
 }
 
 .custom-table th {
+  padding: 12px 24px;
+  background-color: #f9fafb;
+  font-weight: 500;
   font-size: 0.75rem;
-  font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #475467;
+  color: #667085;
+  border-bottom: 1px solid #eaecf0;
+  white-space: nowrap;
 }
 
 .header-content {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.header-icon,
-.header-icon ::ng-deep svg,
-.header-icon lucide-icon {
-  width: 16px !important;
-  height: 16px !important;
-  color: #667085;
+.header-icon {
+  width: 16px;
+  height: 16px;
+  color: #98a2b3;
 }
 
-/* 4. Body Rows & Hover */
-.custom-table tbody tr {
-  transition: background 0.15s ease;
+/* ==========================================================================
+   4. صفوف وخلايا الجدول (Body Rows & Cells)
+   ========================================================================== */
+.custom-table td {
+  padding: 16px 24px;
+  border-bottom: 1px solid #f2f4f7;
+  vertical-align: middle;
+  white-space: nowrap;
+  transition: background-color 0.15s ease-in-out;
 }
 
+/* تأثير التحويم والتحديد */
 .custom-table tbody tr:hover {
-  background: #f9fafb;
-}
-.custom-table tbody tr.row-selected {
-  background: #f0f7ff;
-}
-.custom-table tbody tr.row-selected:hover {
-  background: #e5f0ff;
-}
-.custom-table tbody tr:last-child td {
-  border-bottom: none;
+  background-color: #f9fafb;
 }
 
-/* 5. Custom Checkbox */
-.custom-table .col-checkbox {
-  width: 48px;
+.custom-table tr.row-selected {
+  background-color: #f0f7ff;
+}
+
+.custom-table tr:last-child td {
+  border-bottom: none; /* لمنع تكرار الحدود فوق شريط التنقل */
+}
+
+/* Checkbox Column */
+.col-checkbox {
+  width: 40px;
   text-align: center;
-  padding: 12px 16px;
 }
 
-.custom-table input[type='checkbox'] {
-  appearance: none;
+.col-checkbox input[type='checkbox'] {
   width: 18px;
   height: 18px;
-  border: 1.5px solid #d0d5dd;
-  border-radius: 4px;
+  border-radius: 6px;
+  border: 1px solid #d0d5dd;
   cursor: pointer;
-  display: inline-grid;
-  place-content: center;
-  transition: all 0.15s;
+  accent-color: #175cd3;
 }
 
-.custom-table input[type='checkbox']:hover {
-  border-color: #175cd3;
-  background: #f0f5ff;
-}
-.custom-table input[type='checkbox']:checked,
-.custom-table input[type='checkbox']:indeterminate {
-  background: #175cd3;
-  border-color: #175cd3;
-}
-
-.custom-table input[type='checkbox']:checked::before {
-  content: '';
-  width: 10px;
-  height: 6px;
-  border: solid #fff;
-  border-width: 0 0 2px 2px;
-  transform: rotate(-45deg) translate(1px, -1px);
-}
-
-.custom-table input[type='checkbox']:indeterminate::before {
-  content: '';
-  width: 8px;
-  height: 2px;
-  background: #fff;
-}
-
-/* 6. Actions & Helpers */
-.custom-table .col-actions {
+/* Actions Column */
+.col-actions {
   width: 1%;
-  text-align: center;
+  white-space: nowrap;
+  text-align: right;
 }
+
 .actions-wrapper {
-  display: inline-flex;
-  gap: 4px;
-}
-.fallback-icon-text {
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-.text-center {
-  text-align: center !important;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
 }
 
-.custom-table td.empty-state {
+/* الحالة الفارغة (Empty State) */
+.empty-state {
   text-align: center;
-  padding: 48px 24px;
+  padding: 48px 24px !important;
   color: #667085;
+  font-size: 0.875rem;
+  background-color: #ffffff;
 }
 
-/* 7. Pagination Footer */
+/* ==========================================================================
+   5. شريط التنقل السفلي (Pagination - Outside Scroll Area)
+   ========================================================================== */
 .table-pagination {
-  flex-shrink: 0;
+  flex-shrink: 0; /* يمنع انكماش الـ Pagination عند امتلاء الجدول */
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 12px 24px;
-  background: #fff;
   border-top: 1px solid #eaecf0;
-  gap: 16px;
-  flex-wrap: wrap;
+  background-color: #ffffff;
+  font-size: 0.875rem;
+  color: #344054;
+  z-index: 20;
 }
 
-.page-size-selector,
-.pagination-actions {
+.page-size-selector {
   display: flex;
   align-items: center;
   gap: 8px;
+  color: #667085;
+  font-size: 0.875rem;
 }
 
 .page-select {
-  padding: 6px 12px;
+  padding: 6px 10px;
   border-radius: 8px;
   border: 1px solid #d0d5dd;
-  background: #fff;
+  background-color: #ffffff;
   color: #344054;
+  font-size: 0.875rem;
+  font-weight: 500;
+  outline: none;
   cursor: pointer;
+  box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+  transition: all 0.2s ease;
 }
 
-.page-select:hover {
-  border-color: #b2ddff;
+.page-select:focus {
+  border-color: #84caff;
+  box-shadow: 0px 0px 0px 4px #f0f9ff;
 }
 
-/* 8. Scrollbar */
+.pagination-info {
+  font-weight: 500;
+  color: #344054;
+}
+
+.pagination-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ==========================================================================
+   6. شريط التمرير المخصص (Custom Scrollbar)
+   ========================================================================== */
 .table-responsive::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
+
+.table-responsive::-webkit-scrollbar-track {
+  background: #f9fafb;
+}
+
 .table-responsive::-webkit-scrollbar-thumb {
   background: #eaecf0;
-  border-radius: 3px;
+  border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+  background: #d0d5dd;
 }
