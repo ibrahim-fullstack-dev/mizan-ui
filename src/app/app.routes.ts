@@ -24,22 +24,16 @@ export const routes: Routes = [
       },
     ],
   },
-
-  // // 4. مسار الإعدادات الشامل الجديد (Settings)
-  // {
-  //   path: APP_ROUTES.settings.root,
-  //   loadComponent: () =>
-  //     import('./features/settings/settings-layout.component').then(
-  //       (m) => m.SettingsLayoutComponent,
-  //     ),
-  //   children: [
-  //     {
-  //       path: APP_ROUTES.settings.users,
-  //       loadComponent: () =>
-  //         import('./features/settings/users/users.component').then((m) => m.UsersComponent),
-  //     },
-  //   ],
-  // },
+  {
+    path: APP_ROUTES.suppliers.root,
+    children: [
+      {
+        path: APP_ROUTES.suppliers.list,
+        loadComponent: () =>
+          import('./features/suppliers/suppliers.component').then((m) => m.SuppliersComponent),
+      },
+    ],
+  },
 
   // 5. مسار الحماية من الروابط العشوائية (Page Not Found / Wildcard Route)
   {
