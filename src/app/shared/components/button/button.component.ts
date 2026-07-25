@@ -1,22 +1,23 @@
+// src/app/shared/components/button/button.component.ts
 import { Component, input, output, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-// 📥 استيراد الأنواع المفصولة
 import { ButtonVariant, ButtonType } from './button.types';
+import { LucideAngularModule, type LucideIconData } from 'lucide-angular';
 
 @Component({
+  // Component Metadata.
   selector: 'app-button',
-  standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LucideAngularModule],
   templateUrl: './button.component.html',
-  styleUrls: ['./button.component.css'], // تم تغييرها إلى CSS بناءً على طلبك السابق
+  styleUrls: ['./button.component.css'],
 })
+// Component Class.
 export class ButtonComponent {
-  // 📥 استخدام الأنواع المستوردة لتحديد نوع الـ Signals
   variant = input<ButtonVariant>('primary');
   type = input<ButtonType>('button');
   disabled = input<boolean>(false);
   loading = input<boolean>(false);
-  icon = input<string>('');
+  icon = input<LucideIconData | undefined>(undefined);
   fullWidth = input<boolean>(false);
 
   btnClick = output<MouseEvent>();

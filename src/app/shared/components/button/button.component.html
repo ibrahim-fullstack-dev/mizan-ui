@@ -8,7 +8,7 @@
     <span class="btn-spinner" aria-hidden="true"></span>
   } @else {
     @if (icon()) {
-      <span class="btn-icon">{{ icon() }}</span>
+      <lucide-icon [img]="icon()" class="btn-icon" aria-hidden="true"></lucide-icon>
     }
 
     <span class="btn-content">
