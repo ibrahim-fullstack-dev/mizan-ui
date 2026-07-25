@@ -6,8 +6,8 @@ import { ChartGroupItem } from './analytics.columns.chart.types';
   selector: 'app-columns-chart', // يمكنك تغييره إلى app-bar-chart لاحقاً
   standalone: true,
   imports: [BarChartModule],
-  templateUrl: './analytics.columns.chart.html',
-  styleUrl: './analytics.columns.chart.css',
+  templateUrl: './analytics.columns.chart.component.html',
+  styleUrl: './analytics.columns.chart.component.css',
 })
 export class ColumnsChartComponent {
   data = input<ChartGroupItem[]>([]);
