@@ -34,6 +34,18 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: APP_ROUTES.bills.root,
+    children: [
+      {
+        path: APP_ROUTES.bills.salesInvoicesList,
+        loadComponent: () =>
+          import('./features/bills-invoices/sales-invoices-list/sales-invoices-list.component').then(
+            (m) => m.SalesInvoicesComponent,
+          ),
+      },
+    ],
+  },
 
   // 5. مسار الحماية من الروابط العشوائية (Page Not Found / Wildcard Route)
   {
