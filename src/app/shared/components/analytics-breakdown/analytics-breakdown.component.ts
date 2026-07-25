@@ -7,9 +7,9 @@ import { NgClass } from '@angular/common';
 @Component({
   selector: 'app-analytics-breakdown',
   imports: [LucideAngularModule, RouterLink, NgClass],
-  templateUrl: './analytics-breakdown.html',
+  templateUrl: './analytics-breakdown.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  styleUrl: './analytics-breakdown.css',
+  styleUrl: './analytics-breakdown.component.css',
 })
 export class AnalyticsBreakdown {
   readonly MyIcons = {
