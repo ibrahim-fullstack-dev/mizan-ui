@@ -19,7 +19,8 @@ export const routes: Routes = [
     children: [
       {
         path: APP_ROUTES.clients.list,
-        loadComponent: () => import('./features/clients/clients').then((m) => m.Clients),
+        loadComponent: () =>
+          import('./features/clients/clients.component').then((m) => m.ClientsComponent),
       },
     ],
   },

@@ -3,6 +3,12 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "paths": {
+      "@shared/*": ["./src/app/shared/*"],
+      "@components/*": ["./src/app/shared/components/*"],
+      "@core/*": ["./src/app/core/*"],
+      "@env/*": ["./src/environments/*"]
+    },
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
