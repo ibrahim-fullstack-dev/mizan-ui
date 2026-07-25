@@ -1,9 +1,9 @@
-<div class="input-wrapper" [class.input-disabled]="disabled()" [class.input-has-error]="error()">
+<div class="input-container">
   @if (label()) {
-    <label [attr.for]="inputId" class="input-label">
+    <label [for]="inputId" class="input-label">
       {{ label() }}
       @if (required()) {
-        <span class="required-asterisk" aria-hidden="true">*</span>
+        <span class="text-danger">*</span>
       }
     </label>
   }
@@ -11,19 +11,15 @@
   <input
     [id]="inputId"
     [type]="type()"
+    [value]="value()"
     [placeholder]="placeholder()"
     [disabled]="disabled()"
-    [value]="value"
-    [attr.aria-invalid]="error() ? 'true' : 'false'"
-    [attr.aria-describedby]="error() ? inputId + '-error' : null"
-    (input)="onInputChange($event)"
-    (blur)="onInputBlur()"
-    class="form-input"
+    (input)="onInput($event)"
+    class="form-control"
+    [class.is-invalid]="error()"
   />
 
   @if (error()) {
-    <span [id]="inputId + '-error'" class="input-error-message" role="alert">
-      {{ error() }}
-    </span>
+    <span class="error-message">{{ error() }}</span>
   }
 </div>
