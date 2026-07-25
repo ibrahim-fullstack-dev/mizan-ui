@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RecurringSalesInvoices } from './recurring-sales-invoices';
+import { RecurringSalesInvoicesComponent } from './recurring-sales-invoices.component';
 
 describe('RecurringSalesInvoices', () => {
-  let component: RecurringSalesInvoices;
-  let fixture: ComponentFixture<RecurringSalesInvoices>;
+  let component: RecurringSalesInvoicesComponent;
+  let fixture: ComponentFixture<RecurringSalesInvoicesComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RecurringSalesInvoices],
+      imports: [RecurringSalesInvoicesComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(RecurringSalesInvoices);
+    fixture = TestBed.createComponent(RecurringSalesInvoicesComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

@@ -17,7 +17,7 @@ import {
   HEADER_BUTTONS,
   TABLE_ACTIONS,
   PAGE_NAVIGATION_BUTTONS,
-} from '../sales-invoices.constant';
+} from './sales-invoices.constant';
 @Component({
   selector: 'app-sales-invoices',
   standalone: true,
@@ -32,7 +32,7 @@ import {
   templateUrl: './sales-invoices-list.component.html',
   styleUrl: './sales-invoices-list.component.css',
 })
-export class SalesInvoicesComponent {
+export class SalesInvoicesListComponent {
   private readonly rawBillsInvoices = signal<IBillsInvoices[]>([
     {
       id: 1,
