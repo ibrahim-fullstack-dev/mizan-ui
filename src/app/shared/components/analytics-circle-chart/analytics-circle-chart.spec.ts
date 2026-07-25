@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AnalyticsCircleChart } from './analytics-circle-chart';
+import { AnalyticsCircleChart } from './analytics-circle-chart.component';
 
 describe('AnalyticsCircleChart', () => {
   let component: AnalyticsCircleChart;

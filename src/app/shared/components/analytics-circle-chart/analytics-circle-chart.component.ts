@@ -5,8 +5,8 @@ import { Color, ScaleType, LegendPosition } from '@swimlane/ngx-charts';
 @Component({
   selector: 'app-analytics-circle-chart',
   imports: [PieChartModule],
-  templateUrl: './analytics-circle-chart.html',
-  styleUrl: './analytics-circle-chart.css',
+  templateUrl: './analytics-circle-chart.component.html',
+  styleUrl: './analytics-circle-chart.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AnalyticsCircleChart {
