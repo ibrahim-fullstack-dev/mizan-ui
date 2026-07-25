@@ -40,7 +40,7 @@ export const routes: Routes = [
       {
         path: APP_ROUTES.bills.salesInvoicesList,
         loadComponent: () =>
-          import('./features/bills-invoices/sales-invoices-list/sales-invoices-list.component').then(
+          import('./features/bills-invoices/sales-invoices-list.component').then(
             (m) => m.SalesInvoicesComponent,
           ),
       },
