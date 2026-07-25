@@ -17,7 +17,7 @@ import {
   HEADER_BUTTONS,
   TABLE_ACTIONS,
   PAGE_NAVIGATION_BUTTONS,
-} from './sales-invoices.constant';
+} from '../sales-invoices.constant';
 @Component({
   selector: 'app-sales-invoices',
   standalone: true,
