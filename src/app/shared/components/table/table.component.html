@@ -21,7 +21,11 @@
             <th>
               <div class="header-content">
                 @if (col.icon) {
-                  <span class="header-icon" [class]="col.icon" aria-hidden="true"></span>
+                  <lucide-icon
+                    [img]="col.icon"
+                    class="header-icon"
+                    aria-hidden="true"
+                  ></lucide-icon>
                 }
                 <span class="header-label">{{ col.label }}</span>
               </div>
@@ -55,14 +59,13 @@
               <td>{{ row[col.key] }}</td>
             }
 
-            <!-- أزرار العمليات (محدث: يتأكد من تفعيل العَلَم ووجود عناصر) -->
             @if (showActions() && actions().length > 0) {
               <td class="col-actions">
                 <div class="actions-wrapper">
                   @for (action of actions(); track action.type) {
                     <app-button
                       [variant]="action.danger ? 'danger' : 'text'"
-                      [icon]="action.icon ?? ''"
+                      [icon]="action.icon!"
                       [title]="action.label || action.type"
                       (btnClick)="onActionTrigger(action.type, row)"
                     >
@@ -86,11 +89,55 @@
               "
               class="empty-state"
             >
-              No data available.
+              {{ emptyMessage() }}
             </td>
           </tr>
         }
       </tbody>
     </table>
   </div>
+  @if (showPagination()) {
+    <div class="table-pagination">
+      <!-- اختيار عدد العناصر لكل صفحة -->
+      <div class="page-size-selector">
+        <label for="pageSizeSelect">Rows per page:</label>
+        <select
+          id="pageSizeSelect"
+          [value]="pageSize()"
+          (change)="onPageSizeChange($event)"
+          class="page-select"
+        >
+          @for (option of pageSizeOptions; track option) {
+            <option [value]="option">{{ option }}</option>
+          }
+        </select>
+      </div>
+
+      <!-- عرض مدى السجلات الحالية -->
+      <div class="pagination-info">
+        <span>Showing {{ startIndex() }} - {{ endIndex() }} of {{ totalItems() }}</span>
+      </div>
+
+      <!-- أزرار التنقل (Previous / Next) -->
+      <div class="pagination-actions">
+        <app-button
+          variant="text"
+          [disabled]="isFirstPage()"
+          (btnClick)="goToPreviousPage()"
+          title="Previous Page"
+        >
+          Previous
+        </app-button>
+
+        <app-button
+          variant="text"
+          [disabled]="isLastPage()"
+          (btnClick)="goToNextPage()"
+          title="Next Page"
+        >
+          Next
+        </app-button>
+      </div>
+    </div>
+  }
 </div>
