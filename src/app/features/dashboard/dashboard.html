@@ -55,12 +55,18 @@
   </section>
   <section class="dashboard-tables-grid">
     <app-table
-      [data]="clients()"
-      [columns]="tableColumns()"
-      [actions]="tableActions()"
-      (actionClick)="onTableActionTrigger($event)"
-      (selectionChange)="onRowsSelected($event)"
+      [data]="alerts()"
+      [columns]="alertsTableColumns"
       [showActions]="false"
+      [emptyMessage]="'No alerts found.'"
+      [showPagination]="false"
+    ></app-table>
+    <app-table
+      [data]="unpaidSales()"
+      [columns]="unpaidSalesTableColumns"
+      [showActions]="false"
+      [emptyMessage]="'No unpaid sales found.'"
+      [showPagination]="false"
     ></app-table>
   </section>
 </div>

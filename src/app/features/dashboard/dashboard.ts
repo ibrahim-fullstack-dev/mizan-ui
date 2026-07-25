@@ -1,25 +1,14 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { MetricCard } from '../../shared/components/metric-card/metric-card.component';
-import { ColumnsChartComponent } from '../../shared/components/analytics-columns-chart/analytics.columns.chart';
+import { ColumnsChartComponent } from '../../shared/components/analytics-columns-chart/analytics.columns.chart.component';
 import { UrgentActions } from './components/urgent-actions/urgent-actions';
-import { AnalyticsBreakdown } from '../../shared/components/analytics-breakdown/analytics-breakdown';
-import { AnalyticsCircleChart } from '../../shared/components/analytics-circle-chart/analytics-circle-chart';
+import { AnalyticsBreakdown } from '../../shared/components/analytics-breakdown/analytics-breakdown.component';
+import { AnalyticsCircleChart } from '../../shared/components/analytics-circle-chart/analytics-circle-chart.component';
 import { TableComponent } from '../../shared/components/table/table.component';
 import { ChartGroupItem } from '../../shared/components/analytics-columns-chart/analytics.columns.chart.types';
-import {
-  TableColumn,
-  TableAction,
-  TableActionEvent,
-} from '../../shared/components/table/table.types';
+import { IAlert, IUnpaidSales } from './dashboard.types';
+import { AlERTS_TABLE_COLUMNS, UNPAID_SALES_TABLE_COLUMNS } from './dashboard.constant';
 import { LucideAngularModule } from 'lucide-angular';
-
-interface Client {
-  id: number;
-  name: string;
-  email: string;
-  role: string;
-  status: 'Active' | 'Inactive';
-}
 
 @Component({
   selector: 'app-dashboard',
@@ -37,38 +26,95 @@ interface Client {
   styleUrl: './dashboard.css',
 })
 export class DashboardComponent {
-  protected readonly tableColumns = signal<TableColumn[]>([
-    { key: 'name', label: 'Name', sortable: true },
-    { key: 'email', label: 'Email Address' },
-    { key: 'role', label: 'Role' },
-    { key: 'status', label: 'Status' },
-  ]);
-  protected readonly tableActions = signal<TableAction[]>([
-    { type: 'edit', icon: 'icon-edit', label: 'Edit' },
-    { type: 'delete', icon: 'icon-trash', label: 'Delete', danger: true },
-  ]);
-  // ==========================================
-  // 1. بيانات جدول العملاء (Clients Table Data)
-  // ==========================================
-  protected readonly clients = signal<Client[]>([
-    { id: 1, name: 'Ahmad Omar', email: 'ahmad@example.com', role: 'Admin', status: 'Active' },
-    { id: 2, name: 'Sara Khalid', email: 'sara@example.com', role: 'Editor', status: 'Active' },
+  protected readonly alertsTableColumns = AlERTS_TABLE_COLUMNS;
+  protected readonly unpaidSalesTableColumns = UNPAID_SALES_TABLE_COLUMNS;
+  protected readonly alerts = signal<IAlert[]>([
+    {
+      id: 1,
+      name: 'Ahmad Omar',
+      SKU: '12345678',
+      Branch: 'Main',
+      date: '2022-01-01',
+      stock: '100',
+    },
+    {
+      id: 2,
+      name: 'Sara Khalid',
+      SKU: '12345678',
+      Branch: 'Main',
+      date: '2022-01-01',
+      stock: '100',
+    },
     {
       id: 3,
       name: 'Fahad Suleiman',
-      email: 'fahad@example.com',
-      role: 'Viewer',
-      status: 'Inactive',
+      SKU: '12345678',
+      Branch: 'Main',
+      date: '2022-01-01',
+      stock: '100',
     },
-    { id: 4, name: 'Reem Ali', email: 'reem@example.com', role: 'Editor', status: 'Active' },
-    { id: 5, name: 'Yousef Hassan', email: 'yousef@example.com', role: 'Viewer', status: 'Active' },
-    { id: 6, name: 'Mona Al-Otaibi', email: 'mona@example.com', role: 'Admin', status: 'Active' },
-    { id: 7, name: 'Tarek Zayed', email: 'tarek@example.com', role: 'Viewer', status: 'Inactive' },
+    { id: 4, name: 'Reem Ali', SKU: '12345678', Branch: 'Main', date: '2022-01-01', stock: '100' },
+    {
+      id: 5,
+      name: 'Yousef Hassan',
+      SKU: '12345678',
+      Branch: 'Main',
+      date: '2022-01-01',
+      stock: '100',
+    },
   ]);
-
-  // ==========================================
-  // 2. بيانات أدوات الإحصائيات الجانبية (Widgets Data)
-  // ==========================================
+  protected readonly unpaidSales = signal<IUnpaidSales[]>([
+    {
+      id: 1,
+      invoiceNumber: 12345678,
+      clientName: 'Ahmad Omar',
+      type: 'Sales',
+      status: 'Unpaid',
+      branch: 'Main',
+      warehouse: 'Warehouse 1',
+      price: 100,
+    },
+    {
+      id: 2,
+      invoiceNumber: 12345678,
+      clientName: 'Sara Khalid',
+      type: 'Sales',
+      status: 'Unpaid',
+      branch: 'Main',
+      warehouse: 'Warehouse 1',
+      price: 100,
+    },
+    {
+      id: 3,
+      invoiceNumber: 12345678,
+      clientName: 'Fahad Suleiman',
+      type: 'Sales',
+      status: 'Unpaid',
+      branch: 'Main',
+      warehouse: 'Warehouse 1',
+      price: 100,
+    },
+    {
+      id: 4,
+      invoiceNumber: 12345678,
+      clientName: 'Reem Ali',
+      type: 'Sales',
+      status: 'Unpaid',
+      branch: 'Main',
+      warehouse: 'Warehouse 1',
+      price: 100,
+    },
+    {
+      id: 5,
+      invoiceNumber: 12345678,
+      clientName: 'Yousef Hassan',
+      type: 'Sales',
+      status: 'Unpaid',
+      branch: 'Main',
+      warehouse: 'Warehouse 1',
+      price: 100,
+    },
+  ]);
   protected readonly salesProfitData = [
     {
       name: 'Profit',
@@ -211,21 +257,4 @@ export class DashboardComponent {
 
   protected readonly isAnimated = signal<boolean>(true);
   protected readonly showGrid = signal<boolean>(true);
-
-  protected onTableActionTrigger(event: TableActionEvent<Client>): void {
-    const client = event.row;
-    console.log(`Action [${event.action}] triggered on client:`, client);
-
-    if (event.action === 'delete') {
-      this.deleteClient(client.id);
-    }
-  }
-
-  protected onRowsSelected(selectedRows: any[]): void {
-    console.log('Selected clients updated:', selectedRows);
-  }
-
-  private deleteClient(id: number): void {
-    this.clients.update((currentClients) => currentClients.filter((c) => c.id !== id));
-  }
 }
