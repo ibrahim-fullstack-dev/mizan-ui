@@ -81,6 +81,11 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: APP_ROUTES.offers,
+    loadComponent: () =>
+      import('./features/offers/offers.component').then((m) => m.OffersComponent),
+  },
 
   // 5. مسار الحماية من الروابط العشوائية (Page Not Found / Wildcard Route)
   {
