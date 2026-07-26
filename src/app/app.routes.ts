@@ -58,6 +58,13 @@ export const routes: Routes = [
             (m) => m.CreditNotesComponent,
           ),
       },
+      {
+        path: APP_ROUTES.bills.PurchaseInvoices,
+        loadComponent: () =>
+          import('./features/bills-invoices/purchase-invoices/purchase-invoices.component').then(
+            (m) => m.PurchaseInvoicesComponent,
+          ),
+      },
     ],
   },
 

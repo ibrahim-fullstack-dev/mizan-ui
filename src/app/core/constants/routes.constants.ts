@@ -24,7 +24,7 @@ export const APP_ROUTES = {
     salesInvoicesList: 'sale',
     viewRecurringInvoicesSale: 'sale-repeat',
     viewCreditNotes: 'returned-sales',
-    viewPurchase: 'purchase',
+    PurchaseInvoices: 'purchase',
     viewRecurringPurchaseInvoices: 'purchase-repeat',
     viewPurchaseReturns: 'returned-purchase',
     importSalesInvoices: 'import-sale-invoice',

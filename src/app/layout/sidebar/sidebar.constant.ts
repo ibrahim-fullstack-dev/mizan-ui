@@ -61,7 +61,7 @@ export const SIDEBAR_NAVIGATION: SidebarItem[] = [
       },
       {
         label: 'Purchase Invoices',
-        path: ['/', APP_ROUTES.bills.root, APP_ROUTES.bills.viewPurchase],
+        path: ['/', APP_ROUTES.bills.root, APP_ROUTES.bills.PurchaseInvoices],
       },
       {
         label: 'Recurring Purchase Invoices',

@@ -66,7 +66,7 @@ export class UrgentActions {
       title: 'Purchase Invoice',
       description: 'Record an incoming purchase bill',
       icon: Receipt,
-      link: `/${APP_ROUTES.bills.root}/${APP_ROUTES.bills.viewPurchase}`,
+      link: `/${APP_ROUTES.bills.root}/${APP_ROUTES.bills.PurchaseInvoices}`,
     },
     {
       title: 'Add Product',
