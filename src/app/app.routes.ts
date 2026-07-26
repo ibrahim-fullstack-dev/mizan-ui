@@ -65,6 +65,13 @@ export const routes: Routes = [
             (m) => m.PurchaseInvoicesComponent,
           ),
       },
+      {
+        path: APP_ROUTES.bills.viewRecurringPurchaseInvoices,
+        loadComponent: () =>
+          import('./features/bills-invoices/recurring-purchase-invoices/recurring-purchase-invoices.component').then(
+            (m) => m.RecurringPurchaseInvoicesComponent,
+          ),
+      },
     ],
   },
 
