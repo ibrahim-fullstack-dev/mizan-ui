@@ -96,6 +96,13 @@ export const routes: Routes = [
             (m) => m.SaleOrdersComponent,
           ),
       },
+      {
+        path: APP_ROUTES.orders.purchaseOrders,
+        loadComponent: () =>
+          import('./features/orders/purchase-orders/purchase-orders.component').then(
+            (m) => m.PurchaseOrdersComponent,
+          ),
+      },
     ],
   },
 
