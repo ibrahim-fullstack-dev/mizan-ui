@@ -51,6 +51,13 @@ export const routes: Routes = [
             (m) => m.RecurringSalesInvoicesComponent,
           ),
       },
+      {
+        path: APP_ROUTES.bills.viewCreditNotes,
+        loadComponent: () =>
+          import('./features/bills-invoices/credit-notes/credit-notes.component').then(
+            (m) => m.CreditNotesComponent,
+          ),
+      },
     ],
   },
 
