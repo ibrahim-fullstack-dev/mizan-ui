@@ -105,6 +105,18 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: APP_ROUTES.pos.root,
+    children: [
+      {
+        path: APP_ROUTES.pos.posList,
+        loadComponent: () =>
+          import('./features/POS/point-of-sale/point-of-sale.component').then(
+            (m) => m.PointOfSaleComponent,
+          ),
+      },
+    ],
+  },
 
   // 5. مسار الحماية من الروابط العشوائية (Page Not Found / Wildcard Route)
   {
