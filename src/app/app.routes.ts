@@ -128,21 +128,6 @@ export const routes: Routes = [
             (m) => m.ProductsListsComponent,
           ),
       },
-
-      {
-        path: APP_ROUTES.warehouse.branchesLists,
-        loadComponent: () =>
-          import('./features/warehouse/branches-lists/branches-lists.component').then(
-            (m) => m.BranchesListsComponent,
-          ),
-      },
-      {
-        path: APP_ROUTES.warehouse.priceLists,
-        loadComponent: () =>
-          import('./features/warehouse/price-lists/price-lists.component').then(
-            (m) => m.PriceListsComponent,
-          ),
-      },
     ],
   },
 
