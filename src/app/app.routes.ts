@@ -117,6 +117,19 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: APP_ROUTES.warehouse.root,
+
+    children: [
+      {
+        path: APP_ROUTES.warehouse.warehouseProductsLists,
+        loadComponent: () =>
+          import('./features/warehouse/products-lists/products-lists.component').then(
+            (m) => m.ProductsListsComponent,
+          ),
+      },
+    ],
+  },
 
   // 5. مسار الحماية من الروابط العشوائية (Page Not Found / Wildcard Route)
   {
