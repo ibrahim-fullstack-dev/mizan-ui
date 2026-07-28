@@ -135,6 +135,7 @@ export const routes: Routes = [
             (m) => m.BranchesListsComponent,
           ),
       },
+
       {
         path: APP_ROUTES.warehouse.priceLists,
         loadComponent: () =>
