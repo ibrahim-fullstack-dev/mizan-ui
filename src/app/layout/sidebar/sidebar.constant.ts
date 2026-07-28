@@ -148,39 +148,19 @@ export const SIDEBAR_NAVIGATION: SidebarItem[] = [
       // مسارات الإعدادات المتداخلة (Nested settings object resolved to absolute segments)
       {
         label: 'Setting: Categories',
-        path: [
-          '/',
-          APP_ROUTES.warehouse.root,
-          APP_ROUTES.warehouse.settings.root,
-          APP_ROUTES.warehouse.settings.categoryLists,
-        ],
+        path: ['/', APP_ROUTES.warehouse.root, APP_ROUTES.warehouse.categoryLists],
       },
       {
         label: 'Setting: Warranties',
-        path: [
-          '/',
-          APP_ROUTES.warehouse.root,
-          APP_ROUTES.warehouse.settings.root,
-          APP_ROUTES.warehouse.settings.warrantiesLists,
-        ],
+        path: ['/', APP_ROUTES.warehouse.root, APP_ROUTES.warehouse.warrantiesLists],
       },
       {
         label: 'Setting: Units of Measure',
-        path: [
-          '/',
-          APP_ROUTES.warehouse.root,
-          APP_ROUTES.warehouse.settings.root,
-          APP_ROUTES.warehouse.settings.unitsLists,
-        ],
+        path: ['/', APP_ROUTES.warehouse.root, APP_ROUTES.warehouse.unitsLists],
       },
       {
         label: 'Setting: Brands',
-        path: [
-          '/',
-          APP_ROUTES.warehouse.root,
-          APP_ROUTES.warehouse.settings.root,
-          APP_ROUTES.warehouse.settings.brandLists,
-        ],
+        path: ['/', APP_ROUTES.warehouse.root, APP_ROUTES.warehouse.brandLists],
       },
     ],
   },
