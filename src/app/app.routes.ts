@@ -150,6 +150,13 @@ export const routes: Routes = [
             (m) => m.WarehousesComponent,
           ),
       },
+      {
+        path: APP_ROUTES.warehouse.transferOrders,
+        loadComponent: () =>
+          import('./features/warehouse/transfer-orders/transfer-orders.component').then(
+            (m) => m.TransferOrdersComponent,
+          ),
+      },
     ],
   },
 
