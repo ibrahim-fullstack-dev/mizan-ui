@@ -57,13 +57,10 @@ export const APP_ROUTES = {
     warehouses: 'warehouses',
     transferOrders: 'transfer-orders',
     openingProductBalance: 'opening-balance',
-    settings: {
-      root: 'settings',
-      categoryLists: 'categories',
-      warrantiesLists: 'warranties',
-      unitsLists: 'units',
-      brandLists: 'brands',
-    },
+    categoryLists: 'categories',
+    warrantiesLists: 'warranties',
+    unitsLists: 'units',
+    brandLists: 'brands',
   },
 
   damagedStock: 'damaged-stock',

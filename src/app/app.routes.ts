@@ -157,6 +157,14 @@ export const routes: Routes = [
             (m) => m.TransferOrdersComponent,
           ),
       },
+
+      {
+        path: APP_ROUTES.warehouse.categoryLists,
+        loadComponent: () =>
+          import('./features/warehouse/categories/categories.component').then(
+            (m) => m.CategoriesSettingsComponent,
+          ),
+      },
     ],
   },
 
