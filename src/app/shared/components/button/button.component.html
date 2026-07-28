@@ -1,0 +1,18 @@
+<button
+  [type]="type()"
+  [disabled]="disabled() || loading()"
+  [className]="buttonClasses()"
+  (click)="onClick($event)"
+>
+  @if (loading()) {
+    <span class="btn-spinner" aria-hidden="true"></span>
+  } @else {
+    @if (icon()) {
+      <span class="btn-icon">{{ icon() }}</span>
+    }
+
+    <span class="btn-content">
+      <ng-content></ng-content>
+    </span>
+  }
+</button>

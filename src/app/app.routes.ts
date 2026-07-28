@@ -14,18 +14,15 @@ export const routes: Routes = [
     loadComponent: () => import('./features/dashboard/dashboard').then((m) => m.DashboardComponent),
   },
 
-  // {
-  //   path: APP_ROUTES.clients.root,
-  //   children: [
-  //     {
-  //       path: APP_ROUTES.clients.import,
-  //       loadComponent: () =>
-  //         import('./features/clients/import/import-clients.component').then(
-  //           (m) => m.ImportClientsComponent,
-  //         ),
-  //     },
-  //   ],
-  // },
+  {
+    path: APP_ROUTES.clients.root,
+    children: [
+      {
+        path: APP_ROUTES.clients.list,
+        loadComponent: () => import('./features/clients/clients').then((m) => m.Clients),
+      },
+    ],
+  },
 
   // // 4. مسار الإعدادات الشامل الجديد (Settings)
   // {

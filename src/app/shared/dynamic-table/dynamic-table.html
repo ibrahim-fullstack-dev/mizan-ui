@@ -2,6 +2,18 @@
   <table class="dynamic-data-table">
     <thead>
       <tr>
+        <!-- 🔲 كاشف تحديد الكل في الزاوية الأولى -->
+        @if (selectable()) {
+          <th class="checkbox-cell">
+            <input
+              type="checkbox"
+              [checked]="isAllSelected()"
+              (change)="toggleAll()"
+              class="table-checkbox"
+            />
+          </th>
+        }
+
         @for (col of columns(); track col.key) {
           <th>{{ col.label }}</th>
         }
@@ -10,7 +22,19 @@
 
     <tbody>
       @for (row of data(); track row.id || $index) {
-        <tr>
+        <tr [class.row-selected]="selectable() && selectedRows().has(row)">
+          <!-- 🔲 كاشف تحديد السطر المنفرد -->
+          @if (selectable()) {
+            <td class="checkbox-cell">
+              <input
+                type="checkbox"
+                [checked]="selectedRows().has(row)"
+                (change)="toggleRow(row)"
+                class="table-checkbox"
+              />
+            </td>
+          }
+
           @for (col of columns(); track col.key) {
             <td>
               @switch (col.type) {
@@ -43,7 +67,8 @@
         </tr>
       } @empty {
         <tr>
-          <td [attr.colspan]="columns().length" class="empty-state-cell">
+          <!-- 🛡️ التحديث هنا: استخدام totalColumnsCount لمنع انكسار حدود الجدول عند عدم وجود بيانات -->
+          <td [attr.colspan]="totalColumnsCount()" class="empty-state-cell">
             <div class="empty-state-content">
               <p>{{ emptyMessage() }}</p>
             </div>

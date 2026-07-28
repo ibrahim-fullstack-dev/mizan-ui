@@ -1,0 +1,138 @@
+<div class="table-container">
+  <!-- 📦 حاوية الجدول لضمان التمرير الأفقي على الشاشات الصغيرة -->
+  <div class="table-responsive">
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <!-- 1. مربع الاختيار الرئيسي (Bulk Selection) في أقصى اليسار -->
+          <th class="col-checkbox">
+            <input
+              type="checkbox"
+              [checked]="isAllSelected()"
+              [indeterminate]="isSomeSelected()"
+              (change)="toggleAllRows($event)"
+              aria-label="Select all rows"
+            />
+          </th>
+
+          <!-- 2. رؤوس الأعمدة الديناميكية (Dynamic Headers) -->
+          @for (col of columns(); track col.key) {
+            <th>
+              <div class="header-content">
+                @if (col.icon) {
+                  <span class="header-icon" [class]="col.icon" aria-hidden="true"></span>
+                }
+                <span class="header-label">{{ col.label }}</span>
+              </div>
+            </th>
+          }
+
+          <!-- 3. رأس العمليات في أقصى اليمين (يظهر فقط إذا تم تمرير عمليات) -->
+          @if (actions().length > 0) {
+            <th class="col-actions text-center">Actions</th>
+          }
+        </tr>
+      </thead>
+
+      <tbody>
+        <!-- 4. عرض البيانات ديناميكياً -->
+        @for (row of data(); track row.id || $index) {
+          <tr [class.row-selected]="isRowSelected(row)">
+            <!-- مربع الاختيار الخاص بالصف الحالي -->
+            <td class="col-checkbox">
+              <input
+                type="checkbox"
+                [checked]="isRowSelected(row)"
+                (change)="toggleRowSelection(row, $event)"
+                aria-label="Select row"
+              />
+            </td>
+
+            <!-- البيانات الديناميكية بناءً على الأعمدة النشطة -->
+            @for (col of columns(); track col.key) {
+              <td>{{ row[col.key] }}</td>
+            }
+
+            <!-- أزرار العمليات الاختيارية في أقصى اليمين -->
+            @if (actions().length > 0) {
+              <td class="col-actions">
+                <div class="actions-wrapper">
+                  @for (action of actions(); track action.type) {
+                    <button
+                      type="button"
+                      [class]="'btn-action btn-' + action.type"
+                      [class.btn-danger]="action.danger"
+                      [attr.aria-label]="action.label || action.type"
+                      [title]="action.label || action.type"
+                      (click)="onActionTrigger(action.type, row)"
+                    >
+                      <!-- يمكنك استخدام خط أيقونات مثل FontAwesome أو أيقونات SVG مخصصة هنا -->
+                      @if (action.icon) {
+                        <span [class]="action.icon" aria-hidden="true"></span>
+                      } @else {
+                        <!-- أيقونات نصية افتراضية في حال عدم توفر مكتبة أيقونات -->
+                        <span class="fallback-icon-text">{{ action.type }}</span>
+                      }
+                    </button>
+                  }
+                </div>
+              </td>
+            }
+          </tr>
+        } @empty {
+          <!-- حالة عدم وجود بيانات للعرض -->
+          <tr>
+            <td [attr.colspan]="columns().length + 2" class="empty-state">No data available.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 5. شريط التحكم بالصفحات (Footer Pagination) -->
+  <div class="table-pagination">
+    <!-- قائمة اختيار عدد العناصر لكل صفحة -->
+    <div class="page-size-selector">
+      <label for="pageSizeSelect">Showing</label>
+      <select
+        id="pageSizeSelect"
+        [value]="pageSize()"
+        (change)="onPageSizeChange($event)"
+        class="pagination-select"
+      >
+        @for (size of pageSizeOptions; track size) {
+          <option [value]="size">{{ size }}</option>
+        }
+      </select>
+      <span>per page</span>
+    </div>
+
+    <!-- معلومات الصفحة الحالية ومجموع العناصر -->
+    <div class="pagination-info" role="status">
+      Showing <strong>{{ startIndex() }}-{{ endIndex() }}</strong> out of
+      <strong>{{ totalItems() }}</strong>
+    </div>
+
+    <!-- أزرار التنقل (Next & Back) -->
+    <div class="pagination-controls">
+      <button
+        type="button"
+        class="btn-nav"
+        [disabled]="isFirstPage()"
+        (click)="goToPreviousPage()"
+        aria-label="Previous page"
+      >
+        Back
+      </button>
+      <button
+        type="button"
+        class="btn-nav"
+        [disabled]="isLastPage()"
+        (click)="goToNextPage()"
+        aria-label="Next page"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+</div>

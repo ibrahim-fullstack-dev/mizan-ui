@@ -1,0 +1,25 @@
+<div class="client-layout-wrapper">
+  <!-- الـ Topbar المشترك -->
+  <app-topbar
+    searchPlaceholder="Find a client..."
+    [addConfig]="{ label: 'Add New Client', icon: '➕', variant: 'primary' }"
+    [deleteConfig]="{ label: 'Delete Selected Clients', icon: '🗑️', variant: 'danger' }"
+    [filterConfig]="{ label: 'Filter Clients', icon: '🎛️', variant: 'secondary' }"
+    [exportConfig]="{ label: 'Export to Excel', icon: '📤', variant: 'secondary' }"
+    (searchChange)="handleSearch($event)"
+    (deleteClick)="deleteSelectedClients()"
+  >
+  </app-topbar>
+
+  <!-- 📊 جدول البيانات الديناميكي -->
+  <div class="table-container">
+    <app-dynamic-table
+      [columns]="tableColumns()"
+      [data]="clientsData()"
+      [selectable]="true"
+      emptyMessage="No clients found matching your criteria."
+      (selectionChange)="onClientSelectionChange($event)"
+    >
+    </app-dynamic-table>
+  </div>
+</div>
