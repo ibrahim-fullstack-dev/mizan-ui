@@ -208,6 +208,13 @@ export const routes: Routes = [
             (m) => m.ProductionsComponent,
           ),
       },
+      {
+        path: APP_ROUTES.manufactures.productionsSettings,
+        loadComponent: () =>
+          import('./features/manufacturing/productions-settings/productions-settings.component').then(
+            (m) => m.ProductionsSettingsComponent,
+          ),
+      },
     ],
   },
 
