@@ -165,6 +165,13 @@ export const routes: Routes = [
             (m) => m.CategoriesSettingsComponent,
           ),
       },
+      {
+        path: APP_ROUTES.warehouse.warrantiesLists,
+        loadComponent: () =>
+          import('./features/warehouse/warranties/warranties.component').then(
+            (m) => m.WarrantiesComponent,
+          ),
+      },
     ],
   },
 
