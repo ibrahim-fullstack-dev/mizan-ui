@@ -178,15 +178,15 @@ export const SIDEBAR_NAVIGATION: SidebarItem[] = [
     icon: 'factory',
     children: [
       {
-        label: 'BOM Equations',
+        label: 'Manufacturing Equations',
         path: ['/', APP_ROUTES.manufactures.root, APP_ROUTES.manufactures.manufacturingEquations],
       },
       {
-        label: 'Productions Log',
+        label: 'Productions',
         path: ['/', APP_ROUTES.manufactures.root, APP_ROUTES.manufactures.productions],
       },
       {
-        label: 'Production Settings',
+        label: 'Productions Settings',
         path: ['/', APP_ROUTES.manufactures.root, APP_ROUTES.manufactures.productionsSettings],
       },
       {
