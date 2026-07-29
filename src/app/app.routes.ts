@@ -191,6 +191,18 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/damages/damages.component').then((m) => m.DamagesComponent),
   },
+  {
+    path: APP_ROUTES.manufactures.root,
+    children: [
+      {
+        path: APP_ROUTES.manufactures.manufacturingEquations,
+        loadComponent: () =>
+          import('./features/manufacturing/manufacturing-quations/manufacturing-quations.component').then(
+            (m) => m.ManufacturingQuationsComponent,
+          ),
+      },
+    ],
+  },
 
   {
     path: '**',
