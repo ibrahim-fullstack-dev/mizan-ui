@@ -172,6 +172,13 @@ export const routes: Routes = [
             (m) => m.WarrantiesComponent,
           ),
       },
+      {
+        path: APP_ROUTES.warehouse.unitsLists,
+        loadComponent: () =>
+          import('./features/warehouse/units/units.component').then(
+            (m) => m.TransferOrdersComponent,
+          ),
+      },
     ],
   },
 
