@@ -201,6 +201,13 @@ export const routes: Routes = [
             (m) => m.ManufacturingQuationsComponent,
           ),
       },
+      {
+        path: APP_ROUTES.manufactures.productions,
+        loadComponent: () =>
+          import('./features/manufacturing/productions/productions.component').then(
+            (m) => m.ProductionsComponent,
+          ),
+      },
     ],
   },
 
