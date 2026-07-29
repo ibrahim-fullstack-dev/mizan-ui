@@ -186,8 +186,12 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: APP_ROUTES.damagedStock,
+    loadComponent: () =>
+      import('./features/damages/damages.component').then((m) => m.DamagesComponent),
+  },
 
-  // 5. مسار الحماية من الروابط العشوائية (Page Not Found / Wildcard Route)
   {
     path: '**',
     redirectTo: APP_ROUTES.dashboard, // أو توجيهه لصفحة 404 مخصصة لاحقاً
