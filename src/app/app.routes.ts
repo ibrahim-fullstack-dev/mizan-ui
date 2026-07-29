@@ -215,6 +215,13 @@ export const routes: Routes = [
             (m) => m.ProductionsSettingsComponent,
           ),
       },
+      {
+        path: APP_ROUTES.manufactures.productionInvoices,
+        loadComponent: () =>
+          import('./features/manufacturing/productions-invoices/productions-invoices.component').then(
+            (m) => m.ProductionsInvoicesComponent,
+          ),
+      },
     ],
   },
 
