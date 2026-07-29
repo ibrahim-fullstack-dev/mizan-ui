@@ -179,6 +179,11 @@ export const routes: Routes = [
             (m) => m.TransferOrdersComponent,
           ),
       },
+      {
+        path: APP_ROUTES.warehouse.brandLists,
+        loadComponent: () =>
+          import('./features/warehouse/brands/brands.component').then((m) => m.BrandsComponent),
+      },
     ],
   },
 
