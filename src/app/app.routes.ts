@@ -224,7 +224,18 @@ export const routes: Routes = [
       },
     ],
   },
-
+  {
+    path: APP_ROUTES.expenses.root,
+    children: [
+      {
+        path: APP_ROUTES.expenses.expensesList,
+        loadComponent: () =>
+          import('./features/expenses/expenses-list/expenses-list.component').then(
+            (m) => m.ExpensesListComponent,
+          ),
+      },
+    ],
+  },
   {
     path: '**',
     redirectTo: APP_ROUTES.dashboard, // أو توجيهه لصفحة 404 مخصصة لاحقاً
