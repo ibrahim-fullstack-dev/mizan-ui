@@ -206,7 +206,7 @@ export const SIDEBAR_NAVIGATION: SidebarItem[] = [
         path: ['/', APP_ROUTES.expenses.root, APP_ROUTES.expenses.expensesList],
       },
       {
-        label: 'Recurring Expenses',
+        label: 'Repeat Expenses List',
         path: ['/', APP_ROUTES.expenses.root, APP_ROUTES.expenses.repeatExpensesList],
       },
       {
