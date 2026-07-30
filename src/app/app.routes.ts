@@ -234,6 +234,13 @@ export const routes: Routes = [
             (m) => m.ExpensesListComponent,
           ),
       },
+      {
+        path: APP_ROUTES.expenses.repeatExpensesList,
+        loadComponent: () =>
+          import('./features/expenses/repeat-expenses-list/repeat-expenses-list.component').then(
+            (m) => m.RepeatExpensesListComponent,
+          ),
+      },
     ],
   },
   {
