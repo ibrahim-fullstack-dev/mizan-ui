@@ -1,35 +1,49 @@
-import { APP_ROUTES } from '../../core/constants/routes.constants'; // يرجى التأكد من المسار الفعلي في مشروعك
+import { APP_ROUTES } from '../../core/constants/routes.constants';
 import { SidebarItem } from './sidebar.types';
+import {
+  LayoutDashboard,
+  Users,
+  Settings,
+  Landmark,
+  CreditCard,
+  Truck,
+  Tags,
+  ShoppingCart,
+  MonitorSmartphone,
+  Boxes,
+  PackageX,
+  ChartBar,
+  Wallet,
+  Banknote,
+  ChartPie,
+  Percent,
+  BookOpen,
+  Layers,
+  User,
+  Grid2x2,
+  BadgeDollarSign,
+} from 'lucide-angular';
 
 export const SIDEBAR_NAVIGATION: SidebarItem[] = [
-  // 1. الرئيسيّة (Dashboard)
+  // Dashboard
   {
     label: 'Dashboard',
-    icon: 'layout-dashboard',
+    icon: LayoutDashboard,
     path: ['/', APP_ROUTES.dashboard],
   },
-
-  // 2. البنك (Bank)
-  {
-    label: 'Bank Accounts',
-    icon: 'landmark',
-    path: ['/', APP_ROUTES.bank],
-  },
-
-  // 3. العملاء (Clients)
+  // Clients
   {
     label: 'Clients',
-    icon: 'users',
+    icon: Users,
     children: [
       { label: 'Clients List', path: ['/', APP_ROUTES.clients.root, APP_ROUTES.clients.list] },
       { label: 'Import Clients', path: ['/', APP_ROUTES.clients.root, APP_ROUTES.clients.import] },
     ],
   },
-
-  // 4. الموردين (Suppliers)
+  // Suppliers
   {
     label: 'Suppliers',
-    icon: 'truck',
+    icon: Truck,
     children: [
       {
         label: 'Suppliers List',
@@ -41,35 +55,34 @@ export const SIDEBAR_NAVIGATION: SidebarItem[] = [
       },
     ],
   },
-
-  // 5. الفواتير والمستندات (Bills & Invoices)
+  // Bills & Invoices (Sales & Purchases)
   {
-    label: 'Bills & Invoices',
-    icon: 'file-text',
+    label: 'Bills',
+    icon: CreditCard,
     children: [
       {
-        label: 'Sales Invoices',
+        label: 'Sales Invoices List',
         path: ['/', APP_ROUTES.bills.root, APP_ROUTES.bills.salesInvoicesList],
       },
       {
-        label: 'Recurring Sales Invoices',
-        path: ['/', APP_ROUTES.bills.root, APP_ROUTES.bills.viewRecurringInvoicesSale],
+        label: 'View Recurring Sales Invoices',
+        path: ['/', APP_ROUTES.bills.root, APP_ROUTES.bills.recurringSaleInvoices],
       },
       {
-        label: 'Credit Notes (Returns)',
-        path: ['/', APP_ROUTES.bills.root, APP_ROUTES.bills.viewCreditNotes],
+        label: 'View Credit Notes',
+        path: ['/', APP_ROUTES.bills.root, APP_ROUTES.bills.creditNotes],
       },
       {
-        label: 'Purchase Invoices',
+        label: 'View Purchase Invoices',
         path: ['/', APP_ROUTES.bills.root, APP_ROUTES.bills.PurchaseInvoices],
       },
       {
-        label: 'Recurring Purchase Invoices',
-        path: ['/', APP_ROUTES.bills.root, APP_ROUTES.bills.viewRecurringPurchaseInvoices],
+        label: 'View Recurring Purchase Invoices',
+        path: ['/', APP_ROUTES.bills.root, APP_ROUTES.bills.recurringPurchaseInvoices],
       },
       {
-        label: 'Purchase Returns',
-        path: ['/', APP_ROUTES.bills.root, APP_ROUTES.bills.viewPurchaseReturns],
+        label: 'View Purchase Returns',
+        path: ['/', APP_ROUTES.bills.root, APP_ROUTES.bills.purchaseReturns],
       },
       {
         label: 'Import Sales Invoices',
@@ -81,18 +94,16 @@ export const SIDEBAR_NAVIGATION: SidebarItem[] = [
       },
     ],
   },
-
-  // 6. العروض (Offers)
+  // Offers
   {
-    label: 'Sale Offers',
-    icon: 'tags',
+    label: 'Offers',
+    icon: Tags,
     path: ['/', APP_ROUTES.offers],
   },
-
-  // 7. الطلبيات (Orders)
+  // Orders (Sales & Purchases)
   {
-    label: 'Orders Management',
-    icon: 'shopping-cart',
+    label: 'Orders',
+    icon: ShoppingCart,
     children: [
       { label: 'Sale Orders', path: ['/', APP_ROUTES.orders.root, APP_ROUTES.orders.saleOrders] },
       {
@@ -101,32 +112,30 @@ export const SIDEBAR_NAVIGATION: SidebarItem[] = [
       },
     ],
   },
-
-  // 8. نقاط البيع (POS)
+  // Point of Sale (POS)
   {
     label: 'Point of Sale (POS)',
-    icon: 'monitor-smartphone',
+    icon: MonitorSmartphone,
     children: [
-      { label: 'POS Sessions List', path: ['/', APP_ROUTES.pos.root, APP_ROUTES.pos.posList] },
-      { label: 'Login to POS', path: ['/', APP_ROUTES.pos.root, APP_ROUTES.pos.loginToPOS] },
+      { label: 'POS Sessions List', path: ['/', APP_ROUTES.POS.root, APP_ROUTES.POS.POSList] },
+      { label: 'Login to POS', path: ['/', APP_ROUTES.POS.root, APP_ROUTES.POS.loginToPOS] },
     ],
   },
-
-  // 9. المخازن والمستودعات (Warehouse) - مع معالجة كائن الإعدادات المتداخل
+  // Warehouses & Transfers (Manufacturing)
   {
-    label: 'Inventory & Warehouses',
-    icon: 'boxes',
+    label: 'Warehouse',
+    icon: Boxes,
     children: [
       {
-        label: 'Products List',
-        path: ['/', APP_ROUTES.warehouse.root, APP_ROUTES.warehouse.warehouseProductsLists],
+        label: 'Products Lists',
+        path: ['/', APP_ROUTES.warehouse.root, APP_ROUTES.warehouse.productsLists],
       },
       {
         label: 'Import Products',
-        path: ['/', APP_ROUTES.warehouse.root, APP_ROUTES.warehouse.importsProducts],
+        path: ['/', APP_ROUTES.warehouse.root, APP_ROUTES.warehouse.importProducts],
       },
       {
-        label: 'Branches List',
+        label: 'Branches Lists',
         path: ['/', APP_ROUTES.warehouse.root, APP_ROUTES.warehouse.branchesLists],
       },
       {
@@ -134,7 +143,7 @@ export const SIDEBAR_NAVIGATION: SidebarItem[] = [
         path: ['/', APP_ROUTES.warehouse.root, APP_ROUTES.warehouse.priceLists],
       },
       {
-        label: 'Warehouses Management',
+        label: 'Warehouses',
         path: ['/', APP_ROUTES.warehouse.root, APP_ROUTES.warehouse.warehouses],
       },
       {
@@ -147,35 +156,33 @@ export const SIDEBAR_NAVIGATION: SidebarItem[] = [
       },
       // مسارات الإعدادات المتداخلة (Nested settings object resolved to absolute segments)
       {
-        label: 'Setting: Categories',
+        label: 'Setting: Categories Lists',
         path: ['/', APP_ROUTES.warehouse.root, APP_ROUTES.warehouse.categoryLists],
       },
       {
-        label: 'Setting: Warranties',
+        label: 'Setting: Warranties Lists',
         path: ['/', APP_ROUTES.warehouse.root, APP_ROUTES.warehouse.warrantiesLists],
       },
       {
-        label: 'Setting: Units of Measure',
+        label: 'Setting: Units Lists',
         path: ['/', APP_ROUTES.warehouse.root, APP_ROUTES.warehouse.unitsLists],
       },
       {
-        label: 'Setting: Brands',
+        label: 'Setting: Brands Lists',
         path: ['/', APP_ROUTES.warehouse.root, APP_ROUTES.warehouse.brandLists],
       },
     ],
   },
-
-  // 10. المخزون التالف (Damaged Stock)
+  // Damaged Stock
   {
     label: 'Damaged Stock',
-    icon: 'package-x',
+    icon: PackageX,
     path: ['/', APP_ROUTES.damagedStock],
   },
-
-  // 11. التصنيع والإنتاج (Manufacturing)
+  // Manufacturing
   {
     label: 'Manufacturing',
-    icon: 'factory',
+    icon: MonitorSmartphone,
     children: [
       {
         label: 'Manufacturing Equations',
@@ -195,11 +202,61 @@ export const SIDEBAR_NAVIGATION: SidebarItem[] = [
       },
     ],
   },
-
-  // 12. المصروفات (Expenses)
+  // Reports
+  {
+    label: 'Reports',
+    icon: ChartBar,
+    children: [
+      {
+        label: 'Sales',
+        path: ['/', APP_ROUTES.reports.root, APP_ROUTES.reports.sales.root],
+      },
+      {
+        label: 'Clients',
+        path: ['/', APP_ROUTES.reports.root, APP_ROUTES.reports.clients.root],
+      },
+      {
+        label: 'Purchases',
+        path: ['/', APP_ROUTES.reports.root, APP_ROUTES.reports.purchases.root],
+      },
+      {
+        label: 'Payments',
+        path: ['/', APP_ROUTES.reports.root, APP_ROUTES.reports.payments.root],
+      },
+      {
+        label: 'Expenses',
+        path: ['/', APP_ROUTES.reports.root, APP_ROUTES.reports.expenses.root],
+      },
+      {
+        label: 'Taxes',
+        path: ['/', APP_ROUTES.reports.root, APP_ROUTES.reports.taxes.root],
+      },
+      {
+        label: 'Stock',
+        path: ['/', APP_ROUTES.reports.root, APP_ROUTES.reports.stock.root],
+      },
+      {
+        label: 'Accounting',
+        path: ['/', APP_ROUTES.reports.root, APP_ROUTES.reports.accounting.root],
+      },
+      {
+        label: 'Cost Center',
+        path: ['/', APP_ROUTES.reports.root, APP_ROUTES.reports.costCenter.root],
+      },
+      {
+        label: 'Assets',
+        path: ['/', APP_ROUTES.reports.root, APP_ROUTES.reports.assets.root],
+      },
+      {
+        label: 'Manufacturing',
+        path: ['/', APP_ROUTES.reports.root, APP_ROUTES.reports.manufacturing.root],
+      },
+    ],
+  },
+  // Expenses (Sales & Purchases)
   {
     label: 'Expenses',
-    icon: 'wallet',
+    icon: Wallet,
     children: [
       {
         label: 'Expenses List',
@@ -210,7 +267,7 @@ export const SIDEBAR_NAVIGATION: SidebarItem[] = [
         path: ['/', APP_ROUTES.expenses.root, APP_ROUTES.expenses.repeatExpensesList],
       },
       {
-        label: 'Expenses Categories',
+        label: 'Expenses Category',
         path: ['/', APP_ROUTES.expenses.root, APP_ROUTES.expenses.expensesCategory],
       },
       {
@@ -219,18 +276,17 @@ export const SIDEBAR_NAVIGATION: SidebarItem[] = [
       },
     ],
   },
-
-  // 13. المدفوعات والتسويات (Payments & Settlements)
+  // Payments & Settlements (Sales & Purchases)
   {
-    label: 'Payments & Settlements',
-    icon: 'banknote',
+    label: 'Payments',
+    icon: Banknote,
     children: [
       {
         label: 'Sales Payments',
         path: ['/', APP_ROUTES.payments.root, APP_ROUTES.payments.salePayments],
       },
       {
-        label: 'Sales Settlements',
+        label: 'Sale Settlements',
         path: ['/', APP_ROUTES.payments.root, APP_ROUTES.payments.saleSettlements],
       },
       {
@@ -255,14 +311,19 @@ export const SIDEBAR_NAVIGATION: SidebarItem[] = [
       },
     ],
   },
-
-  // 14. الأصول والإهلاكات (Asset & Depreciation)
+  // Bank
+  {
+    label: 'Bank Accounts',
+    icon: Landmark,
+    path: ['/', APP_ROUTES.bank],
+  },
+  // Assets & Depreciation
   {
     label: 'Assets & Depreciation',
-    icon: 'chart-pie',
+    icon: ChartPie,
     children: [
       {
-        label: 'Assets Categories',
+        label: 'Assets Category',
         path: [
           '/',
           APP_ROUTES.assetsAndDepreciation.root,
@@ -270,11 +331,11 @@ export const SIDEBAR_NAVIGATION: SidebarItem[] = [
         ],
       },
       {
-        label: 'Assets Registry',
+        label: 'Assets',
         path: ['/', APP_ROUTES.assetsAndDepreciation.root, APP_ROUTES.assetsAndDepreciation.assets],
       },
       {
-        label: 'Depreciation Log',
+        label: 'Depreciation',
         path: [
           '/',
           APP_ROUTES.assetsAndDepreciation.root,
@@ -283,26 +344,31 @@ export const SIDEBAR_NAVIGATION: SidebarItem[] = [
       },
     ],
   },
-
-  // 15. الحسابات العامة والدفاتر (Accounting & General Ledger)
+  // Discounts
   {
-    label: 'Accounting & Ledger',
-    icon: 'book-open',
+    label: 'Discounts',
+    icon: Percent,
+    path: ['/', APP_ROUTES.discounts],
+  },
+  // Accounting
+  {
+    label: 'Accounting',
+    icon: BookOpen,
     children: [
       {
         label: 'Manual Ledgers',
         path: ['/', APP_ROUTES.accounting.root, APP_ROUTES.accounting.manualLedgers],
       },
       {
-        label: 'Add Journal Entry',
+        label: 'Add Journal Entries',
         path: ['/', APP_ROUTES.accounting.root, APP_ROUTES.accounting.addLedgerEntries],
       },
       {
-        label: 'All Journal Entries',
+        label: 'Entries',
         path: ['/', APP_ROUTES.accounting.root, APP_ROUTES.accounting.entries],
       },
       {
-        label: 'Chart of Accounts',
+        label: 'accounts Manual',
         path: ['/', APP_ROUTES.accounting.root, APP_ROUTES.accounting.accountsManual],
       },
       {
@@ -310,29 +376,18 @@ export const SIDEBAR_NAVIGATION: SidebarItem[] = [
         path: ['/', APP_ROUTES.accounting.root, APP_ROUTES.accounting.generalLedger],
       },
       {
-        label: 'Close Financial Period',
+        label: 'Close Period',
         path: ['/', APP_ROUTES.accounting.root, APP_ROUTES.accounting.closePeriod],
       },
     ],
   },
-
-  // 16. الخصومات ومجموعات العملاء ومراكز التكلفة والاشتراكات (Discounts, Groups, Cost Centers & Subscriptions)
-  {
-    label: 'Discounts Management',
-    icon: 'percent',
-    path: ['/', APP_ROUTES.discounts],
-  },
-  {
-    label: 'Client Groups',
-    icon: 'user-check',
-    path: ['/', APP_ROUTES.clientGroup],
-  },
+  // Cost Centers
   {
     label: 'Cost Centers',
-    icon: 'layers',
+    icon: Layers,
     children: [
       {
-        label: 'Cost Centers List',
+        label: 'Cost Centers',
         path: ['/', APP_ROUTES.costCenter.root, APP_ROUTES.costCenter.costCenters],
       },
       {
@@ -348,817 +403,61 @@ export const SIDEBAR_NAVIGATION: SidebarItem[] = [
         path: ['/', APP_ROUTES.costCenter.root, APP_ROUTES.costCenter.estimatedBudget],
       },
       {
-        label: 'Departments Setup',
+        label: 'Departments',
         path: ['/', APP_ROUTES.costCenter.root, APP_ROUTES.costCenter.departments],
       },
       {
-        label: 'Projects Registry',
+        label: 'Projects',
         path: ['/', APP_ROUTES.costCenter.root, APP_ROUTES.costCenter.projects],
       },
     ],
   },
+  // Number Group
   {
-    label: 'System Subscriptions',
-    icon: 'repeat',
+    label: 'Number Group',
+    icon: Grid2x2,
+    path: ['/', APP_ROUTES.numberGroup],
+  },
+  // Client Group
+  {
+    label: 'Client Group',
+    icon: User,
+    path: ['/', APP_ROUTES.clientGroup],
+  },
+  // Subscriptions
+  {
+    label: 'Subscriptions',
+    icon: BadgeDollarSign,
     children: [
       {
-        label: 'Subscriptions List',
-        path: ['/', APP_ROUTES.subscriptions.root, APP_ROUTES.subscriptions.list],
+        label: 'Pricing Plans',
+        path: ['/', APP_ROUTES.subscriptions.root, APP_ROUTES.subscriptions.pricingPlans],
       },
       {
-        label: 'Subscription Invoices',
+        label: 'Invoices',
         path: ['/', APP_ROUTES.subscriptions.root, APP_ROUTES.subscriptions.invoices],
       },
     ],
   },
-
-  // ==========================================
-  // تجميعة التقارير (Reports Modules - Flattened Categorically)
-  // ==========================================
-
-  // 17. تقارير المبيعات والمشتريات والعملاء والموردين
-  {
-    label: 'Reports: Sales & CRM',
-    icon: 'chart-bar',
-    children: [
-      // Sales Reports
-      {
-        label: 'Sales by Client',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.sales.root,
-          APP_ROUTES.reports.sales.saleBasedOnClient,
-        ],
-      },
-      {
-        label: 'Sales by Product',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.sales.root,
-          APP_ROUTES.reports.sales.saleBasedOnProduct,
-        ],
-      },
-      {
-        label: 'Sales by User',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.sales.root,
-          APP_ROUTES.reports.sales.saleBasedOnUser,
-        ],
-      },
-      {
-        label: 'Sales by Salesman',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.sales.root,
-          APP_ROUTES.reports.sales.saleBasedOnSalesman,
-        ],
-      },
-      {
-        label: 'Sales by Supplier',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.sales.root,
-          APP_ROUTES.reports.sales.saleBasedOnSupplier,
-        ],
-      },
-      {
-        label: 'Product History',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.sales.root,
-          APP_ROUTES.reports.sales.productHistoryReport,
-        ],
-      },
-      {
-        label: 'POS Cashier Report',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.sales.root,
-          APP_ROUTES.reports.sales.posCashierReport,
-        ],
-      },
-      {
-        label: 'POS Cashier Summary',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.sales.root,
-          APP_ROUTES.reports.sales.posCashierSummary,
-        ],
-      },
-      {
-        label: 'POS Deficit/Excess',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.sales.root,
-          APP_ROUTES.reports.sales.posDeficitExcessReport,
-        ],
-      },
-      // Clients Reports
-      {
-        label: 'Client Remaining Balances',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.clients.root,
-          APP_ROUTES.reports.clients.clientRemainingBalance,
-        ],
-      },
-      {
-        label: 'Bank Fees Report',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.clients.root,
-          APP_ROUTES.reports.clients.bankFeesReport,
-        ],
-      },
-      {
-        label: 'Detailed Invoice Profits',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.clients.root,
-          APP_ROUTES.reports.clients.summaryProfitInvoicesDetailed,
-        ],
-      },
-      {
-        label: 'Summary Invoice Profits',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.clients.root,
-          APP_ROUTES.reports.clients.summaryProfitInvoices,
-        ],
-      },
-      {
-        label: 'Client Statement Report',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.clients.root,
-          APP_ROUTES.reports.clients.statementReportForClient,
-        ],
-      },
-      {
-        label: 'Credit Sales Report',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.clients.root,
-          APP_ROUTES.reports.clients.creditSaleReport,
-        ],
-      },
-      {
-        label: 'Credit Sales Summary',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.clients.root,
-          APP_ROUTES.reports.clients.summaryCreditSaleReport,
-        ],
-      },
-      {
-        label: 'Invoice Aging (Clients)',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.clients.root,
-          APP_ROUTES.reports.clients.invoiceAging,
-        ],
-      },
-      {
-        label: 'Bad Debts Log',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.clients.root,
-          APP_ROUTES.reports.clients.badDebts,
-        ],
-      },
-    ],
-  },
-
-  // 18. تقارير المشتريات، المدفوعات، والمصروفات
-  {
-    label: 'Reports: Procurement & Costs',
-    icon: 'chart-no-axes-column',
-    children: [
-      // Purchases Reports
-      {
-        label: 'Purchases by Supplier',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.purchases.root,
-          APP_ROUTES.reports.purchases.purchasesBySupplier,
-        ],
-      },
-      {
-        label: 'Purchases by Product',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.purchases.root,
-          APP_ROUTES.reports.purchases.purchasesBasedOnProduct,
-        ],
-      },
-      {
-        label: 'Supplier Remaining Balances',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.purchases.root,
-          APP_ROUTES.reports.purchases.supplierRemainingBalance,
-        ],
-      },
-      {
-        label: 'Purchases Statement Bill',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.purchases.root,
-          APP_ROUTES.reports.purchases.purchasesStatementBill,
-        ],
-      },
-      {
-        label: 'Purchases Order Bill',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.purchases.root,
-          APP_ROUTES.reports.purchases.purchasesOrderBill,
-        ],
-      },
-      {
-        label: 'Supplier Statement Report',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.purchases.root,
-          APP_ROUTES.reports.purchases.statementReportForSupplier,
-        ],
-      },
-      {
-        label: 'Credit Purchase Report',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.purchases.root,
-          APP_ROUTES.reports.purchases.creditPurchaseReport,
-        ],
-      },
-      {
-        label: 'Purchase Order Summary',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.purchases.root,
-          APP_ROUTES.reports.purchases.purchasesOrderBillSummary,
-        ],
-      },
-      {
-        label: 'Purchase Statement Summary',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.purchases.root,
-          APP_ROUTES.reports.purchases.purchasesStatementBillSummary,
-        ],
-      },
-      {
-        label: 'Invoice Aging (Suppliers)',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.purchases.root,
-          APP_ROUTES.reports.purchases.invoiceAging,
-        ],
-      },
-      {
-        label: 'Credit Purchase Summary',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.purchases.root,
-          APP_ROUTES.reports.purchases.summaryCreditPurchaseReport,
-        ],
-      },
-      // Payments Reports
-      {
-        label: 'Sales Client Payments',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.payments.root,
-          APP_ROUTES.reports.payments.saleClientPayment,
-        ],
-      },
-      {
-        label: 'Sales Payments Log',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.payments.root,
-          APP_ROUTES.reports.payments.salePayment,
-        ],
-      },
-      {
-        label: 'Credit Sale Payment Notices',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.payments.root,
-          APP_ROUTES.reports.payments.creditSalePaymentNotices,
-        ],
-      },
-      {
-        label: 'Sales Reconciliation',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.payments.root,
-          APP_ROUTES.reports.payments.salesReconciliationReport,
-        ],
-      },
-      {
-        label: 'Purchase Supplier Payments',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.payments.root,
-          APP_ROUTES.reports.payments.purchaseSupplierPayment,
-        ],
-      },
-      {
-        label: 'Purchase Payments Log',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.payments.root,
-          APP_ROUTES.reports.payments.purchasePayment,
-        ],
-      },
-      {
-        label: 'Duty to Pay Report',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.payments.root,
-          APP_ROUTES.reports.payments.dutyToPayReport,
-        ],
-      },
-      {
-        label: 'Payments Held Log',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.payments.root,
-          APP_ROUTES.reports.payments.paymentHeld,
-        ],
-      },
-      {
-        label: 'Time to Pay Analysis',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.payments.root,
-          APP_ROUTES.reports.payments.timeToPayReport,
-        ],
-      },
-      // Expenses Reports
-      {
-        label: 'Expenses by Categories',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.expenses.root,
-          APP_ROUTES.reports.expenses.expenseBasedOnCategories,
-        ],
-      },
-      {
-        label: 'Expenses by Supplier',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.expenses.root,
-          APP_ROUTES.reports.expenses.expenseBasedOnSupplier,
-        ],
-      },
-      {
-        label: 'Expenses by Client',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.expenses.root,
-          APP_ROUTES.reports.expenses.expenseBasedOnClient,
-        ],
-      },
-      {
-        label: 'Expense List Report',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.expenses.root,
-          APP_ROUTES.reports.expenses.expenseListReport,
-        ],
-      },
-      {
-        label: 'Expense List Summary',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.expenses.root,
-          APP_ROUTES.reports.expenses.expenseListSummaryReport,
-        ],
-      },
-    ],
-  },
-
-  // 19. تقارير الضرائب، المخازن، الحسابات الختامية والتصنيع
-  {
-    label: 'Reports: Finance & Stock',
-    icon: 'chart-column-big',
-    children: [
-      // Taxes Reports
-      {
-        label: 'Sales Tax Report',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.taxes.root,
-          APP_ROUTES.reports.taxes.saleTaxReport,
-        ],
-      },
-      {
-        label: 'Output Tax Log',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.taxes.root,
-          APP_ROUTES.reports.taxes.outTax,
-        ],
-      },
-      {
-        label: 'Output Tax by Client',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.taxes.root,
-          APP_ROUTES.reports.taxes.outTaxBasedOnClient,
-        ],
-      },
-      {
-        label: 'Purchase Tax Report',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.taxes.root,
-          APP_ROUTES.reports.taxes.purchaseTaxReport,
-        ],
-      },
-      {
-        label: 'Input Tax Log',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.taxes.root,
-          APP_ROUTES.reports.taxes.inTax,
-        ],
-      },
-      {
-        label: 'Input Tax by Supplier',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.taxes.root,
-          APP_ROUTES.reports.taxes.inTaxBasedOnSupplier,
-        ],
-      },
-      {
-        label: 'Return Tax Report',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.taxes.root,
-          APP_ROUTES.reports.taxes.returnTaxReport,
-        ],
-      },
-      // Stock Reports
-      {
-        label: 'Damaged Stock Report',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.stock.root,
-          APP_ROUTES.reports.stock.damagedStockReport,
-        ],
-      },
-      {
-        label: 'Damaged Products Summary',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.stock.root,
-          APP_ROUTES.reports.stock.summaryDamageProductReport,
-        ],
-      },
-      {
-        label: 'Expired Stock Products',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.stock.root,
-          APP_ROUTES.reports.stock.expireStockProduct,
-        ],
-      },
-      {
-        label: 'Product Price Lists',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.stock.root,
-          APP_ROUTES.reports.stock.productPriceListReport,
-        ],
-      },
-      {
-        label: 'Popular Products Analysis',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.stock.root,
-          APP_ROUTES.reports.stock.popularProduct,
-        ],
-      },
-      {
-        label: 'Low Stock Alerts',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.stock.root,
-          APP_ROUTES.reports.stock.lowStockProducts,
-        ],
-      },
-      {
-        label: 'Stock by Category',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.stock.root,
-          APP_ROUTES.reports.stock.stockBasedOnCategory,
-        ],
-      },
-      {
-        label: 'Suppliers by Branch Stock',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.stock.root,
-          APP_ROUTES.reports.stock.suppliersReportByBranchStock,
-        ],
-      },
-      {
-        label: 'Stock Input In Range',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.stock.root,
-          APP_ROUTES.reports.stock.stockInputInRangeReport,
-        ],
-      },
-      {
-        label: 'Stock Transfers Log',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.stock.root,
-          APP_ROUTES.reports.stock.stockTransfer,
-        ],
-      },
-      {
-        label: 'Stock Transfers by Product',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.stock.root,
-          APP_ROUTES.reports.stock.stockTransferProduct,
-        ],
-      },
-      {
-        label: 'Warehouse Stock Summary',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.stock.root,
-          APP_ROUTES.reports.stock.stockWarehouseSummary,
-        ],
-      },
-      // Accounting Reports
-      {
-        label: 'Ledger: General Ledger',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.accounting.root,
-          APP_ROUTES.reports.accounting.generalLedger,
-        ],
-      },
-      {
-        label: 'Ledger: Detailed Ledger',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.accounting.root,
-          APP_ROUTES.reports.accounting.generalLedgerDetails,
-        ],
-      },
-      {
-        label: 'Statement: Trial Balance',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.accounting.root,
-          APP_ROUTES.reports.accounting.trialBalanceReport,
-        ],
-      },
-      {
-        label: 'Statement: Financial Position',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.accounting.root,
-          APP_ROUTES.reports.accounting.statementOfFinancialPositionReport,
-        ],
-      },
-      {
-        label: 'Statement: Income Statement',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.accounting.root,
-          APP_ROUTES.reports.accounting.incomeStatementReport,
-        ],
-      },
-      {
-        label: 'Statement: Cash Flow',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.accounting.root,
-          APP_ROUTES.reports.accounting.cashFlowStatement,
-        ],
-      },
-      {
-        label: 'Statement: Daily Entries',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.accounting.root,
-          APP_ROUTES.reports.accounting.dailyEntryReport,
-        ],
-      },
-      // Cost Center Reports
-      {
-        label: 'Cost Center Transactions',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.costCenter.root,
-          APP_ROUTES.reports.costCenter.transactions,
-        ],
-      },
-      {
-        label: 'Cost Center Trial Balance',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.costCenter.root,
-          APP_ROUTES.reports.costCenter.trialBalance,
-        ],
-      },
-      {
-        label: 'Cost Center Profit & Loss',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.costCenter.root,
-          APP_ROUTES.reports.costCenter.profitAndLoss,
-        ],
-      },
-      {
-        label: 'Budget Suggestions',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.costCenter.root,
-          APP_ROUTES.reports.costCenter.budgetSuggestion,
-        ],
-      },
-      {
-        label: 'Budget Report',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.costCenter.root,
-          APP_ROUTES.reports.costCenter.budgetReport,
-        ],
-      },
-      {
-        label: 'Budget Variance Analysis',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.costCenter.root,
-          APP_ROUTES.reports.costCenter.budgetVariance,
-        ],
-      },
-      // Assets Reports
-      {
-        label: 'Assets Master List',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.assets.root,
-          APP_ROUTES.reports.assets.assetListReport,
-        ],
-      },
-      {
-        label: 'Assets by Category',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.assets.root,
-          APP_ROUTES.reports.assets.assetBasedOnCategories,
-        ],
-      },
-      {
-        label: 'Assets by Branch',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.assets.root,
-          APP_ROUTES.reports.assets.assetBasedOnBranches,
-        ],
-      },
-      {
-        label: 'Equipment Depreciation',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.assets.root,
-          APP_ROUTES.reports.assets.assetAndEquipmentDepreciationReport,
-        ],
-      },
-      // Manufacturing Reports
-      {
-        label: 'Consumed Raw Materials',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.manufacturing.root,
-          APP_ROUTES.reports.manufacturing.consumedRawMaterials,
-        ],
-      },
-      {
-        label: 'Produced Products Output',
-        path: [
-          '/',
-          APP_ROUTES.reports.root,
-          APP_ROUTES.reports.manufacturing.root,
-          APP_ROUTES.reports.manufacturing.producedProductsReport,
-        ],
-      },
-    ],
-  },
-
-  // 20. إعدادات النظام (System Settings)
+  // Settings
   {
     label: 'Settings',
-    icon: 'settings',
+    icon: Settings,
     children: [
       {
-        label: 'Base Configuration',
+        label: 'Base Settings',
         path: ['/', APP_ROUTES.settings.root, APP_ROUTES.settings.baseSettings],
       },
       {
-        label: 'Company Profile',
+        label: 'Company Settings',
         path: ['/', APP_ROUTES.settings.root, APP_ROUTES.settings.companySetting],
       },
       {
-        label: 'Users Management',
+        label: 'Users',
         path: ['/', APP_ROUTES.settings.root, APP_ROUTES.settings.users],
       },
       {
-        label: 'Roles & Permissions',
+        label: 'Roles',
         path: ['/', APP_ROUTES.settings.root, APP_ROUTES.settings.roles],
       },
       {
@@ -1166,35 +465,31 @@ export const SIDEBAR_NAVIGATION: SidebarItem[] = [
         path: ['/', APP_ROUTES.settings.root, APP_ROUTES.settings.paymentMethod],
       },
       {
-        label: 'Number Groups',
-        path: ['/', APP_ROUTES.settings.root, APP_ROUTES.settings.numberGroup],
-      },
-      {
-        label: 'Tax Configurations',
+        label: 'Taxes',
         path: ['/', APP_ROUTES.settings.root, APP_ROUTES.settings.taxes],
       },
       {
-        label: 'Payment Fees Settings',
+        label: 'Payment Fees',
         path: ['/', APP_ROUTES.settings.root, APP_ROUTES.settings.paymentFees],
       },
       {
-        label: 'Currencies Setup',
+        label: 'Currency',
         path: ['/', APP_ROUTES.settings.root, APP_ROUTES.settings.currency],
       },
       {
-        label: 'Countries Setup',
+        label: 'Country',
         path: ['/', APP_ROUTES.settings.root, APP_ROUTES.settings.country],
       },
       {
-        label: 'System Activity Logs',
+        label: 'Activity Logs',
         path: ['/', APP_ROUTES.settings.root, APP_ROUTES.settings.activityLog],
       },
       {
-        label: 'Invoice Template Designer',
+        label: 'Template Designer',
         path: ['/', APP_ROUTES.settings.root, APP_ROUTES.settings.templateDesign],
       },
       {
-        label: 'Support Tickets',
+        label: 'Tickets',
         path: ['/', APP_ROUTES.settings.root, APP_ROUTES.settings.tickets],
       },
     ],
