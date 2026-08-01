@@ -1,0 +1,26 @@
+<div class="button-group-container">
+  @if (girdprops().gridTitle) {
+    <h3>{{ girdprops().gridTitle }}</h3>
+  }
+
+  <div class="actions-grid" [ngClass]="sizeClass()">
+    @for (button of buttonGroup(); track button.link || $index) {
+      <a
+        class="action-btn"
+        [routerLink]="button.link"
+        routerLinkActive="active"
+        [attr.aria-label]="button.title"
+      >
+        <lucide-icon [img]="button.icon" aria-hidden="true"></lucide-icon>
+
+        <div class="btn-text">
+          <span class="btn-title">{{ button.title }}</span>
+
+          @if (button.description && girdprops().showDescription) {
+            <span class="btn-desc">{{ button.description }}</span>
+          }
+        </div>
+      </a>
+    }
+  </div>
+</div>
