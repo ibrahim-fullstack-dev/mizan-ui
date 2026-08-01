@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { MetricCard } from '../../shared/components/metric-card/metric-card.component';
 import { ColumnsChartComponent } from '../../shared/components/analytics-columns-chart/analytics.columns.chart.component';
-import { UrgentActions } from './components/urgent-actions/urgent-actions';
+import { ButtonGroupComponent } from '../../shared/components/button-group/button-group.component';
 import { AnalyticsBreakdown } from '../../shared/components/analytics-breakdown/analytics-breakdown.component';
 import { AnalyticsCircleChart } from '../../shared/components/analytics-circle-chart/analytics-circle-chart.component';
 import { TableComponent } from '../../shared/components/table/table.component';
@@ -9,6 +9,20 @@ import { ChartGroupItem } from '../../shared/components/analytics-columns-chart/
 import { IAlert, IUnpaidSales } from './dashboard.types';
 import { AlERTS_TABLE_COLUMNS, UNPAID_SALES_TABLE_COLUMNS } from './dashboard.constant';
 import { LucideAngularModule } from 'lucide-angular';
+import {
+  UserPlus,
+  FilePlus,
+  FileText,
+  Truck,
+  Receipt,
+  Box,
+  ArrowDownLeft,
+  Wallet,
+  ArrowUpRight,
+} from 'lucide-angular';
+import { RouterLink, RouterLinkActive } from '@angular/router';
+import { IButtonGroupItem } from '../../shared/components/button-group/button-group.types';
+import { APP_ROUTES } from '../../core/constants/routes.constants';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,7 +30,7 @@ import { LucideAngularModule } from 'lucide-angular';
   imports: [
     MetricCard,
     ColumnsChartComponent,
-    UrgentActions,
+    ButtonGroupComponent,
     AnalyticsBreakdown,
     AnalyticsCircleChart,
     TableComponent,
@@ -257,4 +271,61 @@ export class DashboardComponent {
 
   protected readonly isAnimated = signal<boolean>(true);
   protected readonly showGrid = signal<boolean>(true);
+
+  buttonGroup: IButtonGroupItem[] = [
+    {
+      title: 'Add Client',
+      description: 'Create a new client profile',
+      icon: UserPlus,
+      link: `/${APP_ROUTES.clients.root}/${APP_ROUTES.clients.import}`,
+    },
+    {
+      title: 'Add Offer',
+      description: 'Generate a new sales quotation',
+      icon: FilePlus,
+      link: `/${APP_ROUTES.offers}`,
+    },
+    {
+      title: 'Sales Invoice',
+      description: 'Create a direct sales invoice',
+      icon: FileText,
+      link: `/${APP_ROUTES.bills.root}/${APP_ROUTES.bills.salesInvoicesList}`,
+    },
+    {
+      title: 'Add Supplier',
+      description: 'Register a new supplier profile',
+      icon: Truck,
+      link: `/${APP_ROUTES.suppliers.root}/${APP_ROUTES.suppliers.import}`,
+    },
+    {
+      title: 'Purchase Invoice',
+      description: 'Record an incoming purchase bill',
+      icon: Receipt,
+      link: `/${APP_ROUTES.bills.root}/${APP_ROUTES.bills.PurchaseInvoices}`,
+    },
+    {
+      title: 'Add Product',
+      description: 'Add items to the warehouse catalog',
+      icon: Box,
+      link: `/${APP_ROUTES.warehouse.root}/${APP_ROUTES.warehouse.importProducts}`,
+    },
+    {
+      title: 'Sale Payment',
+      description: 'Record a receipt voucher from a client',
+      icon: ArrowDownLeft,
+      link: `/${APP_ROUTES.payments.root}/${APP_ROUTES.payments.salePayments}`,
+    },
+    {
+      title: 'Add Expense',
+      description: 'Log a new operating expense voucher',
+      icon: Wallet,
+      link: `/${APP_ROUTES.expenses.root}/${APP_ROUTES.expenses.importExpenses}`,
+    },
+    {
+      title: 'Purchase Payment',
+      description: 'Record a payment voucher to a supplier',
+      icon: ArrowUpRight,
+      link: `/${APP_ROUTES.payments.root}/${APP_ROUTES.payments.purchasePayments}`,
+    },
+  ];
 }
