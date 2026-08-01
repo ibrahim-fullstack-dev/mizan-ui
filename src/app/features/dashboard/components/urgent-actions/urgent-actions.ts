@@ -72,7 +72,7 @@ export class UrgentActions {
       title: 'Add Product',
       description: 'Add items to the warehouse catalog',
       icon: Box,
-      link: `/${APP_ROUTES.warehouse.root}/${APP_ROUTES.warehouse.importsProducts}`,
+      link: `/${APP_ROUTES.warehouse.root}/${APP_ROUTES.warehouse.importProducts}`,
     },
     {
       title: 'Sale Payment',
