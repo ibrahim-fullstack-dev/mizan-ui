@@ -1,8 +1,6 @@
 export const APP_ROUTES = {
   // Dashboard
   dashboard: 'dashboard',
-  // Bank
-  bank: 'bank',
 
   // Clients
   clients: {
@@ -22,11 +20,11 @@ export const APP_ROUTES = {
   bills: {
     root: 'bills',
     salesInvoicesList: 'sale',
-    viewRecurringInvoicesSale: 'sale-repeat',
-    viewCreditNotes: 'returned-sales',
+    recurringSaleInvoices: 'sale-repeat',
+    creditNotes: 'returned-sales',
     PurchaseInvoices: 'purchase',
-    viewRecurringPurchaseInvoices: 'purchase-repeat',
-    viewPurchaseReturns: 'returned-purchase',
+    recurringPurchaseInvoices: 'purchase-repeat',
+    purchaseReturns: 'returned-purchase',
     importSalesInvoices: 'import-sale-invoice',
     importCreditSales: 'import-credit-sale',
   },
@@ -41,17 +39,17 @@ export const APP_ROUTES = {
   },
 
   // POS Routes
-  pos: {
+  POS: {
     root: 'pos',
-    posList: 'list',
+    POSList: 'list',
     loginToPOS: 'start-session',
   },
 
   // Warehouses & Transfers (Manufacturing)
   warehouse: {
     root: 'warehouse',
-    warehouseProductsLists: 'list',
-    importsProducts: 'import',
+    productsLists: 'list',
+    importProducts: 'import',
     branchesLists: 'branches',
     priceLists: 'price-lists',
     warehouses: 'warehouses',
@@ -94,6 +92,9 @@ export const APP_ROUTES = {
     supplierPayments: 'supplier-payments', // Supplier Payments
     clientPayments: 'client-payments', // Client Payments
   },
+  // Bank
+  bank: 'bank',
+
   // Asset & Depreciation
   assetsAndDepreciation: {
     root: 'assets-depreciation',
@@ -268,11 +269,13 @@ export const APP_ROUTES = {
     departments: 'departments', // Departments
     projects: 'projects', // Projects
   },
+  // Number Groups
+  numberGroup: 'number-group', // Number Groups
 
   // Subscriptions
   subscriptions: {
     root: 'subscriptions',
-    list: 'list',
+    pricingPlans: 'list',
     invoices: 'invoices',
   },
 
@@ -284,7 +287,6 @@ export const APP_ROUTES = {
     users: 'users', // Users
     roles: 'roles', // Roles
     paymentMethod: 'payment-methods', // Payment method
-    numberGroup: 'number-group', // Number Groups
     taxes: 'taxes', // Taxes
     paymentFees: 'fees', // Payment Fees
     currency: 'currencies', // Currency
