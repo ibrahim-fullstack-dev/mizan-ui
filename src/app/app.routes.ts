@@ -45,14 +45,14 @@ export const routes: Routes = [
           ),
       },
       {
-        path: APP_ROUTES.bills.viewRecurringInvoicesSale,
+        path: APP_ROUTES.bills.recurringSaleInvoices,
         loadComponent: () =>
           import('./features/bills-invoices/recurring-sales-invoices/recurring-sales-invoices.component').then(
             (m) => m.RecurringSalesInvoicesComponent,
           ),
       },
       {
-        path: APP_ROUTES.bills.viewCreditNotes,
+        path: APP_ROUTES.bills.creditNotes,
         loadComponent: () =>
           import('./features/bills-invoices/credit-notes/credit-notes.component').then(
             (m) => m.CreditNotesComponent,
@@ -66,14 +66,14 @@ export const routes: Routes = [
           ),
       },
       {
-        path: APP_ROUTES.bills.viewRecurringPurchaseInvoices,
+        path: APP_ROUTES.bills.recurringPurchaseInvoices,
         loadComponent: () =>
           import('./features/bills-invoices/recurring-purchase-invoices/recurring-purchase-invoices.component').then(
             (m) => m.RecurringPurchaseInvoicesComponent,
           ),
       },
       {
-        path: APP_ROUTES.bills.viewPurchaseReturns,
+        path: APP_ROUTES.bills.purchaseReturns,
         loadComponent: () =>
           import('./features/bills-invoices/purchase-returns/purchase-returns.component').then(
             (m) => m.PurchaseReturnsComponent,
@@ -106,10 +106,10 @@ export const routes: Routes = [
     ],
   },
   {
-    path: APP_ROUTES.pos.root,
+    path: APP_ROUTES.POS.root,
     children: [
       {
-        path: APP_ROUTES.pos.posList,
+        path: APP_ROUTES.POS.POSList,
         loadComponent: () =>
           import('./features/POS/point-of-sale/point-of-sale.component').then(
             (m) => m.PointOfSaleComponent,
@@ -122,7 +122,7 @@ export const routes: Routes = [
 
     children: [
       {
-        path: APP_ROUTES.warehouse.warehouseProductsLists,
+        path: APP_ROUTES.warehouse.productsLists,
         loadComponent: () =>
           import('./features/warehouse/products-lists/products-lists.component').then(
             (m) => m.ProductsListsComponent,
