@@ -35,7 +35,14 @@
       >
       </app-columns-chart>
     </div>
-    <app-urgent-actions></app-urgent-actions>
+    <app-button-group
+      [buttonGroup]="buttonGroup"
+      [girdprops]="{
+        gridTitle: 'Urgent Actions',
+        size: 'small',
+        showDescription: false,
+      }"
+    ></app-button-group>
   </section>
 
   <section class="charts-analytics-row">
