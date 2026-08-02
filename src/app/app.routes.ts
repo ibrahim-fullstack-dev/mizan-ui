@@ -318,6 +318,13 @@ export const routes: Routes = [
             (m) => m.AssetsCategoryComponent,
           ),
       },
+      {
+        path: APP_ROUTES.assetsAndDepreciation.assets,
+        loadComponent: () =>
+          import('./features/assets-depreciation/assets/assets.component').then(
+            (m) => m.AssetsComponent,
+          ),
+      },
     ],
   },
   {
