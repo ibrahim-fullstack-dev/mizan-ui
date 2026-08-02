@@ -340,6 +340,19 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/discounts/discounts.component').then((m) => m.DiscountsComponent),
   },
+  // Cost Centers
+  {
+    path: APP_ROUTES.costCenter.root,
+    children: [
+      {
+        path: APP_ROUTES.costCenter.costCenters,
+        loadComponent: () =>
+          import('./features/cost-center/cost-centers/cost-centers.component').then(
+            (m) => m.CostCentersComponent,
+          ),
+      },
+    ],
+  },
   {
     path: '**',
     redirectTo: APP_ROUTES.dashboard, // أو توجيهه لصفحة 404 مخصصة لاحقاً
