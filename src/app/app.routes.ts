@@ -267,6 +267,13 @@ export const routes: Routes = [
             (m) => m.SaleSettlementsComponent,
           ),
       },
+      {
+        path: APP_ROUTES.payments.salePaymentsReturn,
+        loadComponent: () =>
+          import('./features/payments/sale-payments-return/sale-payments-return.component').then(
+            (m) => m.SalePaymentsReturnComponent,
+          ),
+      },
     ],
   },
   {
