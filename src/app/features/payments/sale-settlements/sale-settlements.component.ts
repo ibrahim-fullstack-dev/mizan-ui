@@ -1,0 +1,110 @@
+import { Component, computed, signal } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { LucideAngularModule } from 'lucide-angular';
+
+// 🏛️ Shared Components
+import { PageHeaderComponent } from '@components/page-header/page-header.component';
+import { InputComponent } from '@components/input/input.component';
+import { TableComponent } from '@components/table/table.component';
+
+import { TableActionEvent } from '@components/table/table.types';
+import { ISaleSettlement } from './sale-settlements.types';
+
+// 📐 constants
+import { TABLE_COLUMNS } from './sale-settlements.constant';
+@Component({
+  selector: 'app-client',
+  standalone: true,
+  imports: [CommonModule, PageHeaderComponent, InputComponent, TableComponent, LucideAngularModule],
+  templateUrl: './sale-settlements.component.html',
+  styleUrl: './sale-settlements.component.css',
+})
+export class SaleSettlementsComponent {
+  private readonly rawExpenses = signal<ISaleSettlement[]>([
+    {
+      id: 1,
+      saleInvoiceNumber: '1234567890',
+      saleDate: '2023-01-01',
+      settlementDate: '2023-01-01',
+      clientName: 'Client A',
+      branch: 'Branch 1',
+      salesUser: 'User 1',
+      settlementUser: 1,
+      settlementAmount: 1000,
+      invoiceTotal: 1500,
+      totalPaid: 500,
+      remaining: 500,
+    },
+  ]);
+
+  protected readonly tableColumns = TABLE_COLUMNS;
+
+  protected readonly searchQuery = signal<string>('');
+  protected readonly pageSize = signal<number>(10);
+  protected readonly currentPage = signal<number>(1);
+
+  protected readonly filteredsales = computed(() => {
+    const query = this.searchQuery().toLowerCase().trim();
+
+    if (!query) {
+      return this.rawExpenses();
+    }
+
+    return this.rawExpenses().filter((client) => client.clientName.toLowerCase().includes(query));
+  });
+
+  protected readonly totalClientsCount = computed(() => this.filteredsales().length);
+
+  // 5️⃣ معالجات أفعال الشريط العلوي (PageHeader Actions Dispatcher)
+  protected onHeaderAction(key: any): void {
+    switch (key) {
+      case 'add-client':
+        this.openAddClientModal();
+        break;
+      case 'export-pdf':
+        this.exportClients();
+        break;
+      default:
+        console.warn(`Unhandled action key: ${key}`);
+    }
+  }
+
+  // 6️⃣ معالجات أفعال الجدول (Table Event Handlers)
+  protected onTableActionTrigger(event: TableActionEvent<ISaleSettlement>): void {
+    const client = event.row;
+
+    switch (event.action) {
+      case 'delete':
+        this.deleteClient(client.id);
+        break;
+      case 'edit':
+        this.openEditClientModal(client);
+        break;
+    }
+  }
+
+  protected onRowsSelected(selectedClients: ISaleSettlement[]): void {
+    console.log('Selected clients:', selectedClients);
+  }
+
+  protected onPageParamsChange(event: any): void {
+    this.currentPage.set(event.page);
+    this.pageSize.set(event.pageSize);
+  }
+
+  private deleteClient(id: number): void {
+    this.rawExpenses.update((current) => current.filter((client) => client.id !== id));
+  }
+
+  private openAddClientModal(): void {
+    console.log('Opening Add Client Modal...');
+  }
+
+  private openEditClientModal(client: ISaleSettlement): void {
+    console.log('Opening Edit Client Modal for:', client);
+  }
+
+  private exportClients(): void {
+    console.log('Exporting client list to PDF...');
+  }
+}
