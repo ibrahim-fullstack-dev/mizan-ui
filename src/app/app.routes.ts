@@ -334,6 +334,12 @@ export const routes: Routes = [
       },
     ],
   },
+  // Discounts
+  {
+    path: APP_ROUTES.discounts,
+    loadComponent: () =>
+      import('./features/discounts/discounts.component').then((m) => m.DiscountsComponent),
+  },
   {
     path: '**',
     redirectTo: APP_ROUTES.dashboard, // أو توجيهه لصفحة 404 مخصصة لاحقاً
