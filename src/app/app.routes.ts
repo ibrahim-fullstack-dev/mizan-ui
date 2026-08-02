@@ -260,6 +260,13 @@ export const routes: Routes = [
             (m) => m.SalePaymentsComponent,
           ),
       },
+      {
+        path: APP_ROUTES.payments.saleSettlements,
+        loadComponent: () =>
+          import('./features/payments/sale-settlements/sale-settlements.component').then(
+            (m) => m.SaleSettlementsComponent,
+          ),
+      },
     ],
   },
   {
