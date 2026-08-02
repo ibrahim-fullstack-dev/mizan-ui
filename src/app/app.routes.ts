@@ -281,6 +281,13 @@ export const routes: Routes = [
             (m) => m.PurchasePaymentsComponent,
           ),
       },
+      {
+        path: APP_ROUTES.payments.purchasePaymentsReturn,
+        loadComponent: () =>
+          import('./features/payments/purchase-payments-return/purchase-payments-return.component').then(
+            (m) => m.PurchasePaymentsReturnComponent,
+          ),
+      },
     ],
   },
   {
