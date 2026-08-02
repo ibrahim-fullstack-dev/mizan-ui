@@ -309,6 +309,18 @@ export const routes: Routes = [
     loadComponent: () => import('./features/bank/bank.component').then((m) => m.BankComponent),
   },
   {
+    path: APP_ROUTES.assetsAndDepreciation.root,
+    children: [
+      {
+        path: APP_ROUTES.assetsAndDepreciation.assetsCategory,
+        loadComponent: () =>
+          import('./features/assets-depreciation/assets-category/assets-category.component').then(
+            (m) => m.AssetsCategoryComponent,
+          ),
+      },
+    ],
+  },
+  {
     path: '**',
     redirectTo: APP_ROUTES.dashboard, // أو توجيهه لصفحة 404 مخصصة لاحقاً
   },
