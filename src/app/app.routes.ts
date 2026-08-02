@@ -288,6 +288,13 @@ export const routes: Routes = [
             (m) => m.PurchasePaymentsReturnComponent,
           ),
       },
+      {
+        path: APP_ROUTES.payments.supplierPayments,
+        loadComponent: () =>
+          import('./features/payments/supplier-payments/supplier-payments.component').then(
+            (m) => m.SupplierPaymentsComponent,
+          ),
+      },
     ],
   },
   {
