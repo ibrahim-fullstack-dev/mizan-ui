@@ -305,6 +305,10 @@ export const routes: Routes = [
     ],
   },
   {
+    path: APP_ROUTES.bank,
+    loadComponent: () => import('./features/bank/bank.component').then((m) => m.BankComponent),
+  },
+  {
     path: '**',
     redirectTo: APP_ROUTES.dashboard, // أو توجيهه لصفحة 404 مخصصة لاحقاً
   },
