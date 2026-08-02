@@ -313,7 +313,7 @@ export const SIDEBAR_NAVIGATION: SidebarItem[] = [
   },
   // Bank
   {
-    label: 'Bank Accounts',
+    label: 'Bank',
     icon: Landmark,
     path: ['/', APP_ROUTES.bank],
   },
