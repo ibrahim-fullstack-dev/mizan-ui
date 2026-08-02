@@ -251,6 +251,18 @@ export const routes: Routes = [
     ],
   },
   {
+    path: APP_ROUTES.payments.root,
+    children: [
+      {
+        path: APP_ROUTES.payments.salePayments,
+        loadComponent: () =>
+          import('./features/payments/sale-payments/sale-payments.component').then(
+            (m) => m.SalePaymentsComponent,
+          ),
+      },
+    ],
+  },
+  {
     path: '**',
     redirectTo: APP_ROUTES.dashboard, // أو توجيهه لصفحة 404 مخصصة لاحقاً
   },
