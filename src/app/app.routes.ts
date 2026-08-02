@@ -295,6 +295,13 @@ export const routes: Routes = [
             (m) => m.SupplierPaymentsComponent,
           ),
       },
+      {
+        path: APP_ROUTES.payments.clientPayments,
+        loadComponent: () =>
+          import('./features/payments/client-payments/client-payments.component').then(
+            (m) => m.ClientPaymentsComponent,
+          ),
+      },
     ],
   },
   {
