@@ -388,6 +388,11 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: APP_ROUTES.numberGroup,
+    loadComponent: () =>
+      import('./features/number-group/number-group.component').then((m) => m.NumberGroupComponent),
+  },
 
   {
     path: '**',
