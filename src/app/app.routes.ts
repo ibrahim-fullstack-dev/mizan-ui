@@ -372,6 +372,13 @@ export const routes: Routes = [
             (m) => m.estimatedBudgetComponent,
           ),
       },
+      {
+        path: APP_ROUTES.costCenter.departments,
+        loadComponent: () =>
+          import('./features/cost-center/departments/departments.component').then(
+            (m) => m.DepartmentsComponent,
+          ),
+      },
     ],
   },
 
