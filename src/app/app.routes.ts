@@ -358,6 +358,13 @@ export const routes: Routes = [
             (m) => m.CostCenterRulesComponent,
           ),
       },
+      {
+        path: APP_ROUTES.costCenter.costCenterAllocations,
+        loadComponent: () =>
+          import('./features/cost-center/cost-center-allocations/cost-center-allocations.component').then(
+            (m) => m.CostCenterAllocationsComponent,
+          ),
+      },
     ],
   },
 

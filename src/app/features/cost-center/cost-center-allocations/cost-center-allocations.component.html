@@ -1,0 +1,30 @@
+<div class="page-container">
+  <div
+    class="toolbar"
+    style="margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center"
+  >
+    <app-page-header [buttons]="headerButtons" (actionClicked)="onHeaderAction($event)">
+      <app-input
+        search-zone
+        placeholder="Search bills invoices by client name..."
+        [value]="searchQuery()"
+        (valueChange)="searchQuery.set($event)"
+      />
+    </app-page-header>
+  </div>
+
+  <app-table
+    [data]="filteredBillsInvoices()"
+    [columns]="tableColumns"
+    [actions]="tableActions"
+    [selectable]="true"
+    [totalItems]="totalBillsInvoicesCount()"
+    [pageSize]="pageSize()"
+    [currentPage]="currentPage()"
+    (actionClick)="onTableActionTrigger($event)"
+    (selectionChange)="onRowsSelected($event)"
+    (pageChange)="onPageParamsChange($event)"
+    [emptyMessage]="'No bills invoices found.'"
+  >
+  </app-table>
+</div>
