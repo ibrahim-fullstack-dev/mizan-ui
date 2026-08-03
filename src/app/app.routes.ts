@@ -351,8 +351,16 @@ export const routes: Routes = [
             (m) => m.CostCentersComponent,
           ),
       },
+      {
+        path: APP_ROUTES.costCenter.costCenterRules,
+        loadComponent: () =>
+          import('./features/cost-center/cost-center-rules/cost-center-rules.component').then(
+            (m) => m.CostCenterRulesComponent,
+          ),
+      },
     ],
   },
+
   {
     path: '**',
     redirectTo: APP_ROUTES.dashboard, // أو توجيهه لصفحة 404 مخصصة لاحقاً
