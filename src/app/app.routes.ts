@@ -393,6 +393,11 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/number-group/number-group.component').then((m) => m.NumberGroupComponent),
   },
+  {
+    path: APP_ROUTES.clientGroup,
+    loadComponent: () =>
+      import('./features/client-group/client-group.component').then((m) => m.ClientGroupComponent),
+  },
 
   {
     path: '**',
