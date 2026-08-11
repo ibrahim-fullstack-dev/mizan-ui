@@ -1,79 +1,65 @@
 <div class="dashboard-wrapper">
-  <section class="metrics-grid">
-    <app-metric-card
-      title="Sales Profit"
-      currentMonthValue="0.00%"
-      lastMonthValue="0"
-      [chartData]="salesProfitData"
-    ></app-metric-card>
-    <app-metric-card
-      title="Sales"
-      currentMonthValue="0.00%"
-      lastMonthValue="0"
-      [chartData]="salesData"
-    ></app-metric-card>
-    <app-metric-card
-      title="Bank Balance"
-      currentMonthValue="0.00%"
-      lastMonthValue="0"
-      [chartData]="bankData"
-    ></app-metric-card>
-    <app-metric-card
-      title="Cash"
-      currentMonthValue="0.00%"
-      lastMonthValue="0"
-      [chartData]="cashData"
-    ></app-metric-card>
+  <!-- 1. قسم البطاقات الإحصائية العلوية (KPI Cards) -->
+  <section class="analytics-row-container">
+    <div class="analytics-grid">
+      @for (card of analyticsCards(); track card.id) {
+        <app-analytics-card [card]="card"></app-analytics-card>
+      }
+    </div>
   </section>
 
+  <!-- 2. القسم الأوسط: الرسم البياني بجانب الأزرار السريعة -->
   <section class="dashboard-mid-section">
-    <div class="chart-wrapper">
-      <app-columns-chart
-        [data]="analyticsData()"
-        [animations]="isAnimated()"
-        [showGridLines]="showGrid()"
-      >
+    <div class="chart-card">
+      <app-columns-chart [data]="analyticsData()" [animations]="true" [showGridLines]="true">
       </app-columns-chart>
     </div>
-    <app-button-group
-      [buttonGroup]="buttonGroup"
-      [girdprops]="{
-        gridTitle: 'Urgent Actions',
-        size: 'small',
-        showDescription: false,
-      }"
-    ></app-button-group>
+
+    <div class="actions-card">
+      <app-button-group
+        [buttonGroup]="buttonGroup"
+        [girdprops]="{
+          gridTitle: 'Urgent Actions',
+          size: 'small',
+          showDescription: false,
+        }"
+      ></app-button-group>
+    </div>
   </section>
 
-  <section class="charts-analytics-row">
-    <div>
-      <app-analytics-circle-chart
-        title="Highest Expenses by Category"
-        [chartLabels]="['Marketing', 'Salaries', 'Rent', 'Utilities', 'Software']"
-        [chartDataValues]="[5000, 12000, 3500, 1200, 2400]"
-      ></app-analytics-circle-chart>
-      <app-analytics-circle-chart
-        title="Most Active Customers"
-        [chartLabels]="['Anas Ahmed', 'Mizan Corp', 'Al-Amal Ltd', 'Yemen Tech', 'Omar Ali']"
-        [chartDataValues]="[45, 38, 32, 28, 15]"
-      ></app-analytics-circle-chart>
+  <!-- 3. الجداول جنباً إلى جنب في صف واحد -->
+  <section class="dashboard-tables-row">
+    <div class="table-card">
+      <app-table
+        [data]="alerts()"
+        [columns]="alertsTableColumns"
+        [showActions]="false"
+        [emptyMessage]="'No alerts found.'"
+        [showPagination]="false"
+      ></app-table>
     </div>
-    <app-analytics-breakdown></app-analytics-breakdown>
+
+    <div class="table-card">
+      <app-table
+        [data]="alerts()"
+        [columns]="alertsTableColumns"
+        [showActions]="false"
+        [emptyMessage]="'No alerts found.'"
+        [showPagination]="false"
+      ></app-table>
+    </div>
   </section>
-  <section class="dashboard-tables-grid">
-    <app-table
-      [data]="alerts()"
-      [columns]="alertsTableColumns"
-      [showActions]="false"
-      [emptyMessage]="'No alerts found.'"
-      [showPagination]="false"
-    ></app-table>
-    <app-table
-      [data]="unpaidSales()"
-      [columns]="unpaidSalesTableColumns"
-      [showActions]="false"
-      [emptyMessage]="'No unpaid sales found.'"
-      [showPagination]="false"
-    ></app-table>
+
+  <!-- 4. العنصر الكبير في الأسفل (مثلاً جدول أو تقرير واسع إضافي إذا رغبت) -->
+  <section class="dashboard-bottom-full-section">
+    <div class="table-card">
+      <app-table
+        [data]="unpaidSales()"
+        [columns]="unpaidSalesTableColumns"
+        [showActions]="false"
+        [emptyMessage]="'No unpaid sales found.'"
+        [showPagination]="false"
+      ></app-table>
+    </div>
   </section>
 </div>

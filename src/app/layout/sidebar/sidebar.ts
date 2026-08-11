@@ -16,7 +16,6 @@ import { SIDEBAR_NAVIGATION } from './sidebar.constant';
 export class Sidebar {
   protected readonly navigationItems = SIDEBAR_NAVIGATION;
   protected readonly activeDropdown = signal<string | null>(null);
-
   protected toggleDropdown(label: string): void {
     this.activeDropdown.update((currentLabel) => (currentLabel === label ? null : label));
   }

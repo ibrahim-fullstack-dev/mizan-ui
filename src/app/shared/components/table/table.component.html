@@ -21,13 +21,9 @@
             <th>
               <div class="header-content">
                 @if (col.icon) {
-                  <lucide-icon
-                    [img]="col.icon"
-                    class="header-icon"
-                    aria-hidden="true"
-                  ></lucide-icon>
+                  <lucide-icon [img]="col.icon" class="header-icon"></lucide-icon>
                 }
-                <span class="header-label">{{ col.label }}</span>
+                <p class="header-label">{{ col.label }}</p>
               </div>
             </th>
           }

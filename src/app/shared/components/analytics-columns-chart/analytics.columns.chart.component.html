@@ -1,26 +1,36 @@
 <div class="chart-main-container">
   <div class="chart-header">
     <div class="chart-title-zone">
-      <h3>Total Invoices vs Total Payments</h3>
-      <p>Last updated:</p>
+      <h3 class="chart-title">Total Invoices vs Total Payments</h3>
+      <p class="chart-subtitle">Last updated: Just now</p>
     </div>
     <div class="custom-legend">
-      <span class="legend-item invoices">Invoices</span>
-      <span class="legend-item payments">Payments</span>
+      <span class="legend-item invoices">
+        <span class="legend-dot invoices-dot"></span> Invoices
+      </span>
+      <span class="legend-item payments">
+        <span class="legend-dot payments-dot"></span> Payments
+      </span>
     </div>
   </div>
 
   <div class="main-chart-wrapper">
-    <ngx-charts-bar-vertical-2d
+    <ngx-charts-line-chart
       [results]="data()"
+      [view]="[0, 0]"
       [scheme]="colorScheme"
       [gradient]="gradient()"
-      [xAxis]="showXAxis()"
-      [yAxis]="showYAxis()"
+      [xAxis]="true"
+      [yAxis]="true"
+      [legend]="false"
+      [showXAxisLabel]="false"
+      [showYAxisLabel]="false"
+      [yAxisTickFormatting]="yAxisTickFormatting"
       [showGridLines]="showGridLines()"
       [animations]="animations()"
-      [yAxisTickFormatting]="yAxisTickFormatting"
+      [autoScale]="true"
+      [timeline]="true"
     >
-    </ngx-charts-bar-vertical-2d>
+    </ngx-charts-line-chart>
   </div>
 </div>

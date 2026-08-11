@@ -1,75 +1,83 @@
 .chart-main-container {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  height: 100%; /* ليملأ مساحة الـ Grid الأب */
+  gap: 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .chart-header {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 100%;
 }
 
-.chart-title-zone h3 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: #0f172a;
-  margin: 0 0 4px 0;
+.chart-title-zone {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
-.chart-title-zone p {
-  font-size: 0.85rem;
-  color: #94a3b8;
+.chart-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-main, #1e293b);
+  margin: 0;
+}
+
+.chart-subtitle {
+  font-size: 0.75rem;
+  color: var(--text-secondary, #64748b);
   margin: 0;
 }
 
 .custom-legend {
   display: flex;
-  gap: 16px;
-  font-size: 0.85rem;
-  font-weight: 500;
+  align-items: center;
+  gap: 1rem;
 }
 
 .legend-item {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 0.375rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary, #475569);
 }
 
-.legend-item::before {
-  content: '';
-  width: 12px;
-  height: 12px;
-  border-radius: 3px;
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
   display: inline-block;
 }
 
-.legend-item.invoices::before {
+.invoices-dot {
   background-color: #3b82f6;
 }
-.legend-item.payments::before {
+
+.payments-dot {
   background-color: #10b981;
 }
 
 .main-chart-wrapper {
   width: 100%;
-  height: 300px;
+  height: 320px;
+  display: block;
 }
 
-.main-chart-placeholder {
-  width: 100%;
-  height: 100%;
-  background: #f8fafc;
-  border: 1px dashed #cbd5e1;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #94a3b8;
-  font-size: 0.9rem;
+/* إظهار خطوط الشبكة وتنسيق النصوص بوضوح */
+::ng-deep .ngx-charts text {
+  fill: var(--text-secondary, #64748b) !important;
+  font-size: 11px;
+}
+
+::ng-deep .ngx-charts .gridline-path {
+  stroke: var(--border-color, #e2e8f0) !important;
+  stroke-dasharray: 3, 3;
+  stroke-width: 1px;
 }

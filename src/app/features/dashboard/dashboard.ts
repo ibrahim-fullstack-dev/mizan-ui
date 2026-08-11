@@ -1,38 +1,26 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
-import { MetricCard } from '../../shared/components/metric-card/metric-card.component';
+import { Component, signal } from '@angular/core';
 import { ColumnsChartComponent } from '../../shared/components/analytics-columns-chart/analytics.columns.chart.component';
 import { ButtonGroupComponent } from '../../shared/components/button-group/button-group.component';
 import { AnalyticsBreakdown } from '../../shared/components/analytics-breakdown/analytics-breakdown.component';
-import { AnalyticsCircleChart } from '../../shared/components/analytics-circle-chart/analytics-circle-chart.component';
 import { TableComponent } from '../../shared/components/table/table.component';
 import { ChartGroupItem } from '../../shared/components/analytics-columns-chart/analytics.columns.chart.types';
 import { IAlert, IUnpaidSales } from './dashboard.types';
-import { AlERTS_TABLE_COLUMNS, UNPAID_SALES_TABLE_COLUMNS } from './dashboard.constant';
-import { LucideAngularModule } from 'lucide-angular';
 import {
-  UserPlus,
-  FilePlus,
-  FileText,
-  Truck,
-  Receipt,
-  Box,
-  ArrowDownLeft,
-  Wallet,
-  ArrowUpRight,
-} from 'lucide-angular';
-import { RouterLink, RouterLinkActive } from '@angular/router';
-import { IButtonGroupItem } from '../../shared/components/button-group/button-group.types';
-import { APP_ROUTES } from '../../core/constants/routes.constants';
+  AlERTS_TABLE_COLUMNS,
+  UNPAID_SALES_TABLE_COLUMNS,
+  BUTTON_GROUP,
+  ANALYTICS_CARDS,
+} from './dashboard.constant';
+import { LucideAngularModule } from 'lucide-angular';
+import { IAnalyticsCardItem } from '../../shared/components/analytics-breakdown/analytics-breakdown.types';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
   imports: [
-    MetricCard,
     ColumnsChartComponent,
     ButtonGroupComponent,
     AnalyticsBreakdown,
-    AnalyticsCircleChart,
     TableComponent,
     LucideAngularModule,
   ],
@@ -42,6 +30,9 @@ import { APP_ROUTES } from '../../core/constants/routes.constants';
 export class DashboardComponent {
   protected readonly alertsTableColumns = AlERTS_TABLE_COLUMNS;
   protected readonly unpaidSalesTableColumns = UNPAID_SALES_TABLE_COLUMNS;
+  protected readonly buttonGroup = BUTTON_GROUP;
+  protected readonly analyticsCards = signal<IAnalyticsCardItem[]>(ANALYTICS_CARDS);
+
   protected readonly alerts = signal<IAlert[]>([
     {
       id: 1,
@@ -129,140 +120,130 @@ export class DashboardComponent {
       price: 100,
     },
   ]);
-  protected readonly salesProfitData = [
-    {
-      name: 'Profit',
-      series: [
-        { name: 'W1', value: 12 },
-        { name: 'W2', value: 19 },
-        { name: 'W3', value: 14 },
-        { name: 'W4', value: 24 },
-      ],
-    },
-  ];
-
-  protected readonly salesData = [
-    {
-      name: 'Sales',
-      series: [
-        { name: 'W1', value: 110 },
-        { name: 'W2', value: 95 },
-        { name: 'W3', value: 160 },
-        { name: 'W4', value: 210 },
-      ],
-    },
-  ];
-
-  protected readonly bankData = [
-    {
-      name: 'Bank',
-      series: [
-        { name: 'W1', value: 45 },
-        { name: 'W2', value: 60 },
-        { name: 'W3', value: 50 },
-        { name: 'W4', value: 65 },
-      ],
-    },
-  ];
-
-  protected readonly cashData = [
-    {
-      name: 'Cash',
-      series: [
-        { name: 'W1', value: 25 },
-        { name: 'W2', value: 38 },
-        { name: 'W3', value: 30 },
-        { name: 'W4', value: 42 },
-      ],
-    },
-  ];
-
-  // ==========================================
-  // 3. البيانات الافتراضية للمخطط الرئيسي (Main Chart Fallback Data)
-  // ==========================================
   protected readonly defaultChartData: ChartGroupItem[] = [
     {
-      name: 'Jan',
+      name: 'China',
       series: [
-        { name: 'Invoices', value: 45000 },
-        { name: 'Payments', value: 32000 },
+        {
+          value: 5716,
+          name: '2016-09-17T12:06:18.166Z',
+        },
+        {
+          value: 5937,
+          name: '2016-09-19T07:17:41.975Z',
+        },
+        {
+          value: 2028,
+          name: '2016-09-19T11:34:30.903Z',
+        },
+        {
+          value: 5425,
+          name: '2016-09-20T11:49:07.625Z',
+        },
+        {
+          value: 5927,
+          name: '2016-09-23T16:03:02.600Z',
+        },
       ],
     },
     {
-      name: 'Feb',
+      name: 'Croatia',
       series: [
-        { name: 'Invoices', value: 58000 },
-        { name: 'Payments', value: 42000 },
+        {
+          value: 3075,
+          name: '2016-09-17T12:06:18.166Z',
+        },
+        {
+          value: 4318,
+          name: '2016-09-19T07:17:41.975Z',
+        },
+        {
+          value: 5625,
+          name: '2016-09-19T11:34:30.903Z',
+        },
+        {
+          value: 6450,
+          name: '2016-09-20T11:49:07.625Z',
+        },
+        {
+          value: 2511,
+          name: '2016-09-23T16:03:02.600Z',
+        },
       ],
     },
     {
-      name: 'Mar',
+      name: 'Congo',
       series: [
-        { name: 'Invoices', value: 72000 },
-        { name: 'Payments', value: 52000 },
+        {
+          value: 2547,
+          name: '2016-09-17T12:06:18.166Z',
+        },
+        {
+          value: 6492,
+          name: '2016-09-19T07:17:41.975Z',
+        },
+        {
+          value: 2826,
+          name: '2016-09-19T11:34:30.903Z',
+        },
+        {
+          value: 6084,
+          name: '2016-09-20T11:49:07.625Z',
+        },
+        {
+          value: 3654,
+          name: '2016-09-23T16:03:02.600Z',
+        },
       ],
     },
     {
-      name: 'Apr',
+      name: 'Sao Tome and Principe',
       series: [
-        { name: 'Invoices', value: 60000 },
-        { name: 'Payments', value: 48000 },
+        {
+          value: 3707,
+          name: '2016-09-17T12:06:18.166Z',
+        },
+        {
+          value: 4350,
+          name: '2016-09-19T07:17:41.975Z',
+        },
+        {
+          value: 5399,
+          name: '2016-09-19T11:34:30.903Z',
+        },
+        {
+          value: 3052,
+          name: '2016-09-20T11:49:07.625Z',
+        },
+        {
+          value: 2470,
+          name: '2016-09-23T16:03:02.600Z',
+        },
       ],
     },
     {
-      name: 'May',
+      name: 'Bahamas',
       series: [
-        { name: 'Invoices', value: 89000 },
-        { name: 'Payments', value: 73000 },
-      ],
-    },
-    {
-      name: 'Jun',
-      series: [
-        { name: 'Invoices', value: 95000 },
-        { name: 'Payments', value: 82000 },
-      ],
-    },
-    {
-      name: 'Jul',
-      series: [
-        { name: 'Invoices', value: 105000 },
-        { name: 'Payments', value: 92000 },
-      ],
-    },
-    {
-      name: 'Aug',
-      series: [
-        { name: 'Invoices', value: 115000 },
-        { name: 'Payments', value: 102000 },
-      ],
-    },
-    {
-      name: 'Sep',
-      series: [
-        { name: 'Invoices', value: 125000 },
-        { name: 'Payments', value: 112000 },
-      ],
-    },
-    {
-      name: 'Oct',
-      series: [
-        { name: 'Invoices', value: 135000 },
-        { name: 'Payments', value: 121000 },
-      ],
-    },
-    {
-      name: 'Nov',
-      series: [
-        { name: 'Invoices', value: 145000 },
-        { name: 'Payments', value: 131000 },
-      ],
-    },
-    {
-      name: 'Dec',
-      series: [
-        { name: 'Invoices', value: 155000 },
-        { name: 'Payments', value: 141000 },
+        {
+          value: 2708,
+          name: '2016-09-17T12:06:18.166Z',
+        },
+        {
+          value: 4023,
+          name: '2016-09-19T07:17:41.975Z',
+        },
+        {
+          value: 5766,
+          name: '2016-09-19T11:34:30.903Z',
+        },
+        {
+          value: 2767,
+          name: '2016-09-20T11:49:07.625Z',
+        },
+        {
+          value: 3543,
+          name: '2016-09-23T16:03:02.600Z',
+        },
       ],
     },
   ];
@@ -271,61 +252,4 @@ export class DashboardComponent {
 
   protected readonly isAnimated = signal<boolean>(true);
   protected readonly showGrid = signal<boolean>(true);
-
-  buttonGroup: IButtonGroupItem[] = [
-    {
-      title: 'Add Client',
-      description: 'Create a new client profile',
-      icon: UserPlus,
-      link: `/${APP_ROUTES.clients.root}/${APP_ROUTES.clients.import}`,
-    },
-    {
-      title: 'Add Offer',
-      description: 'Generate a new sales quotation',
-      icon: FilePlus,
-      link: `/${APP_ROUTES.offers}`,
-    },
-    {
-      title: 'Sales Invoice',
-      description: 'Create a direct sales invoice',
-      icon: FileText,
-      link: `/${APP_ROUTES.bills.root}/${APP_ROUTES.bills.salesInvoicesList}`,
-    },
-    {
-      title: 'Add Supplier',
-      description: 'Register a new supplier profile',
-      icon: Truck,
-      link: `/${APP_ROUTES.suppliers.root}/${APP_ROUTES.suppliers.import}`,
-    },
-    {
-      title: 'Purchase Invoice',
-      description: 'Record an incoming purchase bill',
-      icon: Receipt,
-      link: `/${APP_ROUTES.bills.root}/${APP_ROUTES.bills.PurchaseInvoices}`,
-    },
-    {
-      title: 'Add Product',
-      description: 'Add items to the warehouse catalog',
-      icon: Box,
-      link: `/${APP_ROUTES.warehouse.root}/${APP_ROUTES.warehouse.importProducts}`,
-    },
-    {
-      title: 'Sale Payment',
-      description: 'Record a receipt voucher from a client',
-      icon: ArrowDownLeft,
-      link: `/${APP_ROUTES.payments.root}/${APP_ROUTES.payments.salePayments}`,
-    },
-    {
-      title: 'Add Expense',
-      description: 'Log a new operating expense voucher',
-      icon: Wallet,
-      link: `/${APP_ROUTES.expenses.root}/${APP_ROUTES.expenses.importExpenses}`,
-    },
-    {
-      title: 'Purchase Payment',
-      description: 'Record a payment voucher to a supplier',
-      icon: ArrowUpRight,
-      link: `/${APP_ROUTES.payments.root}/${APP_ROUTES.payments.purchasePayments}`,
-    },
-  ];
 }

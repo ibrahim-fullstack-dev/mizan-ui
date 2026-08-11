@@ -1,93 +1,70 @@
 /* ==========================================================================
-   1. الحاوية الرئيسية (Main Dashboard Layout)
+   Bank Page Layout
    ========================================================================== */
+
 .bank-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 24px;
   width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
+  height: 100%;
   padding: 24px;
+  background-color: var(--bg-app);
   box-sizing: border-box;
-  background-color: #f8fafc; /* Slate 50 - خلفية هادئة مريحة للعين */
-  min-height: 100vh;
+  gap: 24px;
+  transition: background-color 0.2s ease;
 }
 
 /* ==========================================================================
-   2. قسم الرسوم البيانية العلوي (Top Analytics Section)
+   1. Charts Top Section
    ========================================================================== */
+
 .bank-top-section {
   width: 100%;
 }
 
-/* شبكة الرسم البياني (تضع الرسوم البيانية جنبًا إلى جنب على الشاشات الكبيرة) */
 .chart-wrapper {
   display: grid;
-  /* توزيع متساوي للرسمين البيانيين مع حد أدنى 340px */
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   width: 100%;
 }
 
-/* تغليف كل مكون رسم بياني داخل بطاقات تفاعلية (Cards) */
-.chart-wrapper > app-columns-chart {
-  display: block;
-  background-color: #ffffff;
-  border-radius: 12px;
-  border: 1px solid #e2e8f0; /* Slate 200 */
+.chart-wrapper > * {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
   padding: 20px;
-  box-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.03),
-    0 2px 4px -1px rgba(0, 0, 0, 0.02);
-  transition: box-shadow 0.2s ease-in-out;
-}
-
-.chart-wrapper > app-columns-chart:hover {
-  box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.05),
-    0 4px 6px -2px rgba(0, 0, 0, 0.025);
+  box-shadow: var(--shadow-sm);
 }
 
 /* ==========================================================================
-   3. قسم الجداول والتنبيهات (Bank Tables Grid)
+   2. Tables Grid Section
    ========================================================================== */
+
 .bank-tables-grid {
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr;
-  width: 100%;
-}
-
-/* تغليف الجدول وتنسيق حدوده الخارجيّة */
-.bank-tables-grid > app-table {
-  display: block;
-  background-color: #ffffff;
-  border-radius: 12px;
-  border: 1px solid #e2e8f0;
-  padding: 20px;
-  box-shadow:
-    0 4px 6px -1px rgba(0, 0, 0, 0.03),
-    0 2px 4px -1px rgba(0, 0, 0, 0.02);
-  overflow: hidden; /* لمنع بروز حواف الجدول الدائرية */
 }
 
 /* ==========================================================================
-   4. الاستجابة للشاشات الصغيرة (Responsive Design)
+   Responsive Design
    ========================================================================== */
+
+@media (max-width: 1024px) {
+  .chart-wrapper {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
 @media (max-width: 768px) {
   .bank-wrapper {
     padding: 16px;
     gap: 16px;
   }
 
-  .chart-wrapper {
-    grid-template-columns: 1fr; /* جعل الرسوم البيانية فوق بعضها في الموبايل */
-    gap: 16px;
-  }
-
-  .chart-wrapper > app-columns-chart,
-  .bank-tables-grid > app-table {
-    padding: 14px;
-    border-radius: 8px;
+  .chart-wrapper > * {
+    padding: 16px;
   }
 }

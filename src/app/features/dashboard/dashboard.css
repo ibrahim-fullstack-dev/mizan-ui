@@ -1,95 +1,92 @@
-/* الحاوية الرئيسية الشاملة للوحة التحكم */
+/* ==========================================================================
+   Dashboard Responsive Styles (Mizan System)
+   ========================================================================== */
+
 .dashboard-wrapper {
-  padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 24px; /* مسافة ثابتة ومتناسقة بين جميع الأقسام الرأسية */
+  gap: 1.25rem;
   width: 100%;
+  padding: 1rem;
+  background-color: var(--bg-main);
   box-sizing: border-box;
-  background-color: #fcfcfd; /* خلفية هادئة مريحة للعين */
 }
 
-/* =================================================== */
-/* 1. شبكة الكروت العلوية (Metrics Grid) */
-/* =================================================== */
-.metrics-grid {
-  display: grid;
-  /* توزيع تلقائي ذكي: تتمدد الكروت وتنكمش حسب المساحة، وبحد أدنى 240px للكارت */
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
+/* تكبير الهوامش قليلاً في الشاشات الأكبر لراحة العين */
+@media (min-width: 768px) {
+  .dashboard-wrapper {
+    gap: 1.5rem;
+    padding: 1.5rem;
+  }
+}
+
+.analytics-row-container {
   width: 100%;
 }
 
-/* =================================================== */
-/* 2. القسم الأوسط (مخطط الأعمدة + الإجراءات العاجلة) */
-/* =================================================== */
+/* شبكة البطاقات الإحصائية: متجاوبة كلياً تلقائياً بفضل minmax */
+.analytics-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .analytics-grid {
+    gap: 1.5rem;
+  }
+}
+
+/* 2. القسم الأوسط (الرسم البياني + الأزرار السريعة) */
 .dashboard-mid-section {
   display: grid;
-  /* مخطط الأعمدة يأخذ الثلثين والإجراءات العاجلة تأخذ الثلث */
-  grid-template-columns: 2fr 1fr;
-  gap: 24px;
+  /* افتراضياً للموبايل: تصبح العناصر فوق بعضها بعمود واحد لعدم كسر التصميم */
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
   width: 100%;
-  align-items: start;
 }
 
-/* =================================================== */
-/* 3. حاوية المخططات الدائرية والبطاقات التحليلية */
-/* =================================================== */
-.charts-analytics-row {
-  display: grid;
-  /* المخططات تأخذ الثلثين (2fr) والبطاقات التحليلية تأخذ الثلث (1fr) */
-  grid-template-columns: 2fr 1fr;
-  gap: 24px;
-  width: 100%;
-  align-items: start;
-}
-
-/* الحاوية الداخلية للمخططين الدائريين ليظهرا بجانب بعضهما */
-.charts-analytics-row > div:first-child {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-}
-.dashboard-tables-grid {
-  width: 100%;
-  display: grid;
-  gap: 24px;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-}
-
-/* =================================================== */
-/* 📱 شاشات التابلت وأجهزة العرض المتوسطة (أصغر من 1024 بكسل) */
-/* =================================================== */
-@media (max-width: 1024px) {
+@media (min-width: 992px) {
   .dashboard-mid-section {
-    /* تحويل العناصر لتصبح فوق بعضها بدلاً من عمودين */
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-
-  .charts-analytics-row {
-    /* تحويل قسم المخططات والبطاقات ليصبح رأسياً */
-    grid-template-columns: 1fr;
-    gap: 20px;
+    /* للابتوب والشاشات الكبيرة: الرسم البياني يأخذ المساحة الأكبر والأزرار بجانبه */
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
   }
 }
 
-/* =================================================== */
-/* 📱 شاشات الهواتف المحمولة (أصغر من 768 بكسل) */
-/* =================================================== */
-@media (max-width: 768px) {
-  .dashboard-wrapper {
-    padding: 16px;
-    gap: 16px;
-  }
+.chart-card,
+.actions-card,
+.table-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  box-sizing: border-box;
+  overflow-x: auto; /* لحماية المكونات الداخلية كالرسم البياني من التداخل في الشاشات الصغيرة */
+}
 
-  .charts-analytics-row > div:first-child {
-    /* المخططات الدائرية تنزل تحت بعضها في الموبايل لحماية الـ SVG */
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
+/* 3. الجداول جنباً إلى جنب في صف واحد */
+.dashboard-tables-row {
+  display: grid;
+  /* افتراضياً للموبايل والتابلت الصغير: جدول تحت جدول */
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  width: 100%;
+}
 
-  .metrics-grid {
-    gap: 16px;
+@media (min-width: 1024px) {
+  .dashboard-tables-row {
+    /* للشاشات الأكبر من 1024px: الجدولين جنباً إلى جنب */
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
   }
+}
+
+/* 4. القسم الواسع في الأسفل (إن وجد) */
+.dashboard-bottom-full-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
