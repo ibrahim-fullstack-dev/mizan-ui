@@ -1,16 +1,148 @@
-/* You can add global styles to this file, and also import other style files */
-/* إعدادات التصفير الأساسية للنظام المالي */
+/* ==========================================================================
+    Global Theme & CSS Variables (Mizan Enterprise - Green Theme)
+    ========================================================================== */
+
+:root {
+  /* --- 1. Brand & Primary Colors (Green Theme) --- */
+  --primary-50: #f0fdf4;
+  --primary-100: #dcfce7;
+  --primary-200: #bbf7d0;
+  --primary-300: #86efac;
+  --primary-400: #4ade80;
+  --primary-500: #22c55e;
+  --primary-600: #16a34a;
+  --primary-700: #0f772c;
+  --primary-800: #166534;
+  --primary-900: #14532d;
+  --primary-950: #052e16;
+
+  /* --- 2. Semantic Colors --- */
+  --color-primary: var(--primary-700);
+  --color-primary-hover: #128c35;
+  --color-primary-active: #0d6324;
+
+  --color-success: #16a34a;
+  --color-warning: #ca8a04;
+  --color-danger: #dc2626;
+  --color-danger-hover: #b91c1c;
+  --color-info: #0284c7;
+
+  /* --- 3. Neutral & Surface Colors (Light Default) --- */
+  --bg-app: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-header: #f8fafc;
+  --bg-hover: #f1f5f9;
+  --bg-selected: #f0fdf4;
+  --bg-input: #ffffff;
+
+  /* --- 4. Text Colors (Light Default) --- */
+  --text-main: #1e293b;
+  --text-primary: #1e293b; /* Unified mapping for global body color */
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --text-light: #94a3b8;
+  --text-inverse: #ffffff;
+
+  /* --- 5. Border & Shadow (Light Default) --- */
+  --border-color: #e2e8f0;
+  --border-focus: var(--primary-700);
+  --ring-focus: rgba(15, 119, 44, 0.25);
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+
+  /* --- 6. Typography & Radius --- */
+  --font-family: system-ui, -apple-system, sans-serif;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+}
+
+/* --- Dark Theme Variables --- */
+.dark-theme,
+html.dark {
+  --color-primary: #22c55e;
+  --color-primary-hover: #4ade80;
+  --color-primary-active: #16a34a;
+  --border-focus: #22c55e;
+  --ring-focus: rgba(34, 197, 94, 0.25);
+
+  --bg-app: #0f172a;
+  --bg-card: #1e293b;
+  --bg-header: #1e293b;
+  --bg-hover: #334155;
+  --bg-selected: #064e3b;
+  --bg-input: #1e293b;
+
+  --text-main: #f8fafc;
+  --text-primary: #f8fafc; /* Unified mapping for dark body color */
+  --text-secondary: #94a3b8;
+  --text-muted: #94a3b8;
+  --text-light: #64748b;
+  --text-inverse: #0f172a;
+
+  --border-color: #334155;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+    Global Resets & Body Styles
+    ========================================================================== */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+html,
 body {
-  font-family:
-    system-ui,
-    -apple-system,
-    sans-serif;
-  background-color: #f8fafc;
-  color: #0f172a;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  font-family: var(--font-family);
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+/* ==========================================================================
+    Scrollbar Styles
+    ========================================================================== */
+
+/* للمتصفحات الحديثة مثل Firefox على مستوى التطبيق بالكامل */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(156, 163, 175, 0.4) transparent;
+}
+
+/* لمتصفحات Chrome, Safari, Edge على مستوى التطبيق بالكامل */
+::-webkit-scrollbar {
+  width: 8px; /* عرض شريط التمرير العمودي */
+  height: 8px; /* ارتفاع شريط التمرير الأفقي إن وجد */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* خلفية المسار شفافة */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(156, 163, 175, 0.4); /* لون المقبض رمادي شفاف */
+  border-radius: 9999px; /* حواف دائرية ناعمة */
+}
+
+/* لون أغمق قليلاً عند تمرير الماوس فوق شريط التمرير */
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(156, 163, 175, 0.7);
 }
