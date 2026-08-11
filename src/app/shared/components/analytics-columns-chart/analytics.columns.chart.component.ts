@@ -1,11 +1,11 @@
 import { Component, input } from '@angular/core';
-import { BarChartModule } from '@swimlane/ngx-charts'; // العودة لموديول الأعمدة
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ChartGroupItem } from './analytics.columns.chart.types';
 
 @Component({
-  selector: 'app-columns-chart', // يمكنك تغييره إلى app-bar-chart لاحقاً
+  selector: 'app-columns-chart',
   standalone: true,
-  imports: [BarChartModule],
+  imports: [NgxChartsModule],
   templateUrl: './analytics.columns.chart.component.html',
   styleUrl: './analytics.columns.chart.component.css',
 })
@@ -18,7 +18,7 @@ export class ColumnsChartComponent {
   animations = input<boolean>(true);
 
   colorScheme: any = {
-    domain: ['#3b82f6', '#10b981'], // الأزرق للفواتير والأخضر للمدفوعات
+    domain: ['#3b82f6', '#10b981'],
   };
 
   yAxisTickFormatting = (val: any): string => {

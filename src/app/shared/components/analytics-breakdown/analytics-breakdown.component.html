@@ -1,29 +1,20 @@
-<div class="analytics-row-container">
-  <div class="analytics-grid">
-    @for (card of analyticsData(); track card.id) {
-      <div class="analytics-card" [ngClass]="card.colorClass">
-        <div class="card-header">
-          <div class="title-wrapper">
-            <span class="card-title">{{ card.title }}</span>
-            <div class="card-value-wrapper">
-              <h2 class="card-value">{{ card.unpaid }}</h2>
-              <p class="card-value">{{ card.value }}</p>
-            </div>
-          </div>
-          <div class="icon-badge">
-            <lucide-icon [name]="card.icon" aria-hidden="true"></lucide-icon>
-          </div>
-        </div>
-
-        <div class="card-footer">
-          @if (card.trend) {
-            <span class="trend-badge" [ngClass]="card.trend.isPositive ? 'trend-up' : 'trend-down'">
-              {{ card.trend.isPositive ? '↑' : '↓' }} {{ card.trend.value }}%
-            </span>
-          }
-          <a [routerLink]="card.link" class="view-details-link"> View details </a>
-        </div>
+<div class="analytics-card" [ngClass]="card().colorType ? 'card-' + card().colorType : ''">
+  <div class="card-header">
+    <div class="title-wrapper">
+      <span class="card-title">{{ card().title }}</span>
+      <div class="card-value-wrapper">
+        <h2 class="card-value">{{ card().value }}</h2>
+        @if (card().description) {
+          <p class="card-description">{{ card().description }}</p>
+        }
       </div>
-    }
+    </div>
+    <div class="icon-badge">
+      <lucide-icon [name]="card().icon" aria-hidden="true"></lucide-icon>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <a [routerLink]="card().link" class="view-details-link"> View details </a>
   </div>
 </div>
