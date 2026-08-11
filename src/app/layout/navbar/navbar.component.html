@@ -1,0 +1,102 @@
+<header class="navbar-container">
+  <!-- Left Section: Sidebar Toggle & Dynamic Page Title -->
+  <div class="navbar-left">
+    <app-button variant="outline" [icon]="Menu" (btnClick)="onToggleSidebar()"></app-button>
+
+    <h1 class="page-title">{{ pageTitle() }}</h1>
+  </div>
+
+  <!-- Center Section: Quick Search Trigger -->
+  <div class="navbar-center">
+    <button
+      type="button"
+      class="quick-search-trigger"
+      (click)="searchClicked.emit()"
+      aria-label="Quick search"
+    >
+      <lucide-icon name="search" class="search-icon" aria-hidden="true"></lucide-icon>
+      <span class="search-placeholder">Search accounts, transactions, clients...</span>
+      <kbd class="search-shortcut">Ctrl K</kbd>
+    </button>
+  </div>
+
+  <!-- Right Section: Alerts, Theme Toggle, Upgrade & User Profile -->
+  <div class="navbar-right">
+    <!-- Upgrade Button -->
+    <app-button variant="primary" [icon]="Zap" (btnClick)="upgradeClicked.emit()">
+      Upgrade
+    </app-button>
+
+    <!-- Theme Toggle Button -->
+    <!-- Theme Toggle Button -->
+    <app-button
+      variant="outline"
+      [icon]="isDarkMode() ? Moon : Sun"
+      (btnClick)="onThemeToggle()"
+    ></app-button>
+
+    <!-- Notifications Button -->
+    <app-button
+      variant="outline"
+      [icon]="Bell"
+      class="notification-btn"
+      (btnClick)="notificationClicked.emit()"
+    >
+      <span class="notification-badge" aria-hidden="true"></span>
+    </app-button>
+
+    <!-- User Profile Dropdown Wrapper -->
+    <div class="profile-dropdown-wrapper">
+      <button
+        type="button"
+        class="profile-trigger"
+        [class.is-open]="isProfileMenuOpen()"
+        (click)="toggleProfileMenu()"
+        [attr.aria-expanded]="isProfileMenuOpen()"
+        aria-label="User profile menu"
+      >
+        <div class="avatar-container">
+          @if (user().avatar) {
+            <img [src]="user().avatar" [alt]="user().name" class="avatar-img" />
+          } @else {
+            <span class="avatar-initials">{{ user().name.charAt(0) }}</span>
+          }
+        </div>
+        <div class="user-meta">
+          <span class="user-name">{{ user().name }}</span>
+          <span class="user-role">Enterprise Admin</span>
+        </div>
+        <lucide-icon name="chevron-down" class="profile-arrow" aria-hidden="true"></lucide-icon>
+      </button>
+
+      <!-- Dropdown Menu -->
+      @if (isProfileMenuOpen()) {
+        <div class="profile-menu">
+          <div class="profile-menu-header">
+            <span class="menu-user-name">{{ user().name }}</span>
+            <span class="menu-user-email">{{ user().email }}</span>
+          </div>
+          <div class="profile-menu-items">
+            <button type="button" class="menu-item" (click)="onProfileOptionClick('profile')">
+              <lucide-icon name="user" class="item-icon"></lucide-icon>
+              <span>My Profile</span>
+            </button>
+            <button type="button" class="menu-item" (click)="onProfileOptionClick('settings')">
+              <lucide-icon name="settings" class="item-icon"></lucide-icon>
+              <span>Preferences</span>
+            </button>
+            <div class="menu-divider"></div>
+            <button
+              type="button"
+              class="menu-item text-danger"
+              (click)="onProfileOptionClick('logout')"
+            >
+              <lucide-icon name="log-out" class="item-icon"></lucide-icon>
+              <span>Log out</span>
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</header>
