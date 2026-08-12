@@ -283,7 +283,7 @@ export const APP_ROUTES = {
   settings: {
     root: 'settings',
     baseSettings: 'base', // SettingsBase Settings
-    companySetting: 'company', // Company Setting
+    companySettings: 'company', // Company Setting
     users: 'users', // Users
     roles: 'roles', // Roles
     paymentMethod: 'payment-methods', // Payment method
