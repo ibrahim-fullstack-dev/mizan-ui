@@ -420,6 +420,13 @@ export const routes: Routes = [
             (m) => m.BaseSettingsComponent,
           ),
       },
+      {
+        path: APP_ROUTES.settings.companySettings,
+        loadComponent: () =>
+          import('./features/settings/company-settings/company-settings.component').then(
+            (m) => m.CompanySettingsComponent,
+          ),
+      },
     ],
   },
 
