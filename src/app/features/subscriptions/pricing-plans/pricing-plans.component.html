@@ -1,0 +1,90 @@
+<section class="pricing-section">
+  <!-- Section Header -->
+  <div class="pricing-header">
+    <div class="pricing-title-wrap">
+      <span class="pricing-badge">Pricing Packages</span>
+      <h2>Flexible Plans Built for Scale</h2>
+      <p>
+        We offer flexible plans designed to meet your needs, whether you are an individual looking
+        for essential features or a team seeking a premium experience.
+      </p>
+    </div>
+  </div>
+
+  <!-- Pricing Cards Grid -->
+  <div class="pricing-grid">
+    @for (plan of plans; track plan.id) {
+      <div class="pricing-card" [class.popular]="plan.isPopular">
+        @if (plan.badge) {
+          <div class="card-badge">{{ plan.badge }}</div>
+        }
+
+        <div class="card-header">
+          <h3>{{ plan.name }}</h3>
+          <p>{{ plan.description }}</p>
+        </div>
+
+        <div class="card-pricing">
+          <span class="amount">{{ plan.price }}</span>
+          <span class="period">{{ plan.period }}</span>
+        </div>
+
+        <!-- Using Shared Button Component -->
+        <div class="card-action">
+          <app-button
+            [variant]="plan.buttonConfig.variant!"
+            [disabled]="plan.buttonConfig.disabled!"
+            [icon]="plan.buttonConfig.icon!"
+            [fullWidth]="plan.buttonConfig.fullWidth!"
+            [type]="plan.buttonConfig.type!"
+            (clicked)="onSelectPlan(plan)"
+          >
+            {{ plan.buttonText }}
+          </app-button>
+        </div>
+
+        <div class="card-features-list">
+          <span class="features-title">Capacity & Storage Details:</span>
+          <ul>
+            <li>
+              <svg
+                class="feature-icon check"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>{{ plan.features.invoices }}</span>
+            </li>
+            <li>
+              <svg
+                class="feature-icon check"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>{{ plan.features.databaseSize }}</span>
+            </li>
+            <li>
+              <svg
+                class="feature-icon check"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              <span>{{ plan.features.storage }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    }
+  </div>
+</section>
