@@ -450,7 +450,7 @@ export const SIDEBAR_NAVIGATION: SidebarItem[] = [
       },
       {
         label: 'Company Settings',
-        path: ['/', APP_ROUTES.settings.root, APP_ROUTES.settings.companySetting],
+        path: ['/', APP_ROUTES.settings.root, APP_ROUTES.settings.companySettings],
       },
       {
         label: 'Users',
