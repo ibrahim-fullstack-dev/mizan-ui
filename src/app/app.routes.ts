@@ -427,6 +427,11 @@ export const routes: Routes = [
             (m) => m.CompanySettingsComponent,
           ),
       },
+      {
+        path: APP_ROUTES.settings.users,
+        loadComponent: () =>
+          import('./features/settings/users/users.component').then((m) => m.UsersComponent),
+      },
     ],
   },
 
