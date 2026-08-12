@@ -1,0 +1,133 @@
+<div class="company-form-slide">
+  <div class="slide-header">
+    <h3 class="slide-title">Basic Information</h3>
+  </div>
+
+  <div class="form-grid">
+    <!-- Name -->
+    <div class="form-group">
+      <app-input
+        [label]="nameConfig.label!"
+        [disabled]="nameConfig.disabled!"
+        [required]="nameConfig.required!"
+        [error]="nameConfig.error!"
+        [placeholder]="nameConfig.placeholder!"
+        [type]="nameConfig.type!"
+      ></app-input>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <app-input
+        [label]="emailConfig.label!"
+        [disabled]="emailConfig.disabled!"
+        [required]="emailConfig.required!"
+        [error]="emailConfig.error!"
+        [placeholder]="emailConfig.placeholder!"
+        [type]="emailConfig.type!"
+      ></app-input>
+    </div>
+
+    <!-- Contact Number 2 -->
+    <div class="form-group">
+      <app-input
+        [label]="contactNumber2Config.label!"
+        [disabled]="contactNumber2Config.disabled!"
+        [required]="contactNumber2Config.required!"
+        [error]="contactNumber2Config.error!"
+        [placeholder]="contactNumber2Config.placeholder!"
+        [type]="contactNumber2Config.type!"
+      ></app-input>
+    </div>
+
+    <!-- Field -->
+    <div class="form-group">
+      <app-input
+        [label]="fieldConfig.label!"
+        [disabled]="fieldConfig.disabled!"
+        [required]="fieldConfig.required!"
+        [error]="fieldConfig.error!"
+        [placeholder]="fieldConfig.placeholder!"
+        [type]="fieldConfig.type!"
+      ></app-input>
+    </div>
+
+    <!-- Commercial Registration No. -->
+    <div class="form-group">
+      <app-input
+        [label]="commercialRegistrationNoConfig.label!"
+        [disabled]="commercialRegistrationNoConfig.disabled!"
+        [required]="commercialRegistrationNoConfig.required!"
+        [error]="commercialRegistrationNoConfig.error!"
+        [placeholder]="commercialRegistrationNoConfig.placeholder!"
+        [type]="commercialRegistrationNoConfig.type!"
+      ></app-input>
+    </div>
+
+    <!-- Organization Name (Company Name) -->
+    <div class="form-group">
+      <app-input
+        [label]="organizationNameConfig.label!"
+        [disabled]="organizationNameConfig.disabled!"
+        [required]="organizationNameConfig.required!"
+        [error]="organizationNameConfig.error!"
+        [placeholder]="organizationNameConfig.placeholder!"
+        [type]="organizationNameConfig.type!"
+      ></app-input>
+    </div>
+
+    <!-- Organizational Unit Name (Branch Name) -->
+    <div class="form-group">
+      <app-input
+        [label]="organizationalUnitNameConfig.label!"
+        [disabled]="organizationalUnitNameConfig.disabled!"
+        [required]="organizationalUnitNameConfig.required!"
+        [error]="organizationalUnitNameConfig.error!"
+        [placeholder]="organizationalUnitNameConfig.placeholder!"
+        [type]="organizationalUnitNameConfig.type!"
+      ></app-input>
+    </div>
+
+    <!-- Other ID Type -->
+    <div class="form-group">
+      <app-input
+        [label]="otherIdTypeConfig.label!"
+        [disabled]="otherIdTypeConfig.disabled!"
+        [required]="otherIdTypeConfig.required!"
+        [error]="otherIdTypeConfig.error!"
+        [placeholder]="otherIdTypeConfig.placeholder!"
+        [type]="otherIdTypeConfig.type!"
+      ></app-input>
+    </div>
+
+    <!-- Other ID Number -->
+    <div class="form-group">
+      <app-input
+        [label]="otherIdNumberConfig.label!"
+        [disabled]="otherIdNumberConfig.disabled!"
+        [required]="otherIdNumberConfig.required!"
+        [error]="otherIdNumberConfig.error!"
+        [placeholder]="otherIdNumberConfig.placeholder!"
+        [type]="otherIdNumberConfig.type!"
+      ></app-input>
+    </div>
+
+    <!-- Short Address -->
+    <div class="form-group full-width">
+      <app-input
+        [label]="shortAddressConfig.label!"
+        [disabled]="shortAddressConfig.disabled!"
+        [required]="shortAddressConfig.required!"
+        [error]="shortAddressConfig.error!"
+        [placeholder]="shortAddressConfig.placeholder!"
+        [type]="shortAddressConfig.type!"
+      ></app-input>
+    </div>
+  </div>
+
+  <!-- Form Actions (Save & Cancel Buttons) -->
+  <div class="form-actions">
+    <app-button [variant]="'secondary'" (click)="onCancel()"> Cancel </app-button>
+    <app-button [variant]="'primary'" (click)="onSave()"> Save Changes </app-button>
+  </div>
+</div>

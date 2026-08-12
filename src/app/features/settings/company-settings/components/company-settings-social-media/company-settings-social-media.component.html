@@ -1,0 +1,106 @@
+<div class="company-form-slide">
+  <div class="slide-header">
+    <h3 class="slide-title">Social Media Links</h3>
+  </div>
+
+  <div class="form-grid">
+    <!-- Website URL -->
+    <div class="form-group">
+      <app-input
+        [label]="websiteConfig.label!"
+        [disabled]="websiteConfig.disabled!"
+        [required]="websiteConfig.required!"
+        [error]="websiteConfig.error!"
+        [placeholder]="websiteConfig.placeholder!"
+        [type]="websiteConfig.type!"
+      >
+      </app-input>
+    </div>
+
+    <!-- LinkedIn -->
+    <div class="form-group">
+      <app-input
+        [label]="linkedinConfig.label!"
+        [disabled]="linkedinConfig.disabled!"
+        [required]="linkedinConfig.required!"
+        [error]="linkedinConfig.error!"
+        [placeholder]="linkedinConfig.placeholder!"
+        [type]="linkedinConfig.type!"
+      ></app-input>
+    </div>
+
+    <!-- Twitter / X -->
+    <div class="form-group">
+      <app-input
+        [label]="twitterConfig.label!"
+        [disabled]="twitterConfig.disabled!"
+        [required]="twitterConfig.required!"
+        [error]="twitterConfig.error!"
+        [placeholder]="twitterConfig.placeholder!"
+        [type]="twitterConfig.type!"
+      ></app-input>
+    </div>
+
+    <!-- WhatsApp / Contact Phone -->
+    <div class="form-group">
+      <app-input
+        [label]="whatsappConfig.label!"
+        [disabled]="whatsappConfig.disabled!"
+        [required]="whatsappConfig.required!"
+        [error]="whatsappConfig.error!"
+        [placeholder]="whatsappConfig.placeholder!"
+        [type]="whatsappConfig.type!"
+      ></app-input>
+    </div>
+    <!-- Facebook -->
+    <div class="form-group">
+      <app-input
+        [label]="facebookConfig.label!"
+        [disabled]="facebookConfig.disabled!"
+        [required]="facebookConfig.required!"
+        [error]="facebookConfig.error!"
+        [placeholder]="facebookConfig.placeholder!"
+        [type]="facebookConfig.type!"
+      ></app-input>
+    </div>
+    <!-- Instagram -->
+    <div class="form-group">
+      <app-input
+        [label]="instagramConfig.label!"
+        [disabled]="instagramConfig.disabled!"
+        [required]="instagramConfig.required!"
+        [error]="instagramConfig.error!"
+        [placeholder]="instagramConfig.placeholder!"
+        [type]="instagramConfig.type!"
+      ></app-input>
+    </div>
+    <!-- YouTube -->
+    <div class="form-group">
+      <app-input
+        [label]="youtubeConfig.label!"
+        [disabled]="youtubeConfig.disabled!"
+        [required]="youtubeConfig.required!"
+        [error]="youtubeConfig.error!"
+        [placeholder]="youtubeConfig.placeholder!"
+        [type]="youtubeConfig.type!"
+      ></app-input>
+    </div>
+    <!-- TikTok -->
+    <div class="form-group">
+      <app-input
+        [label]="tiktokConfig.label!"
+        [disabled]="tiktokConfig.disabled!"
+        [required]="tiktokConfig.required!"
+        [error]="tiktokConfig.error!"
+        [placeholder]="tiktokConfig.placeholder!"
+        [type]="tiktokConfig.type!"
+      ></app-input>
+    </div>
+  </div>
+
+  <!-- Form Actions Using Shared Button Component -->
+  <div class="form-actions">
+    <app-button [variant]="'secondary'" (click)="onCancel()"> Cancel </app-button>
+    <app-button [variant]="'primary'" (click)="onSave()"> Save Changes </app-button>
+  </div>
+</div>

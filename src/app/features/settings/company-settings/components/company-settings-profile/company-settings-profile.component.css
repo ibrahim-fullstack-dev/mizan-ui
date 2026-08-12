@@ -1,0 +1,129 @@
+/* ==========================================================================
+   Company Profile Centered Slide Styles (Theme Integrated)
+   ========================================================================== */
+
+.company-profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+  padding: 40px 24px;
+  background-color: var(--bg-card);
+  background-image: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-hover) 100%);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  box-sizing: border-box;
+  gap: 16px;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Logo Styles (Centered) */
+.logo-container {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  border-radius: var(--radius-full);
+  border: 2px dashed var(--border-color);
+  background-color: var(--bg-input);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition:
+    border-color 0.2s,
+    transform 0.2s;
+  margin-bottom: 4px;
+}
+
+.logo-container:hover {
+  border-color: var(--color-primary);
+  transform: scale(1.03);
+}
+
+.logo-container:hover .logo-overlay-hint {
+  opacity: 1;
+}
+
+.company-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.logo-placeholder {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.logo-overlay-hint {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: var(--text-inverse);
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  text-transform: uppercase;
+}
+
+.hidden-file-input {
+  display: none;
+}
+
+/* Company Name */
+.company-name {
+  font-size: 1.375rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+/* Contact Info Items (Email & Phone) */
+.company-info-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+}
+
+.company-info-item:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  background-color: var(--bg-selected);
+  transform: translateY(-1px);
+}
+
+.info-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.company-info-item:hover .info-icon {
+  color: var(--color-primary);
+}
