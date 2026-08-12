@@ -1,0 +1,197 @@
+/* ==========================================================================
+   Pricing Component Styles (Mizan Enterprise - Theme Integrated)
+   ========================================================================== */
+
+.pricing-section {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  width: 100%;
+  max-width: 1350px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+  font-family: var(--font-family);
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+}
+
+/* Header */
+.pricing-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.5rem;
+}
+
+.pricing-badge {
+  background-color: var(--primary-50);
+  color: var(--primary-700);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 0.35rem 0.875rem;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.05em;
+}
+
+.pricing-title-wrap h2 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin: 0.5rem 0;
+}
+
+.pricing-title-wrap p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Grid & Cards (Responsive Default) */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+.pricing-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s ease;
+}
+
+.pricing-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.pricing-card.popular {
+  border: 2px solid var(--color-primary);
+  box-shadow: var(--ring-focus);
+}
+
+.card-badge {
+  position: absolute;
+  top: -12px;
+  right: 24px;
+  background-color: var(--color-primary);
+  color: var(--text-inverse);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-md);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.card-header h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin: 0 0 0.5rem 0;
+}
+
+.card-header p {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.4;
+  min-height: 36px;
+}
+
+.card-pricing {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.amount {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1;
+}
+
+.period {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+}
+
+/* Action Section */
+.card-action {
+  margin-top: 0.5rem;
+}
+
+/* Features List */
+.card-features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.25rem;
+  margin-top: auto;
+}
+
+.features-title {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+.card-features-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.card-features-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.8125rem;
+  color: var(--text-main);
+}
+
+.feature-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.feature-icon.check {
+  color: var(--color-success);
+}
+
+/* ==========================================================================
+   Large Screen Adjustments (4 Columns in One Row)
+   ========================================================================== */
+@media (min-width: 1200px) {
+  .pricing-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+
+  .pricing-card.popular {
+    transform: translateY(-8px);
+  }
+
+  .pricing-card.popular:hover {
+    transform: translateY(-12px);
+  }
+}
