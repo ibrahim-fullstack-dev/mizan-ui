@@ -410,9 +410,21 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: APP_ROUTES.settings.root,
+    children: [
+      {
+        path: APP_ROUTES.settings.baseSettings,
+        loadComponent: () =>
+          import('./features/settings/base-settings/base-settings.component').then(
+            (m) => m.BaseSettingsComponent,
+          ),
+      },
+    ],
+  },
 
   {
     path: '**',
-    redirectTo: APP_ROUTES.dashboard, // أو توجيهه لصفحة 404 مخصصة لاحقاً
+    redirectTo: APP_ROUTES.dashboard,
   },
 ];
