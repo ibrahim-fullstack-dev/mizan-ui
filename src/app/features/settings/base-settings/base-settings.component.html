@@ -1,0 +1,184 @@
+<div class="page-container">
+  <!-- Top Navigation Buttons Bar -->
+  <div class="nav-items-buttons">
+    <div class="nav-buttons-group">
+      @for (item of pageNavigationButtons; track $index) {
+        <app-button
+          [variant]="item.buttonConfig.variant ?? 'secondary'"
+          [icon]="item.buttonConfig.icon"
+          [title]="item.content"
+          (btnClick)="onPageNavigationItemClick(item.key)"
+        >
+          {{ item.content }}
+        </app-button>
+      }
+    </div>
+    <div class="action-buttons-group">
+      <app-button [variant]="'outline'" (btnClick)="onReset()">Reset</app-button>
+      <app-button [variant]="'primary'" (btnClick)="onSave()">Save Changes</app-button>
+    </div>
+  </div>
+
+  <!-- Settings Form Content Grid -->
+  <div class="settings-content-card">
+    <div class="settings-section-title">
+      <h3>System Base Settings</h3>
+      <p>Configure general regional, financial, document templates, and system preferences.</p>
+    </div>
+
+    <div class="settings-grid">
+      <!-- Language -->
+      <div class="form-group">
+        <label for="language">Language</label>
+        <select id="language" class="form-control">
+          <option value="ar" selected>Arabic</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+
+      <!-- PDF Language -->
+      <div class="form-group">
+        <label for="pdfLanguage">PDF Language</label>
+        <select id="pdfLanguage" class="form-control">
+          <option value="ar" selected>Arabic</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+
+      <!-- Date View -->
+      <div class="form-group">
+        <label for="dateView">Date View</label>
+        <select id="dateView" class="form-control">
+          <option value="yyyy-MM-dd" selected>yyyy-MM-dd</option>
+          <option value="dd/MM/yyyy">dd/MM/yyyy</option>
+          <option value="MM-dd-yyyy">MM-dd-yyyy</option>
+        </select>
+      </div>
+
+      <!-- Time Zone -->
+      <div class="form-group">
+        <label for="timeZone">Time Zone</label>
+        <select id="timeZone" class="form-control">
+          <option value="Asia/Riyadh" selected>Asia/Riyadh</option>
+          <option value="UTC">UTC</option>
+        </select>
+      </div>
+
+      <!-- Currency Country -->
+      <div class="form-group">
+        <label for="currencyCountry">Currency Country</label>
+        <select id="currencyCountry" class="form-control">
+          <option value="SA" selected>Saudi Arabia (Saudi Riyal)</option>
+          <option value="AE">United Arab Emirates (AED)</option>
+          <option value="US">United States (USD)</option>
+        </select>
+      </div>
+
+      <!-- Currency Symbol -->
+      <div class="form-group">
+        <label for="currencySymbol">Currency Symbol</label>
+        <input
+          type="text"
+          id="currencySymbol"
+          class="form-control"
+          value="ر.س"
+          placeholder="e.g. SAR or ر.س"
+        />
+      </div>
+
+      <!-- Currency Symbol Placement -->
+      <div class="form-group">
+        <label for="currencyPlacement">Currency Symbol Placement</label>
+        <select id="currencyPlacement" class="form-control">
+          <option value="after" selected>After Currency</option>
+          <option value="before">Before Currency</option>
+        </select>
+      </div>
+
+      <!-- Decimal Places -->
+      <div class="form-group">
+        <label for="decimalPlaces">Decimal Places</label>
+        <input type="number" id="decimalPlaces" class="form-control" value="2" min="0" max="4" />
+      </div>
+
+      <!-- Deal with Negative -->
+      <div class="form-group">
+        <label for="dealWithNegative">Deal with Negative</label>
+        <select id="dealWithNegative" class="form-control">
+          <option value="minus" selected>Minus Sign (-)</option>
+          <option value="brackets">Parentheses ((500))</option>
+        </select>
+      </div>
+
+      <!-- Resend OTP Seconds -->
+      <div class="form-group">
+        <label for="otpSeconds">Resend OTP Seconds</label>
+        <input type="number" id="otpSeconds" class="form-control" value="60" />
+      </div>
+
+      <!-- Activity Log Retention Days -->
+      <div class="form-group">
+        <label for="retentionDays">Activity Log Retention Days</label>
+        <input type="number" id="retentionDays" class="form-control" value="90" />
+      </div>
+
+      <!-- Payment Receipt Template -->
+      <div class="form-group">
+        <label for="receiptTemplate">Payment Receipt Template</label>
+        <select id="receiptTemplate" class="form-control">
+          <option value="elegant" selected>Elegant Payment Receipt</option>
+          <option value="standard">Standard Receipt</option>
+        </select>
+      </div>
+
+      <!-- Purchase Payment Template -->
+      <div class="form-group">
+        <label for="purchaseTemplate">Purchase Payment Template</label>
+        <select id="purchaseTemplate" class="form-control">
+          <option value="elegant" selected>Elegant Payment Receipt</option>
+          <option value="standard">Standard Receipt</option>
+        </select>
+      </div>
+
+      <!-- Prefix for Payment Receipts -->
+      <div class="form-group">
+        <label for="prefixPayment">Prefix for Payment Receipts</label>
+        <input type="text" id="prefixPayment" class="form-control" value="PAY-" />
+      </div>
+
+      <!-- Prefix for Client Payment Receipts -->
+      <div class="form-group">
+        <label for="prefixClient">Prefix for Client Payment Receipts</label>
+        <input type="text" id="prefixClient" class="form-control" value="CPAY-" />
+      </div>
+
+      <!-- Prefix for Supplier Payment Receipts -->
+      <div class="form-group">
+        <label for="prefixSupplier">Prefix for Supplier Payment Receipts</label>
+        <input type="text" id="prefixSupplier" class="form-control" value="SPAY-" />
+      </div>
+
+      <!-- Prefix for Purchase Receipts -->
+      <div class="form-group">
+        <label for="prefixPurchase">Prefix for Purchase Receipts</label>
+        <input type="text" id="prefixPurchase" class="form-control" value="RPAY-" />
+      </div>
+    </div>
+
+    <!-- Checkboxes / Toggles Section -->
+    <div class="settings-toggles-section">
+      <label class="toggle-item">
+        <input type="checkbox" checked />
+        <span class="toggle-label-text">Logo in Document</span>
+      </label>
+      <label class="toggle-item">
+        <input type="checkbox" />
+        <span class="toggle-label-text">Allow selling expired products</span>
+      </label>
+      <label class="toggle-item">
+        <input type="checkbox" checked />
+        <span class="toggle-label-text">Unique Partner Tax Number</span>
+      </label>
+    </div>
+  </div>
+</div>
