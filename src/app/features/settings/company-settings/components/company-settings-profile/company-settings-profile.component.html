@@ -1,0 +1,36 @@
+<div class="company-profile-card">
+  <!-- Company Logo (Centered) -->
+  <div class="logo-container" (click)="fileInput.click()" title="Click to change logo">
+    @if (companyLogoUrl) {
+      <img [src]="companyLogoUrl" alt="Company Logo" class="company-logo-img" />
+    } @else {
+      <div class="logo-placeholder">
+        <span>Logo</span>
+      </div>
+    }
+    <div class="logo-overlay-hint">Change</div>
+    <input
+      type="file"
+      id="logoFileInput"
+      accept="image/*"
+      class="hidden-file-input"
+      (change)="onLogoSelected($event)"
+      #fileInput
+    />
+  </div>
+
+  <!-- Company Name -->
+  <h2 class="company-name">{{ companyData.name }}</h2>
+
+  <!-- Email Link -->
+  <a [href]="'mailto:' + companyData.email" class="company-info-item email-link">
+    <lucide-icon [img]="companyData.emailIcon" />
+    <span>{{ companyData.email }}</span>
+  </a>
+
+  <!-- Phone Link -->
+  <a [href]="'tel:' + companyData.phone" class="company-info-item phone-link">
+    <lucide-icon [img]="companyData.phoneIcon" />
+    <span>{{ companyData.phone }}</span>
+  </a>
+</div>
