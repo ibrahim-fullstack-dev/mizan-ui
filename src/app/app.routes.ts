@@ -398,6 +398,18 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./features/client-group/client-group.component').then((m) => m.ClientGroupComponent),
   },
+  {
+    path: APP_ROUTES.subscriptions.root,
+    children: [
+      {
+        path: APP_ROUTES.subscriptions.pricingPlans,
+        loadComponent: () =>
+          import('./features/subscriptions/pricing-plans/pricing-plans.component').then(
+            (m) => m.PricingPlansComponent,
+          ),
+      },
+    ],
+  },
 
   {
     path: '**',
