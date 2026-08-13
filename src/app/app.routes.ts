@@ -456,6 +456,13 @@ export const routes: Routes = [
             (m) => m.PaymentFeesComponent,
           ),
       },
+      {
+        path: APP_ROUTES.settings.currency,
+        loadComponent: () =>
+          import('./features/settings/currency/currency.component').then(
+            (m) => m.CurrencyComponent,
+          ),
+      },
     ],
   },
 
