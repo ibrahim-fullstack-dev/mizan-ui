@@ -437,6 +437,13 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/settings/roles/roles.component').then((m) => m.RolesComponent),
       },
+      {
+        path: APP_ROUTES.settings.paymentMethod,
+        loadComponent: () =>
+          import('./features/settings/payment-method/payment-method.component').then(
+            (m) => m.PaymentMethodComponent,
+          ),
+      },
     ],
   },
 
