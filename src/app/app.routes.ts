@@ -432,6 +432,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/settings/users/users.component').then((m) => m.UsersComponent),
       },
+      {
+        path: APP_ROUTES.settings.roles,
+        loadComponent: () =>
+          import('./features/settings/roles/roles.component').then((m) => m.RolesComponent),
+      },
     ],
   },
 
