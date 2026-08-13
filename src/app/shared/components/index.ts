@@ -5,3 +5,4 @@ export * from './table/table.component';
 export * from './input/input.component';
 export * from './analytics-breakdown/analytics-breakdown.component';
 export * from './analytics-columns-chart/analytics.columns.chart.component';
+export * from './select/select.component';
