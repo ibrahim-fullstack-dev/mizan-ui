@@ -463,6 +463,11 @@ export const routes: Routes = [
             (m) => m.CurrencyComponent,
           ),
       },
+      {
+        path: APP_ROUTES.settings.country,
+        loadComponent: () =>
+          import('./features/settings/country/country.component').then((m) => m.CountryComponent),
+      },
     ],
   },
 
