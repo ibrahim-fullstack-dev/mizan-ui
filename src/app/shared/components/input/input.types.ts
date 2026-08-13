@@ -1,6 +1,6 @@
 // src/app/shared/components/input/input.types.ts
 
-export type InputType = 'text' | 'email' | 'number' | 'password' | 'tel' | 'url';
+export type InputType = 'text' | 'email' | 'number' | 'password' | 'tel' | 'url' | 'date';
 
 export interface InputConfig {
   label?: string;
