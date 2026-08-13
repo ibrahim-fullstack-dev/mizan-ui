@@ -468,6 +468,13 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./features/settings/country/country.component').then((m) => m.CountryComponent),
       },
+      {
+        path: APP_ROUTES.settings.activityLog,
+        loadComponent: () =>
+          import('./features/settings/activity-log/activity-log.component').then(
+            (m) => m.ActivityLogComponent,
+          ),
+      },
     ],
   },
 
