@@ -444,6 +444,11 @@ export const routes: Routes = [
             (m) => m.PaymentMethodComponent,
           ),
       },
+      {
+        path: APP_ROUTES.settings.taxes,
+        loadComponent: () =>
+          import('./features/settings/taxes/taxes.component').then((m) => m.TaxesComponent),
+      },
     ],
   },
 
