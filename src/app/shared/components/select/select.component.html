@@ -1,0 +1,29 @@
+<div class="custom-select-wrapper">
+  @if (config.label) {
+    <label class="form-label" [class.required]="config.required">
+      {{ config.label }}
+    </label>
+  }
+
+  <div class="select-container" [class.disabled]="config.disabled" [class.error]="config.error">
+    <select
+      [disabled]="config.disabled || false"
+      [value]="config.value"
+      (change)="onSelectionChange($event)"
+      class="native-select"
+    >
+      @if (config.placeholder) {
+        <option value="" disabled selected>{{ config.placeholder }}</option>
+      }
+      @for (option of config.options; track option.value) {
+        <option [value]="option.value" [disabled]="option.disabled">
+          {{ option.label }}
+        </option>
+      }
+    </select>
+  </div>
+
+  @if (config.error) {
+    <span class="error-message">{{ config.error }}</span>
+  }
+</div>
