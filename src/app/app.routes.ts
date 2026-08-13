@@ -475,6 +475,11 @@ export const routes: Routes = [
             (m) => m.ActivityLogComponent,
           ),
       },
+      {
+        path: APP_ROUTES.settings.tickets,
+        loadComponent: () =>
+          import('./features/settings/tickets/tickets.component').then((m) => m.TicketsComponent),
+      },
     ],
   },
 
