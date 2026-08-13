@@ -1,0 +1,109 @@
+/* ==========================================================================
+   Custom Select Component Styles (Mizan Enterprise Theme Integrated)
+   ========================================================================== */
+
+:host {
+  display: flex;
+  width: 100%;
+}
+
+.custom-select-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.form-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.form-label.required::after {
+  content: ' *';
+  color: var(--color-danger);
+}
+
+.select-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.select-container:hover {
+  border-color: var(--border-focus);
+}
+
+.select-container:focus-within {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px var(--ring-focus);
+}
+
+.select-container.error {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+.select-container.disabled {
+  background-color: var(--bg-hover);
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.native-select {
+  width: 100%;
+  padding: 10px 36px 10px 14px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: var(--font-family);
+  font-size: 0.875rem;
+  color: var(--text-main);
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+}
+
+.native-select option {
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  padding: 10px;
+}
+
+.native-select:disabled {
+  cursor: not-allowed;
+}
+
+/* Custom Dropdown Arrow Icon */
+.select-container::after {
+  content: '';
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--text-secondary);
+  border-bottom: 2px solid var(--text-secondary);
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
+  transition: border-color 0.2s ease;
+}
+
+.select-container:hover::after {
+  border-color: var(--border-focus);
+}
+
+.error-message {
+  font-size: 0.75rem;
+  color: var(--color-danger);
+  font-weight: 500;
+  margin-top: 2px;
+}
