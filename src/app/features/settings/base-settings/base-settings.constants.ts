@@ -4,70 +4,70 @@ export const PAGE_NAVIGATION_BUTTONS: IPageNavigationItem[] = [
     key: 'general',
     buttonConfig: {
       variant: 'text',
+      label: 'General',
     },
-    content: 'General',
   },
   {
     key: 'offer',
     buttonConfig: {
       variant: 'text',
+      label: 'Offer',
     },
-    content: 'Offer',
   },
   {
     key: 'invoice',
     buttonConfig: {
       variant: 'text',
+      label: 'Invoice',
     },
-    content: 'Invoice',
   },
   {
     key: 'order',
     buttonConfig: {
       variant: 'text',
+      label: 'Order',
     },
-    content: 'order',
   },
   {
     key: 'taxes',
     buttonConfig: {
       variant: 'text',
+      label: 'Taxes',
     },
-    content: 'Taxes',
   },
   {
     key: 'pos',
     buttonConfig: {
       variant: 'text',
+      label: 'POS',
     },
-    content: 'POS',
   },
   {
     key: 'accounting',
     buttonConfig: {
       variant: 'text',
+      label: 'Accounting',
     },
-    content: 'Accounting',
   },
   {
     key: 'smtp',
     buttonConfig: {
       variant: 'text',
+      label: 'SMTP',
     },
-    content: 'SMTP',
   },
   {
     key: 'products',
     buttonConfig: {
       variant: 'text',
+      label: 'Products',
     },
-    content: 'Products',
   },
   {
     key: 'notifications',
     buttonConfig: {
       variant: 'text',
+      label: 'Notifications',
     },
-    content: 'Notifications',
   },
 ];

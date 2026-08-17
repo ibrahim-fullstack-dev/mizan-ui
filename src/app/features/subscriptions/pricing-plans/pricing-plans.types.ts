@@ -8,7 +8,6 @@ export interface IPricingPlan {
   price: string;
   period: string;
   description: string;
-  buttonText: string;
   buttonConfig: ButtonConfig;
   features: {
     invoices: string;

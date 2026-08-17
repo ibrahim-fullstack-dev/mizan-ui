@@ -1,15 +1,14 @@
 import { ButtonConfig } from '@components/button/button.types';
-export interface IPurchaseInvoices {
+export interface IPurchaseInvoice {
   id: number;
   invoiceNumber: string;
   clientName: string;
   totalAmount: number;
-  Balance: number;
+  balance: number;
   status: string;
   date: string;
 }
 export interface IPageNavigationItem {
   key: string;
   buttonConfig: ButtonConfig;
-  content: string;
 }

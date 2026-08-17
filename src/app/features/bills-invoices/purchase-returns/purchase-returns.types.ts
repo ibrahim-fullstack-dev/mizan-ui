@@ -1,11 +1,11 @@
-export interface IPurchaseReturns {
+export interface IPurchaseReturn {
   id: number;
   invoiceNumber: string;
   purchaseInvoiceNumber: string;
-  SupplierName: string;
-  BranchName: string;
-  TotalPrice: number;
-  Balance: number;
+  supplierName: string;
+  branchName: string;
+  totalPrice: number;
+  balance: number;
   status: string;
   returnDate: string;
 }

@@ -1,6 +1,6 @@
 import { ButtonConfig } from '@components/button/button.types';
 
-export interface ICostCenterRules {
+export interface ICostCenterRule {
   id: number;
   invoiceNumber: string;
   clientName: string;
@@ -12,5 +12,4 @@ export interface ICostCenterRules {
 export interface IPageNavigationItem {
   key: string;
   buttonConfig: ButtonConfig;
-  content: string;
 }

@@ -1,4 +1,4 @@
-export interface IExpense {
+export interface IExpenseCategory {
   id: number;
   name: string;
   accountName: string;

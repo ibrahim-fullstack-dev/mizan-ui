@@ -1,4 +1,4 @@
-export interface IPOS {
+export interface IPointOfSale {
   id: number;
   code: string;
   reference: string;

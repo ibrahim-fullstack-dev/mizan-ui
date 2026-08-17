@@ -1,4 +1,4 @@
-export interface IManufacturingQuantion {
+export interface IManufacturingEquation {
   id: number;
   name: string;
   manufacturingType: string;
