@@ -9,11 +9,11 @@ import { SIDEBAR_NAVIGATION } from './sidebar.constant';
   selector: 'app-sidebar',
   standalone: true,
   imports: [CommonModule, RouterLink, RouterLinkActive, LucideAngularModule],
-  templateUrl: './sidebar.html',
-  styleUrl: './sidebar.css',
+  templateUrl: './sidebar.component.html',
+  styleUrl: './sidebar.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Sidebar {
+export class SidebarComponent {
   protected readonly navigationItems = SIDEBAR_NAVIGATION;
   protected readonly activeDropdown = signal<string | null>(null);
   protected toggleDropdown(label: string): void {
