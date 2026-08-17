@@ -14,7 +14,12 @@ export interface IPageAction {
 
 export interface IDataPageConfig<T extends { id: TableId }> {
   layout: IPageLayout;
+
+  searchPlaceholder?: string;
+
   headerButtons?: IPageAction[];
+
   tabs?: IPageAction[];
+
   table: TableConfig<T>;
 }
