@@ -1,17 +1,20 @@
-<!-- src/app/core/data-page/data-page.component.html -->
 <div class="page-container">
   @if (config().layout.showToolbar) {
     <div class="toolbar">
-      <app-input
-        search-zone
-        placeholder="Search bills invoices by client name..."
-        [value]="searchQuery()"
-        (valueChange)="searchQuery.set($event)"
-      />
+      <!-- Default search-->
+      <app-input [config]="searchConfig()" [(value)]="searchQuery" />
+
+      <!-- Optional custom search/filter content -->
+      <ng-content select="[toolbar-search-zone]"></ng-content>
+
+      <!-- Standard actions -->
       <div class="toolbar-actions">
         @for (button of config().headerButtons ?? []; track button.key) {
           <app-button [config]="button.buttonConfig" (btnClick)="onHeaderAction(button.key)" />
         }
+
+        <!-- Optional custom actions -->
+        <ng-content select="[toolbar-actions-zone]"></ng-content>
       </div>
     </div>
   }

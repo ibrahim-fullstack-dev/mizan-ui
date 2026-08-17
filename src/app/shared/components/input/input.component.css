@@ -1,7 +1,7 @@
 /* src/app/shared/components/input/input.component.css */
 
 /* ==========================================================================
-   Enterprise Input Component Styles (Mizan System)
+   Enterprise Input Component Styles
    ========================================================================== */
 
 .input-container {
@@ -24,26 +24,89 @@
   align-items: center;
   gap: 0.25rem;
 
+  min-width: 0;
+
   color: var(--text-main);
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
+  line-height: 1.4;
 }
 
-.text-danger {
+.input-label-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.required-indicator {
+  flex-shrink: 0;
   color: var(--color-danger);
   font-weight: 700;
 }
 
 /* ==========================================================================
-   Input
+   Input Wrapper
+   ========================================================================== */
+
+.input-wrapper {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  width: 100%;
+  min-width: 0;
+
+  border-radius: var(--radius-md);
+}
+
+/* ==========================================================================
+   Input Icon
+   ========================================================================== */
+
+.input-icon {
+  position: absolute;
+  left: 0.875rem;
+  z-index: 1;
+
+  width: 18px;
+  height: 18px;
+
+  color: var(--text-muted);
+
+  pointer-events: none;
+
+  transition:
+    color 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.input-wrapper:focus-within .input-icon {
+  color: var(--color-primary);
+}
+
+.input-wrapper.is-invalid .input-icon {
+  color: var(--color-danger);
+}
+
+.input-wrapper.is-disabled .input-icon {
+  color: var(--text-light);
+  opacity: 0.7;
+}
+
+/* ==========================================================================
+   Input Field
    ========================================================================== */
 
 .form-control {
+  display: block;
+
   width: 100%;
   min-width: 0;
   max-width: 100%;
+  height: 42px;
 
-  padding: 0.625rem 0.875rem;
+  padding: 0 0.875rem;
 
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
@@ -53,25 +116,65 @@
   color: var(--text-main);
 
   font-family: var(--font-family);
-  font-size: 0.95rem;
+  font-size: 0.9375rem;
+  font-weight: 400;
   line-height: 1.5;
 
+  box-sizing: border-box;
+
   transition:
-    border-color 0.15s ease-in-out,
-    box-shadow 0.15s ease-in-out,
-    background-color 0.2s ease,
-    color 0.2s ease;
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease,
+    color 0.15s ease;
 }
+
+.input-wrapper.has-icon .form-control {
+  padding-left: 2.75rem;
+}
+
+/* ==========================================================================
+   Placeholder
+   ========================================================================== */
 
 .form-control::placeholder {
   color: var(--text-light);
   opacity: 1;
 }
 
+/* ==========================================================================
+   Hover
+   ========================================================================== */
+
+.form-control:hover:not(:disabled) {
+  border-color: var(--text-light);
+}
+
+/* ==========================================================================
+   Focus
+   ========================================================================== */
+
 .form-control:focus {
   border-color: var(--border-focus);
   box-shadow: 0 0 0 3px var(--ring-focus);
 }
+
+/* ==========================================================================
+   Date Input
+   ========================================================================== */
+
+.form-control[type='date'] {
+  color-scheme: light;
+}
+
+html.dark .form-control[type='date'],
+.dark-theme .form-control[type='date'] {
+  color-scheme: dark;
+}
+
+/* ==========================================================================
+   Disabled
+   ========================================================================== */
 
 .form-control:disabled {
   cursor: not-allowed;
@@ -83,13 +186,21 @@
   opacity: 0.7;
 }
 
-.form-control.is-invalid {
+.form-control:disabled::placeholder {
+  color: var(--text-light);
+}
+
+/* ==========================================================================
+   Invalid
+   ========================================================================== */
+
+.input-wrapper.is-invalid .form-control {
   border-color: var(--color-danger);
 }
 
-.form-control.is-invalid:focus {
+.input-wrapper.is-invalid .form-control:focus {
   border-color: var(--color-danger);
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.2);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.18);
 }
 
 /* ==========================================================================
@@ -103,4 +214,15 @@
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 1.4;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .form-control {
+    width: 100%;
+    max-width: 100%;
+  }
 }
