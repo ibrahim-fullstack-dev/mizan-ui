@@ -1,25 +1,43 @@
 <div class="input-container">
-  @if (label()) {
+  @if (config().label) {
     <label [for]="inputId" class="input-label">
-      {{ label() }}
-      @if (required()) {
-        <span class="text-danger">*</span>
+      <span class="input-label-text">
+        {{ config().label }}
+      </span>
+
+      @if (config().required) {
+        <span class="required-indicator" aria-hidden="true">*</span>
       }
     </label>
   }
 
-  <input
-    [id]="inputId"
-    [type]="type()"
-    [value]="value()"
-    [placeholder]="placeholder()"
-    [disabled]="disabled()"
-    (input)="onInput($event)"
-    class="form-control"
-    [class.is-invalid]="error()"
-  />
+  <div
+    class="input-wrapper"
+    [class.has-icon]="!!config().icon"
+    [class.is-invalid]="!!config().error"
+    [class.is-disabled]="!!config().disabled"
+  >
+    @if (config().icon) {
+      <lucide-icon [img]="config().icon" class="input-icon" aria-hidden="true" />
+    }
 
-  @if (error()) {
-    <span class="error-message">{{ error() }}</span>
+    <input
+      [id]="inputId"
+      [type]="config().type ?? 'text'"
+      [value]="value() || config().value || ''"
+      [placeholder]="config().placeholder ?? ''"
+      [disabled]="config().disabled ?? false"
+      [required]="config().required ?? false"
+      [attr.aria-invalid]="!!config().error"
+      [attr.aria-describedby]="config().error ? inputId + '-error' : null"
+      (input)="onInput($event)"
+      class="form-control"
+    />
+  </div>
+
+  @if (config().error) {
+    <span [id]="inputId + '-error'" class="error-message" role="alert">
+      {{ config().error }}
+    </span>
   }
 </div>
