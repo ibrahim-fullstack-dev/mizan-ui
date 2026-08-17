@@ -5,7 +5,7 @@ import { ButtonComponent } from '@components/button/button.component';
 import { InputComponent } from '@shared/components/input/input.component';
 
 // Constants
-import { BUTTONS } from './company-settings-address.constants';
+import { BUTTONS, ADDRESS_INPUTS } from './company-settings-address.constants';
 
 @Component({
   selector: 'app-company-settings-address',
@@ -20,44 +20,8 @@ export class CompanySettingsAddressComponent {
   @Output() cancel = new EventEmitter<void>();
 
   // Button configurations using ButtonConfig interface
-  buttons = BUTTONS;
-
-  // Address Input Configurations
-  streetNameConfig: InputConfig = {
-    label: 'Street Name',
-    type: 'text',
-    placeholder: 'Enter street name',
-    required: true,
-  };
-  buildingNoConfig: InputConfig = {
-    label: 'Building No',
-    type: 'text',
-    placeholder: 'Enter building number',
-    required: true,
-  };
-  subdivisionConfig: InputConfig = {
-    label: 'Subdivision',
-    type: 'text',
-    placeholder: 'Enter subdivision/district',
-  };
-  cityConfig: InputConfig = {
-    label: 'City',
-    type: 'text',
-    placeholder: 'Enter city name',
-    required: true,
-  };
-  postalCodeConfig: InputConfig = {
-    label: 'Postal Code',
-    type: 'text',
-    placeholder: 'Enter postal code',
-  };
-  countryConfig: InputConfig = {
-    label: 'Country',
-    type: 'text',
-    placeholder: 'Saudi Arabia',
-    disabled: true,
-    required: true,
-  };
+  protected readonly addressInputs = ADDRESS_INPUTS;
+  protected readonly buttons = BUTTONS;
 
   onInput(fieldKey: string, event: Event): void {
     const inputElement = event.target as HTMLInputElement;

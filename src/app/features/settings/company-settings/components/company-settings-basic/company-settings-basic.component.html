@@ -1,133 +1,55 @@
+<!-- src/app/features/settings/company-settings/components/company-settings-basic/company-settings-basic.component.html -->
+
 <div class="company-form-slide">
   <div class="slide-header">
     <h3 class="slide-title">Basic Information</h3>
   </div>
 
   <div class="form-grid">
-    <!-- Name -->
     <div class="form-group">
-      <app-input
-        [label]="nameConfig.label!"
-        [disabled]="nameConfig.disabled!"
-        [required]="nameConfig.required!"
-        [error]="nameConfig.error!"
-        [placeholder]="nameConfig.placeholder!"
-        [type]="nameConfig.type!"
-      ></app-input>
+      <app-input [config]="inputs.name" />
     </div>
 
-    <!-- Email -->
     <div class="form-group">
-      <app-input
-        [label]="emailConfig.label!"
-        [disabled]="emailConfig.disabled!"
-        [required]="emailConfig.required!"
-        [error]="emailConfig.error!"
-        [placeholder]="emailConfig.placeholder!"
-        [type]="emailConfig.type!"
-      ></app-input>
+      <app-input [config]="inputs.email" />
     </div>
 
-    <!-- Contact Number 2 -->
     <div class="form-group">
-      <app-input
-        [label]="contactNumber2Config.label!"
-        [disabled]="contactNumber2Config.disabled!"
-        [required]="contactNumber2Config.required!"
-        [error]="contactNumber2Config.error!"
-        [placeholder]="contactNumber2Config.placeholder!"
-        [type]="contactNumber2Config.type!"
-      ></app-input>
+      <app-input [config]="inputs.contactNumber2" />
     </div>
 
-    <!-- Field -->
     <div class="form-group">
-      <app-input
-        [label]="fieldConfig.label!"
-        [disabled]="fieldConfig.disabled!"
-        [required]="fieldConfig.required!"
-        [error]="fieldConfig.error!"
-        [placeholder]="fieldConfig.placeholder!"
-        [type]="fieldConfig.type!"
-      ></app-input>
+      <app-input [config]="inputs.field" />
     </div>
 
-    <!-- Commercial Registration No. -->
     <div class="form-group">
-      <app-input
-        [label]="commercialRegistrationNoConfig.label!"
-        [disabled]="commercialRegistrationNoConfig.disabled!"
-        [required]="commercialRegistrationNoConfig.required!"
-        [error]="commercialRegistrationNoConfig.error!"
-        [placeholder]="commercialRegistrationNoConfig.placeholder!"
-        [type]="commercialRegistrationNoConfig.type!"
-      ></app-input>
+      <app-input [config]="inputs.commercialRegistrationNo" />
     </div>
 
-    <!-- Organization Name (Company Name) -->
     <div class="form-group">
-      <app-input
-        [label]="organizationNameConfig.label!"
-        [disabled]="organizationNameConfig.disabled!"
-        [required]="organizationNameConfig.required!"
-        [error]="organizationNameConfig.error!"
-        [placeholder]="organizationNameConfig.placeholder!"
-        [type]="organizationNameConfig.type!"
-      ></app-input>
+      <app-input [config]="inputs.organizationName" />
     </div>
 
-    <!-- Organizational Unit Name (Branch Name) -->
     <div class="form-group">
-      <app-input
-        [label]="organizationalUnitNameConfig.label!"
-        [disabled]="organizationalUnitNameConfig.disabled!"
-        [required]="organizationalUnitNameConfig.required!"
-        [error]="organizationalUnitNameConfig.error!"
-        [placeholder]="organizationalUnitNameConfig.placeholder!"
-        [type]="organizationalUnitNameConfig.type!"
-      ></app-input>
+      <app-input [config]="inputs.organizationalUnitName" />
     </div>
 
-    <!-- Other ID Type -->
     <div class="form-group">
-      <app-input
-        [label]="otherIdTypeConfig.label!"
-        [disabled]="otherIdTypeConfig.disabled!"
-        [required]="otherIdTypeConfig.required!"
-        [error]="otherIdTypeConfig.error!"
-        [placeholder]="otherIdTypeConfig.placeholder!"
-        [type]="otherIdTypeConfig.type!"
-      ></app-input>
+      <app-input [config]="inputs.otherIdType" />
     </div>
 
-    <!-- Other ID Number -->
     <div class="form-group">
-      <app-input
-        [label]="otherIdNumberConfig.label!"
-        [disabled]="otherIdNumberConfig.disabled!"
-        [required]="otherIdNumberConfig.required!"
-        [error]="otherIdNumberConfig.error!"
-        [placeholder]="otherIdNumberConfig.placeholder!"
-        [type]="otherIdNumberConfig.type!"
-      ></app-input>
+      <app-input [config]="inputs.otherIdNumber" />
     </div>
 
-    <!-- Short Address -->
     <div class="form-group full-width">
-      <app-input
-        [label]="shortAddressConfig.label!"
-        [disabled]="shortAddressConfig.disabled!"
-        [required]="shortAddressConfig.required!"
-        [error]="shortAddressConfig.error!"
-        [placeholder]="shortAddressConfig.placeholder!"
-        [type]="shortAddressConfig.type!"
-      ></app-input>
+      <app-input [config]="inputs.shortAddress" />
     </div>
   </div>
 
-  <!-- Form Actions (Save & Cancel Buttons) -->
   <div class="form-actions">
     <app-button [config]="buttons.cancel" (btnClick)="onCancel()" />
+
     <app-button [config]="buttons.save" (btnClick)="onSave()" />
   </div>
 </div>

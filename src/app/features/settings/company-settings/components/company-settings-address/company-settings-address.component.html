@@ -1,3 +1,5 @@
+<!-- src/app/features/settings/company-settings/components/company-settings-address/company-settings-address.component.html -->
+
 <div class="company-form-slide">
   <div class="slide-header">
     <h3 class="slide-title">Address Information</h3>
@@ -6,81 +8,38 @@
   <div class="form-grid">
     <!-- Street Name -->
     <div class="form-group">
-      <app-input
-        [label]="streetNameConfig.label!"
-        [disabled]="streetNameConfig.disabled!"
-        [required]="streetNameConfig.required!"
-        [error]="streetNameConfig.error!"
-        [placeholder]="streetNameConfig.placeholder!"
-        [type]="streetNameConfig.type!"
-      >
-      </app-input>
+      <app-input [config]="addressInputs.streetName" />
     </div>
 
     <!-- Building No -->
     <div class="form-group">
-      <app-input
-        [label]="buildingNoConfig.label!"
-        [disabled]="buildingNoConfig.disabled!"
-        [required]="buildingNoConfig.required!"
-        [error]="buildingNoConfig.error!"
-        [placeholder]="buildingNoConfig.placeholder!"
-        [type]="buildingNoConfig.type!"
-      ></app-input>
+      <app-input [config]="addressInputs.buildingNo" />
     </div>
 
     <!-- Subdivision -->
     <div class="form-group">
-      <app-input
-        [label]="subdivisionConfig.label!"
-        [disabled]="subdivisionConfig.disabled!"
-        [required]="subdivisionConfig.required!"
-        [error]="subdivisionConfig.error!"
-        [placeholder]="subdivisionConfig.placeholder!"
-        [type]="subdivisionConfig.type!"
-      ></app-input>
+      <app-input [config]="addressInputs.subdivision" />
     </div>
 
     <!-- City -->
     <div class="form-group">
-      <app-input
-        [label]="cityConfig.label!"
-        [disabled]="cityConfig.disabled!"
-        [required]="cityConfig.required!"
-        [error]="cityConfig.error!"
-        [placeholder]="cityConfig.placeholder!"
-        [type]="cityConfig.type!"
-      ></app-input>
+      <app-input [config]="addressInputs.city" />
     </div>
 
     <!-- Postal Code -->
     <div class="form-group">
-      <app-input
-        [label]="postalCodeConfig.label!"
-        [disabled]="postalCodeConfig.disabled!"
-        [required]="postalCodeConfig.required!"
-        [error]="postalCodeConfig.error!"
-        [placeholder]="postalCodeConfig.placeholder!"
-        [type]="postalCodeConfig.type!"
-      ></app-input>
+      <app-input [config]="addressInputs.postalCode" />
     </div>
 
-    <!-- Country (Default to Saudi Arabia) -->
+    <!-- Country -->
     <div class="form-group">
-      <app-input
-        [label]="countryConfig.label!"
-        [disabled]="true"
-        [required]="countryConfig.required!"
-        [error]="countryConfig.error!"
-        [placeholder]="countryConfig.placeholder || 'Saudi Arabia'"
-        [type]="countryConfig.type!"
-      ></app-input>
+      <app-input [config]="addressInputs.country" />
     </div>
   </div>
 
-  <!-- Form Actions Using Shared Button Component -->
   <div class="form-actions">
     <app-button [config]="buttons.cancel" (btnClick)="onCancel()" />
+
     <app-button [config]="buttons.save" (btnClick)="onSave()" />
   </div>
 </div>
