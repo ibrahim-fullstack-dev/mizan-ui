@@ -1,18 +1,20 @@
 <button
-  [type]="type()"
-  [disabled]="disabled() || loading()"
+  [type]="resolvedConfig().type"
+  [disabled]="resolvedConfig().disabled || resolvedConfig().loading"
   [className]="buttonClasses()"
   (click)="onClick($event)"
 >
-  @if (loading()) {
+  @if (resolvedConfig().loading) {
     <span class="btn-spinner" aria-hidden="true"></span>
   } @else {
-    @if (icon()) {
-      <lucide-icon [img]="icon()" class="btn-icon" aria-hidden="true"></lucide-icon>
+    @if (resolvedConfig().icon; as btnIcon) {
+      <lucide-icon [img]="btnIcon" class="btn-icon" aria-hidden="true"></lucide-icon>
     }
 
     <span class="btn-content">
-      <ng-content></ng-content>
+      <ng-content>
+        {{ resolvedConfig().label }}
+      </ng-content>
     </span>
   }
 </button>

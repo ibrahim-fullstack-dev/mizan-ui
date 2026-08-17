@@ -1,23 +1,22 @@
-import {
-  Component,
-  input,
-  output,
-  computed,
-  signal,
-  linkedSignal,
-  ContentChild,
-  TemplateRef,
-} from '@angular/core';
+// src/app/shared/components/table/table.component.ts
+
+import { Component, computed, input, output, signal } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 import { ButtonComponent } from '../button/button.component';
 import { LucideAngularModule } from 'lucide-angular';
+
+import { ButtonConfig } from '../button/button.types';
+
 import {
-  TableColumn,
-  TableAction,
-  TableActionType,
   TableActionEvent,
+  TableActionType,
+  TableConfig,
+  TableId,
   TablePageEvent,
 } from './table.types';
+
+import { PAGE_SIZE_OPTIONS } from './table.constants';
 
 @Component({
   selector: 'app-table',
@@ -26,149 +25,275 @@ import {
   templateUrl: './table.component.html',
   styleUrl: './table.component.css',
 })
-export class TableComponent<T extends Record<string, any>> {
-  // --- Data & Configuration Inputs ---
-  data = input<any[]>([]);
-  columns = input<TableColumn[]>([]);
-  actions = input<TableAction[]>([]);
+export class TableComponent<T extends { id: TableId }> {
+  // =====================================================
+  // INPUT
+  // =====================================================
 
-  /** Unique key property name to track items (e.g., 'id', 'uuid') */
-  trackByProperty = input<keyof T | string>('id');
+  public readonly config = input.required<TableConfig<T>>();
 
-  // --- Feature Switches ---
-  selectable = input<boolean>(false);
-  showActions = input<boolean>(true);
-  showPagination = input<boolean>(true);
-  emptyMessage = input<string>('لا توجد بيانات للعرض');
-
-  // --- Pagination Inputs ---
-  totalItems = input<number>(0);
-  pageSize = input<number>(10);
-  currentPage = input<number>(1);
-
-  // --- Outputs ---
-  selectionChange = output<T[]>();
-  actionClick = output<TableActionEvent<T>>();
-  pageChange = output<TablePageEvent>();
-
-  protected readonly pageSizeOptions = [5, 10, 25, 50, 100];
+  // =====================================================
+  // OUTPUTS
+  // =====================================================
 
   /**
-   * LinkedSignal dynamically resets selection when data changes
-   * without needing manual side-effects or `effect()`.
+   * Emits only the selected row IDs.
    */
-  protected selectedRowIds = linkedSignal<T[], Set<any>>({
-    source: this.data,
-    computation: () => new Set<any>(),
+  public readonly selectionChange = output<T['id'][]>();
+
+  /**
+   * Emits when the page or page size changes.
+   */
+  public readonly pageChange = output<TablePageEvent>();
+
+  /**
+   * Emits when a row action is triggered.
+   */
+  public readonly actionClick = output<TableActionEvent<T>>();
+
+  // =====================================================
+  // CONSTANTS
+  // =====================================================
+
+  protected readonly pageSizeOptions = PAGE_SIZE_OPTIONS;
+
+  // =====================================================
+  // RESOLVED CONFIG
+  // =====================================================
+
+  protected readonly resolvedConfig = computed(() => {
+    const config = this.config();
+
+    return {
+      data: config.data ?? [],
+
+      columns: config.columns,
+
+      actions: config.actions ?? [],
+
+      selectable: config.selectable ?? false,
+
+      showActions: config.showActions ?? (config.actions?.length ?? 0) > 0,
+
+      showPagination: config.showPagination ?? true,
+
+      emptyMessage: config.emptyMessage ?? 'No items found.',
+
+      totalItems: config.totalItems ?? config.data?.length ?? 0,
+
+      pageSize: config.pageSize ?? 10,
+
+      currentPage: config.currentPage ?? 1,
+    };
   });
 
-  // --- Computed Helpers ---
-  protected startIndex = computed(() => {
-    if (this.data().length === 0) return 0;
-    return (this.currentPage() - 1) * this.pageSize() + 1;
+  // =====================================================
+  // SELECTION STATE
+  // =====================================================
+
+  /**
+   * Stores selected row IDs.
+   */
+  protected readonly selectedRowIds = signal<Set<T['id']>>(new Set());
+
+  // =====================================================
+  // PAGINATION STATE
+  // =====================================================
+
+  protected readonly startIndex = computed(() => {
+    const config = this.resolvedConfig();
+
+    if (config.data.length === 0) {
+      return 0;
+    }
+
+    return (config.currentPage - 1) * config.pageSize + 1;
   });
 
-  protected endIndex = computed(() => {
-    const end = this.currentPage() * this.pageSize();
-    const total = this.totalItems();
-    return end > total ? total : end;
+  protected readonly endIndex = computed(() => {
+    const config = this.resolvedConfig();
+
+    if (config.data.length === 0) {
+      return 0;
+    }
+
+    return Math.min(config.currentPage * config.pageSize, config.totalItems);
   });
 
-  protected isFirstPage = computed(() => this.currentPage() === 1);
-
-  protected isLastPage = computed(() => {
-    if (this.totalItems() === 0) return true;
-    const totalPages = Math.ceil(this.totalItems() / this.pageSize());
-    return this.currentPage() >= totalPages;
+  protected readonly isFirstPage = computed(() => {
+    return this.resolvedConfig().currentPage === 1;
   });
 
-  protected isAllSelected = computed(() => {
-    const currentData = this.data();
-    if (currentData.length === 0) return false;
-    const key = this.trackByProperty();
-    return currentData.every((row) => this.selectedRowIds().has(row[key]));
+  protected readonly isLastPage = computed(() => {
+    const config = this.resolvedConfig();
+
+    if (config.totalItems === 0) {
+      return true;
+    }
+
+    const totalPages = Math.ceil(config.totalItems / config.pageSize);
+
+    return config.currentPage >= totalPages;
   });
 
-  protected isSomeSelected = computed(() => {
-    const currentData = this.data();
-    const key = this.trackByProperty();
-    const selectedCount = currentData.filter((row) => this.selectedRowIds().has(row[key])).length;
-    return selectedCount > 0 && selectedCount < currentData.length;
-  });
+  protected readonly previousPageButton = computed<ButtonConfig>(() => ({
+    label: 'Previous',
+    variant: 'text',
+    type: 'button',
+    disabled: this.isFirstPage(),
+  }));
 
-  // --- Selection Logic ---
-  protected getRowId(row: T): any {
-    const key = this.trackByProperty();
-    // استخدام bracket notation لتجنب خطأ الـ index signature
-    return (row as Record<string, any>)[key as string];
-  }
+  protected readonly nextPageButton = computed<ButtonConfig>(() => ({
+    label: 'Next',
+    variant: 'text',
+    type: 'button',
+    disabled: this.isLastPage(),
+  }));
+
+  // =====================================================
+  // ROW SELECTION
+  // =====================================================
 
   protected isRowSelected(row: T): boolean {
-    return this.selectedRowIds().has(this.getRowId(row));
+    return this.selectedRowIds().has(row.id);
   }
+
+  // =====================================================
+  // SELECT ALL STATE
+  // =====================================================
+
+  protected readonly isAllSelected = computed(() => {
+    const data = this.resolvedConfig().data;
+
+    if (data.length === 0) {
+      return false;
+    }
+
+    return data.every((row) => this.selectedRowIds().has(row.id));
+  });
+
+  protected readonly isSomeSelected = computed(() => {
+    const data = this.resolvedConfig().data;
+
+    if (data.length === 0) {
+      return false;
+    }
+
+    const selectedCount = data.filter((row) => this.selectedRowIds().has(row.id)).length;
+
+    return selectedCount > 0 && selectedCount < data.length;
+  });
+
+  // =====================================================
+  // TOGGLE SINGLE ROW
+  // =====================================================
 
   protected toggleRowSelection(row: T, event: Event): void {
     const checkbox = event.target as HTMLInputElement;
-    const rowId = this.getRowId(row);
+
     const newSelection = new Set(this.selectedRowIds());
 
     if (checkbox.checked) {
-      newSelection.add(rowId);
+      newSelection.add(row.id);
     } else {
-      newSelection.delete(rowId);
+      newSelection.delete(row.id);
     }
 
     this.selectedRowIds.set(newSelection);
-    this.emitSelectionChange(newSelection);
+
+    this.emitSelectionChange();
   }
+
+  // =====================================================
+  // TOGGLE ALL CURRENT PAGE ROWS
+  // =====================================================
 
   protected toggleAllRows(event: Event): void {
     const checkbox = event.target as HTMLInputElement;
+
+    const data = this.resolvedConfig().data;
+
     const newSelection = new Set(this.selectedRowIds());
-    const currentData = this.data();
-    const key = this.trackByProperty();
 
     if (checkbox.checked) {
-      currentData.forEach((row) => newSelection.add(row[key]));
+      data.forEach((row) => {
+        newSelection.add(row.id);
+      });
     } else {
-      currentData.forEach((row) => newSelection.delete(row[key]));
+      data.forEach((row) => {
+        newSelection.delete(row.id);
+      });
     }
 
     this.selectedRowIds.set(newSelection);
-    this.emitSelectionChange(newSelection);
+
+    this.emitSelectionChange();
   }
 
-  private emitSelectionChange(selectedIds: Set<any>): void {
-    const selectedObjects = this.data().filter((row) => selectedIds.has(this.getRowId(row)));
-    this.selectionChange.emit(selectedObjects);
+  // =====================================================
+  // EMIT SELECTION
+  // =====================================================
+
+  private emitSelectionChange(): void {
+    this.selectionChange.emit(Array.from(this.selectedRowIds()));
   }
 
-  // --- User Action Events ---
-  protected onActionTrigger(action: TableActionType, row: T): void {
-    this.actionClick.emit({ action, row });
+  // =====================================================
+  // ACTIONS
+  // =====================================================
+
+  protected onActionTrigger(action: TableActionType, id: T['id']): void {
+    this.actionClick.emit({
+      action,
+      id,
+    });
   }
+  // =====================================================
+  // PAGE SIZE
+  // =====================================================
 
   protected onPageSizeChange(event: Event): void {
     const select = event.target as HTMLSelectElement;
-    const newSize = parseInt(select.value, 10);
-    this.pageChange.emit({ page: 1, pageSize: newSize });
+
+    const pageSize = Number(select.value);
+
+    this.pageChange.emit({
+      page: 1,
+      pageSize,
+    });
   }
+
+  // =====================================================
+  // PREVIOUS PAGE
+  // =====================================================
 
   protected goToPreviousPage(): void {
-    if (!this.isFirstPage()) {
-      this.pageChange.emit({
-        page: this.currentPage() - 1,
-        pageSize: this.pageSize(),
-      });
+    const config = this.resolvedConfig();
+
+    if (this.isFirstPage()) {
+      return;
     }
+
+    this.pageChange.emit({
+      page: config.currentPage - 1,
+      pageSize: config.pageSize,
+    });
   }
 
+  // =====================================================
+  // NEXT PAGE
+  // =====================================================
+
   protected goToNextPage(): void {
-    if (!this.isLastPage()) {
-      this.pageChange.emit({
-        page: this.currentPage() + 1,
-        pageSize: this.pageSize(),
-      });
+    const config = this.resolvedConfig();
+
+    if (this.isLastPage()) {
+      return;
     }
+
+    this.pageChange.emit({
+      page: config.currentPage + 1,
+      pageSize: config.pageSize,
+    });
   }
 }

@@ -2,14 +2,16 @@
 
 import { type LucideIconData } from 'lucide-angular';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'outline' | 'text';
+type ButtonVariant = 'primary' | 'secondary' | 'danger' | 'outline' | 'text';
 
-export type ButtonType = 'button' | 'submit' | 'reset';
+type ButtonType = 'button' | 'submit' | 'reset';
 
 export interface ButtonConfig {
+  label?: string;
   variant?: ButtonVariant;
   type?: ButtonType;
   icon?: LucideIconData;
   fullWidth?: boolean;
   disabled?: boolean;
+  loading?: boolean;
 }

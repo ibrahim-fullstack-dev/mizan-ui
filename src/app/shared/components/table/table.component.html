@@ -1,10 +1,17 @@
 <div class="table-container">
+  <!-- =====================================================
+       TABLE
+       ===================================================== -->
+
   <div class="table-responsive">
     <table class="custom-table">
+      <!-- ================= HEADER ================= -->
+
       <thead>
         <tr>
-          <!-- 1. مربع الاختيار (اختياري) -->
-          @if (selectable()) {
+          <!-- Selection column -->
+
+          @if (resolvedConfig().selectable) {
             <th class="col-checkbox">
               <input
                 type="checkbox"
@@ -16,30 +23,38 @@
             </th>
           }
 
-          <!-- 2. رؤوس الأعمدة الديناميكية -->
-          @for (col of columns(); track col.key) {
+          <!-- Dynamic columns -->
+
+          @for (column of resolvedConfig().columns; track column.key) {
             <th>
               <div class="header-content">
-                @if (col.icon) {
-                  <lucide-icon [img]="col.icon" class="header-icon"></lucide-icon>
+                @if (column.icon) {
+                  <lucide-icon [img]="column.icon" class="header-icon" />
                 }
-                <p class="header-label">{{ col.label }}</p>
+
+                <p class="header-label">
+                  {{ column.label }}
+                </p>
               </div>
             </th>
           }
 
-          <!-- 3. رأس العمليات (محدث: يتأكد من تفعيل العَلَم ووجود عناصر) -->
-          @if (showActions() && actions().length > 0) {
-            <th class="col-actions text-center">Actions</th>
+          <!-- Actions column -->
+
+          @if (resolvedConfig().showActions && resolvedConfig().actions.length > 0) {
+            <th class="col-actions">Actions</th>
           }
         </tr>
       </thead>
 
+      <!-- ================= BODY ================= -->
+
       <tbody>
-        @for (row of data(); track row.id || $index) {
-          <tr [class.row-selected]="selectable() && isRowSelected(row)">
-            <!-- مربع اختيار الصف -->
-            @if (selectable()) {
+        @for (row of resolvedConfig().data; track row.id) {
+          <tr [class.row-selected]="resolvedConfig().selectable && isRowSelected(row)">
+            <!-- Row selection -->
+
+            @if (resolvedConfig().selectable) {
               <td class="col-checkbox">
                 <input
                   type="checkbox"
@@ -50,89 +65,95 @@
               </td>
             }
 
-            <!-- البيانات الديناميكية -->
-            @for (col of columns(); track col.key) {
-              <td>{{ row[col.key] }}</td>
+            <!-- Dynamic cells -->
+
+            @for (column of resolvedConfig().columns; track column.key) {
+              <td>
+                {{ row[column.key] }}
+              </td>
             }
 
-            @if (showActions() && actions().length > 0) {
+            <!-- Row actions -->
+
+            @if (resolvedConfig().showActions && resolvedConfig().actions.length > 0) {
               <td class="col-actions">
                 <div class="actions-wrapper">
-                  @for (action of actions(); track action.type) {
+                  @for (action of resolvedConfig().actions; track action.action) {
                     <app-button
-                      [variant]="action.danger ? 'danger' : 'text'"
-                      [icon]="action.icon!"
-                      [title]="action.label || action.type"
-                      (btnClick)="onActionTrigger(action.type, row)"
-                    >
-                      @if (!action.icon) {
-                        <span class="fallback-icon-text">{{ action.type }}</span>
-                      }
-                    </app-button>
+                      [config]="action.button"
+                      (btnClick)="onActionTrigger(action.action, row.id)"
+                    />
                   }
                 </div>
               </td>
             }
           </tr>
-        } @empty {
-          <!-- تحديث حساب الـ colspan ديناميكياً ليتناسب مع الخيارات الجديدة -->
+        }
+
+        <!-- ================= EMPTY STATE ================= -->
+
+        @empty {
           <tr>
             <td
-              [attr.colspan]="
-                columns().length +
-                (selectable() ? 1 : 0) +
-                (showActions() && actions().length > 0 ? 1 : 0)
-              "
               class="empty-state"
+              [attr.colspan]="
+                resolvedConfig().columns.length +
+                (resolvedConfig().selectable ? 1 : 0) +
+                (resolvedConfig().showActions && resolvedConfig().actions.length > 0 ? 1 : 0)
+              "
             >
-              {{ emptyMessage() }}
+              {{ resolvedConfig().emptyMessage }}
             </td>
           </tr>
         }
       </tbody>
     </table>
   </div>
-  @if (showPagination()) {
+
+  <!-- =====================================================
+       PAGINATION
+       ===================================================== -->
+
+  @if (resolvedConfig().showPagination) {
     <div class="table-pagination">
-      <!-- اختيار عدد العناصر لكل صفحة -->
+      <!-- Page size -->
+
       <div class="page-size-selector">
-        <label for="pageSizeSelect">Rows per page:</label>
+        <label for="pageSizeSelect"> Rows per page: </label>
+
         <select
           id="pageSizeSelect"
-          [value]="pageSize()"
-          (change)="onPageSizeChange($event)"
           class="page-select"
+          [value]="resolvedConfig().pageSize"
+          (change)="onPageSizeChange($event)"
         >
           @for (option of pageSizeOptions; track option) {
-            <option [value]="option">{{ option }}</option>
+            <option [value]="option">
+              {{ option }}
+            </option>
           }
         </select>
       </div>
 
-      <!-- عرض مدى السجلات الحالية -->
+      <!-- Pagination information -->
+
       <div class="pagination-info">
-        <span>Showing {{ startIndex() }} - {{ endIndex() }} of {{ totalItems() }}</span>
+        <span>
+          Showing
+          {{ startIndex() }}
+          -
+          {{ endIndex() }}
+          of
+          {{ resolvedConfig().totalItems }}
+        </span>
       </div>
 
-      <!-- أزرار التنقل (Previous / Next) -->
-      <div class="pagination-actions">
-        <app-button
-          variant="text"
-          [disabled]="isFirstPage()"
-          (btnClick)="goToPreviousPage()"
-          title="Previous Page"
-        >
-          Previous
-        </app-button>
+      <!-- Pagination navigation -->
 
-        <app-button
-          variant="text"
-          [disabled]="isLastPage()"
-          (btnClick)="goToNextPage()"
-          title="Next Page"
-        >
-          Next
-        </app-button>
+      <div class="pagination-actions">
+        <app-button [config]="previousPageButton()" (btnClick)="goToPreviousPage()" />
+
+        <app-button [config]="nextPageButton()" (btnClick)="goToNextPage()" />
       </div>
     </div>
   }
