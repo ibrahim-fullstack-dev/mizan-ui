@@ -1,25 +1,30 @@
+// src/app/features/cost-center/estimated-budget/estimated-budget.component.ts
+
 import { Component, computed, signal } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
-import { LucideAngularModule } from 'lucide-angular';
 
-// 🏛️ Shared Components
-import { PageHeaderComponent } from '@components/page-header/page-header.component';
-import { InputComponent } from '@components/input/input.component';
-import { TableComponent } from '@components/table/table.component';
+// Core
+import { DataPageComponent } from '@core/data-page/data-page.component';
+import { IDataPageConfig } from '@core/data-page/data-page.types';
 
-import { TableActionEvent } from '@components/table/table.types';
 import { IEstimatedBudget } from './estimated-budget.types';
 
-// 📐 constants
-import { TABLE_COLUMNS, HEADER_BUTTONS, TABLE_ACTIONS } from './estimated-budget.constant';
+// Constants
+import { DATA_PAGE_CONFIG } from './estimated-budget.constants';
+
 @Component({
   selector: 'app-estimated-budget',
   standalone: true,
-  imports: [CommonModule, PageHeaderComponent, InputComponent, TableComponent, LucideAngularModule],
+  imports: [CommonModule, DataPageComponent],
   templateUrl: './estimated-budget.component.html',
   styleUrl: './estimated-budget.component.css',
 })
-export class estimatedBudgetComponent {
+export class EstimatedBudgetComponent {
+  // =====================================================
+  // DATA
+  // =====================================================
+
   private readonly rawEstimatedBudgets = signal<IEstimatedBudget[]>([
     {
       id: 1,
@@ -30,7 +35,7 @@ export class estimatedBudgetComponent {
       periodEnd: '2023-12-31',
       budgetYear: '2023',
       costCenter: 'CC001',
-      status: 'founded',
+      status: 'Founded',
     },
     {
       id: 2,
@@ -41,7 +46,7 @@ export class estimatedBudgetComponent {
       periodEnd: '2023-12-31',
       budgetYear: '2023',
       costCenter: 'CC001',
-      status: 'founded',
+      status: 'Founded',
     },
     {
       id: 3,
@@ -52,7 +57,7 @@ export class estimatedBudgetComponent {
       periodEnd: '2023-12-31',
       budgetYear: '2023',
       costCenter: 'CC001',
-      status: 'founded',
+      status: 'Founded',
     },
     {
       id: 4,
@@ -63,84 +68,23 @@ export class estimatedBudgetComponent {
       periodEnd: '2023-12-31',
       budgetYear: '2023',
       costCenter: 'CC001',
-      status: 'founded',
+      status: 'Founded',
     },
   ]);
 
-  protected readonly tableColumns = TABLE_COLUMNS;
-  protected readonly headerButtons = HEADER_BUTTONS;
-  protected readonly tableActions = TABLE_ACTIONS;
+  // =====================================================
+  // DATA PAGE CONFIG
+  // =====================================================
 
-  protected readonly searchQuery = signal<string>('');
-  protected readonly pageSize = signal<number>(10);
-  protected readonly currentPage = signal<number>(1);
+  protected readonly dataPageConfig = computed<IDataPageConfig<IEstimatedBudget>>(() => ({
+    ...DATA_PAGE_CONFIG,
 
-  protected readonly filteredCostCenters = computed(() => {
-    const query = this.searchQuery().toLowerCase().trim();
+    table: {
+      ...DATA_PAGE_CONFIG.table,
 
-    if (!query) {
-      return this.rawEstimatedBudgets();
-    }
+      data: this.rawEstimatedBudgets(),
 
-    return this.rawEstimatedBudgets().filter((costCenter) =>
-      costCenter.name.toLowerCase().includes(query),
-    );
-  });
-
-  protected readonly totalostCentersCount = computed(() => this.filteredCostCenters().length);
-
-  // 5️⃣ معالجات أفعال الشريط العلوي (PageHeader Actions Dispatcher)
-  protected onHeaderAction(key: any): void {
-    switch (key) {
-      case 'add-client':
-        this.openAddClientModal();
-        break;
-      case 'export-pdf':
-        this.exportClients();
-        break;
-      default:
-        console.warn(`Unhandled action key: ${key}`);
-    }
-  }
-
-  // 6️⃣ معالجات أفعال الجدول (Table Event Handlers)
-  protected onTableActionTrigger(event: TableActionEvent<IEstimatedBudget>): void {
-    const client = event.row;
-
-    switch (event.action) {
-      case 'delete':
-        this.deleteClient(client.id);
-        break;
-      case 'edit':
-        this.openEditClientModal(client);
-        break;
-    }
-  }
-
-  protected onRowsSelected(selectedClients: IEstimatedBudget[]): void {
-    console.log('Selected clients:', selectedClients);
-  }
-
-  protected onPageParamsChange(event: any): void {
-    this.currentPage.set(event.page);
-    this.pageSize.set(event.pageSize);
-  }
-
-  private deleteClient(id: number): void {
-    this.rawEstimatedBudgets.update((current) =>
-      current.filter((costCenter) => costCenter.id !== id),
-    );
-  }
-
-  private openAddClientModal(): void {
-    console.log('Opening Add Client Modal...');
-  }
-
-  private openEditClientModal(client: IEstimatedBudget): void {
-    console.log('Opening Edit Client Modal for:', client);
-  }
-
-  private exportClients(): void {
-    console.log('Exporting client list to PDF...');
-  }
+      totalItems: this.rawEstimatedBudgets().length,
+    },
+  }));
 }

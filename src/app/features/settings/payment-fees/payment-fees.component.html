@@ -1,27 +1,2 @@
-<div class="page-container">
-  <div class="toolbar">
-    <app-page-header [buttons]="headerButtons" (actionClicked)="onHeaderAction($event)">
-      <app-input
-        search-zone
-        placeholder="Search suppliers by name..."
-        [value]="searchQuery()"
-        (valueChange)="searchQuery.set($event)"
-      />
-    </app-page-header>
-  </div>
-
-  <app-table
-    [data]="filteredClients()"
-    [columns]="tableColumns"
-    [actions]="tableActions"
-    [selectable]="true"
-    [totalItems]="totalClientsCount()"
-    [pageSize]="pageSize()"
-    [currentPage]="currentPage()"
-    (actionClick)="onTableActionTrigger($event)"
-    (selectionChange)="onRowsSelected($event)"
-    (pageChange)="onPageParamsChange($event)"
-    [emptyMessage]="'No suppliers found.'"
-  >
-  </app-table>
-</div>
+<!-- src/app/features/settings/payment-fees/payment-fees.component.html -->
+<app-data-page [config]="dataPageConfig()" />

@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManufacturingQuationsComponent } from './manufacturing-quations.component';
+import { ManufacturingQuationsComponent } from './manufacturing-equations.component';
 
 describe('ManufacturingQuationsComponent', () => {
   let component: ManufacturingQuationsComponent;

@@ -1,19 +1,2 @@
-<div class="page-container">
-  <div class="toolbar">
-    <app-button variant="danger" title="Delete All"> Delete All </app-button>
-  </div>
-
-  <app-table
-    [data]="rawRecurringSalesInvoices()"
-    [columns]="tableColumns"
-    [actions]="tableActions"
-    [selectable]="true"
-    [pageSize]="pageSize()"
-    [currentPage]="currentPage()"
-    (actionClick)="onTableActionTrigger($event)"
-    (selectionChange)="onRowsSelected($event)"
-    (pageChange)="onPageParamsChange($event)"
-    [emptyMessage]="'No Purchase Invoices found.'"
-  >
-  </app-table>
-</div>
+<!-- src/app/features/bills-invoices/recurring-purchase-invoices/recurring-purchase-invoices.component.html -->
+<app-data-page [config]="dataPageConfig()" />

@@ -1,107 +1,51 @@
+// src/app/features/cost-center/projects/projects.component.ts
+
 import { Component, computed, signal } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
-import { LucideAngularModule } from 'lucide-angular';
 
-// 🏛️ Shared Components
-import { PageHeaderComponent } from '@components/page-header/page-header.component';
-import { InputComponent } from '@components/input/input.component';
-import { TableComponent } from '@components/table/table.component';
+// Core
+import { DataPageComponent } from '@core/data-page/data-page.component';
+import { IDataPageConfig } from '@core/data-page/data-page.types';
 
-import { TableActionEvent } from '@components/table/table.types';
-import { IDepartment } from './projects.types';
+import { IProject } from './projects.types';
 
-// 📐 constants
-import { TABLE_COLUMNS, HEADER_BUTTONS, TABLE_ACTIONS } from './projects.constant';
+// Constants
+import { DATA_PAGE_CONFIG } from './projects.constants';
+
 @Component({
-  selector: 'app-cost-centers',
+  selector: 'app-projects',
   standalone: true,
-  imports: [CommonModule, PageHeaderComponent, InputComponent, TableComponent, LucideAngularModule],
+  imports: [CommonModule, DataPageComponent],
   templateUrl: './projects.component.html',
   styleUrl: './projects.component.css',
 })
 export class ProjectsComponent {
-  private readonly rawDeprtmentsData = signal<IDepartment[]>([
+  // =====================================================
+  // DATA
+  // =====================================================
+
+  private readonly rawProjects = signal<IProject[]>([
     {
       id: 1,
-      name: 'project 1',
-      status: 'active',
+      name: 'Project 1',
+      status: 'Active',
     },
   ]);
 
-  protected readonly tableColumns = TABLE_COLUMNS;
-  protected readonly headerButtons = HEADER_BUTTONS;
-  protected readonly tableActions = TABLE_ACTIONS;
+  // =====================================================
+  // DATA PAGE CONFIG
+  // =====================================================
 
-  protected readonly searchQuery = signal<string>('');
-  protected readonly pageSize = signal<number>(10);
-  protected readonly currentPage = signal<number>(1);
+  protected readonly dataPageConfig = computed<IDataPageConfig<IProject>>(() => ({
+    ...DATA_PAGE_CONFIG,
 
-  protected readonly filteredCostCenters = computed(() => {
-    const query = this.searchQuery().toLowerCase().trim();
+    table: {
+      ...DATA_PAGE_CONFIG.table,
 
-    if (!query) {
-      return this.rawDeprtmentsData();
-    }
+      data: this.rawProjects(),
 
-    return this.rawDeprtmentsData().filter((costCenter) =>
-      costCenter.name.toLowerCase().includes(query),
-    );
-  });
-
-  protected readonly totalostCentersCount = computed(() => this.filteredCostCenters().length);
-
-  // 5️⃣ معالجات أفعال الشريط العلوي (PageHeader Actions Dispatcher)
-  protected onHeaderAction(key: any): void {
-    switch (key) {
-      case 'add-client':
-        this.openAddClientModal();
-        break;
-      case 'export-pdf':
-        this.exportClients();
-        break;
-      default:
-        console.warn(`Unhandled action key: ${key}`);
-    }
-  }
-
-  // 6️⃣ معالجات أفعال الجدول (Table Event Handlers)
-  protected onTableActionTrigger(event: TableActionEvent<IDepartment>): void {
-    const client = event.row;
-
-    switch (event.action) {
-      case 'delete':
-        this.deleteClient(client.id);
-        break;
-      case 'edit':
-        this.openEditClientModal(client);
-        break;
-    }
-  }
-
-  protected onRowsSelected(selectedClients: IDepartment[]): void {
-    console.log('Selected clients:', selectedClients);
-  }
-
-  protected onPageParamsChange(event: any): void {
-    this.currentPage.set(event.page);
-    this.pageSize.set(event.pageSize);
-  }
-
-  private deleteClient(id: number): void {
-    this.rawDeprtmentsData.update((current) =>
-      current.filter((costCenter) => costCenter.id !== id),
-    );
-  }
-
-  private openAddClientModal(): void {
-    console.log('Opening Add Client Modal...');
-  }
-
-  private openEditClientModal(client: IDepartment): void {
-    console.log('Opening Edit Client Modal for:', client);
-  }
-
-  private exportClients(): void {
-    console.log('Exporting client list to PDF...');
-  }
+      totalItems: this.rawProjects().length,
+    },
+  }));
 }

@@ -30,36 +30,18 @@
   <!-- 3. الجداول جنباً إلى جنب في صف واحد -->
   <section class="dashboard-tables-row">
     <div class="table-card">
-      <app-table
-        [data]="alerts()"
-        [columns]="alertsTableColumns"
-        [showActions]="false"
-        [emptyMessage]="'No alerts found.'"
-        [showPagination]="false"
-      ></app-table>
+      <app-table [config]="alertsTableConfig()" />
     </div>
 
     <div class="table-card">
-      <app-table
-        [data]="alerts()"
-        [columns]="alertsTableColumns"
-        [showActions]="false"
-        [emptyMessage]="'No alerts found.'"
-        [showPagination]="false"
-      ></app-table>
+      <app-table [config]="alertsTableConfig()" />
     </div>
   </section>
 
   <!-- 4. العنصر الكبير في الأسفل (مثلاً جدول أو تقرير واسع إضافي إذا رغبت) -->
   <section class="dashboard-bottom-full-section">
     <div class="table-card">
-      <app-table
-        [data]="unpaidSales()"
-        [columns]="unpaidSalesTableColumns"
-        [showActions]="false"
-        [emptyMessage]="'No unpaid sales found.'"
-        [showPagination]="false"
-      ></app-table>
+      <app-table [config]="unpaidSalesTableConfig()" />
     </div>
   </section>
 </div>

@@ -2,7 +2,10 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InputConfig } from '@components/input/input.types';
 import { ButtonComponent } from '@components/button/button.component'; // Adjust import path if needed
-import { InputComponent } from '@shared/components';
+import { InputComponent } from '@shared/components/input/input.component';
+
+// Constants
+import { BUTTONS } from './company-settings-basic.constants';
 
 @Component({
   selector: 'app-company-settings-basic',
@@ -13,6 +16,9 @@ import { InputComponent } from '@shared/components';
 })
 export class CompanySettingsBasicComponent {
   @Output() valueChange = new EventEmitter<{ field: string; value: string }>();
+
+  // Button configurations using ButtonConfig interface
+  buttons = BUTTONS;
 
   // Input configurations using InputConfig interface
   nameConfig: InputConfig = {

@@ -2,7 +2,10 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InputConfig } from '@components/input/input.types';
 import { ButtonComponent } from '@components/button/button.component';
-import { InputComponent } from '@shared/components';
+import { InputComponent } from '@shared/components/input/input.component';
+
+// Constants
+import { BUTTONS } from './company-settings-address.constants';
 
 @Component({
   selector: 'app-company-settings-address',
@@ -15,6 +18,9 @@ export class CompanySettingsAddressComponent {
   @Output() valueChange = new EventEmitter<{ field: string; value: string }>();
   @Output() save = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
+
+  // Button configurations using ButtonConfig interface
+  buttons = BUTTONS;
 
   // Address Input Configurations
   streetNameConfig: InputConfig = {

@@ -1,21 +1,130 @@
-// src/app/features/clients/clients.constant.ts
+// src/app/features/manufacturing/productions-settings/productions-settings.constant.ts
+
 import { TableColumn, TableAction } from '@components/table/table.types';
-import { PageHeaderButton } from '@components/page-header/page-header.types';
-import { Download, Pencil, Trash2, Hash, Plus, Eye, CaseSensitive, FileText } from 'lucide-angular';
 
-export const TABLE_COLUMNS: TableColumn[] = [
-  { key: 'name', label: 'Name', icon: CaseSensitive },
-  { key: 'description', label: 'Description', icon: FileText },
+import { IDataPageConfig, IPageAction, IPageLayout } from '@core/data-page/data-page.types';
+
+import { Download, Pencil, Trash2, Plus, Eye, CaseSensitive, FileText } from 'lucide-angular';
+
+import { IProductionSetting } from './productions-settings.types';
+
+// =====================================================
+// PAGE LAYOUT
+// =====================================================
+
+export const PAGE_LAYOUT: IPageLayout = {
+  showToolbar: true,
+  showTabs: false,
+  showTable: true,
+};
+
+// =====================================================
+// TABLE COLUMNS
+// =====================================================
+
+export const TABLE_COLUMNS: TableColumn<IProductionSetting>[] = [
+  {
+    key: 'name',
+    label: 'Name',
+    icon: CaseSensitive,
+  },
+  {
+    key: 'description',
+    label: 'Description',
+    icon: FileText,
+  },
 ];
 
-export const HEADER_BUTTONS: PageHeaderButton[] = [
-  { key: 'add', label: 'Add', variant: 'primary', icon: Plus },
-  { key: 'delete', label: 'Delete All', variant: 'danger', icon: Trash2 },
-  { key: 'export-pdf', label: 'Export PDF', variant: 'outline', icon: Download },
+// =====================================================
+// HEADER BUTTONS
+// =====================================================
+
+export const HEADER_BUTTONS: IPageAction[] = [
+  {
+    key: 'add',
+    buttonConfig: {
+      label: 'Add',
+      variant: 'primary',
+      icon: Plus,
+      type: 'button',
+    },
+  },
+  {
+    key: 'delete',
+    buttonConfig: {
+      label: 'Delete All',
+      variant: 'danger',
+      icon: Trash2,
+      type: 'button',
+    },
+  },
+  {
+    key: 'export-pdf',
+    buttonConfig: {
+      label: 'Export PDF',
+      variant: 'outline',
+      icon: Download,
+      type: 'button',
+    },
+  },
 ];
+
+// =====================================================
+// TABLE ACTIONS
+// =====================================================
 
 export const TABLE_ACTIONS: TableAction[] = [
-  { type: 'view', icon: Eye },
-  { type: 'edit', icon: Pencil },
-  { type: 'delete', icon: Trash2, danger: true },
+  {
+    action: 'view',
+    button: {
+      label: 'View',
+      icon: Eye,
+      variant: 'text',
+      type: 'button',
+    },
+  },
+  {
+    action: 'edit',
+    button: {
+      label: 'Edit',
+      icon: Pencil,
+      variant: 'text',
+      type: 'button',
+    },
+  },
+  {
+    action: 'delete',
+    button: {
+      label: 'Delete',
+      icon: Trash2,
+      variant: 'danger',
+      type: 'button',
+    },
+  },
 ];
+
+// =====================================================
+// DATA PAGE CONFIG
+// =====================================================
+
+export const DATA_PAGE_CONFIG: IDataPageConfig<IProductionSetting> = {
+  layout: PAGE_LAYOUT,
+
+  headerButtons: HEADER_BUTTONS,
+
+  tabs: [],
+
+  table: {
+    columns: TABLE_COLUMNS,
+
+    actions: TABLE_ACTIONS,
+
+    selectable: true,
+
+    showActions: true,
+
+    showPagination: true,
+
+    emptyMessage: 'No production settings found.',
+  },
+};

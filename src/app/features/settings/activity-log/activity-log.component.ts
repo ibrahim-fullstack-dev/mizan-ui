@@ -1,39 +1,31 @@
+// src/app/features/settings/activity-log/activity-log.component.ts
+
 import { Component, computed, signal } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
-import { LucideAngularModule } from 'lucide-angular';
 
-// 🏛️ Shared Components
-import { InputComponent } from '@components/input/input.component';
-import { TableComponent } from '@components/table/table.component';
-import { SelectComponent } from '@components/select/select.component';
-import { ButtonComponent } from '@components/button/button.component';
+// Core
+import { DataPageComponent } from '@core/data-page/data-page.component';
+import { IDataPageConfig } from '@core/data-page/data-page.types';
 
-import { TableActionEvent } from '@components/table/table.types';
 import { IActivityLog } from './activity-log.types';
 
-// 📐 constants
-import {
-  TABLE_COLUMNS,
-  SUBJECT_SELECT_OPTIONS,
-  EVENT_SELECT_OPTIONS,
-  PERIOD_SELECT_OPTIONS,
-} from './activity-log.constants';
+// Constants
+import { DATA_PAGE_CONFIG } from './activity-log.constants';
+
 @Component({
   selector: 'app-activity-log',
   standalone: true,
-  imports: [
-    CommonModule,
-    InputComponent,
-    TableComponent,
-    SelectComponent,
-    ButtonComponent,
-    LucideAngularModule,
-  ],
+  imports: [CommonModule, DataPageComponent],
   templateUrl: './activity-log.component.html',
   styleUrl: './activity-log.component.css',
 })
 export class ActivityLogComponent {
-  private readonly rawClients = signal<IActivityLog[]>([
+  // =====================================================
+  // DATA
+  // =====================================================
+
+  private readonly rawActivityLogs = signal<IActivityLog[]>([
     {
       id: 1,
       logName: 'Activity Log 1',
@@ -81,75 +73,19 @@ export class ActivityLogComponent {
     },
   ]);
 
-  onRoleChange(val: any) {
-    console.log('Selected role:', val);
-  }
+  // =====================================================
+  // DATA PAGE CONFIG
+  // =====================================================
 
-  protected readonly tableColumns = TABLE_COLUMNS;
-  protected readonly subjectSelectOptions = SUBJECT_SELECT_OPTIONS;
-  protected readonly eventSelectOptions = EVENT_SELECT_OPTIONS;
-  protected readonly periodSelectOptions = PERIOD_SELECT_OPTIONS;
+  protected readonly dataPageConfig = computed<IDataPageConfig<IActivityLog>>(() => ({
+    ...DATA_PAGE_CONFIG,
 
-  protected readonly searchQuery = signal<string>('');
-  protected readonly pageSize = signal<number>(10);
-  protected readonly currentPage = signal<number>(1);
+    table: {
+      ...DATA_PAGE_CONFIG.table,
 
-  protected readonly filteredClients = computed(() => {
-    const query = this.searchQuery().toLowerCase().trim();
+      data: this.rawActivityLogs(),
 
-    if (!query) {
-      return this.rawClients();
-    }
-
-    return (
-      this.rawClients().filter((client) => client.logName.toLowerCase().includes(query)) ||
-      this.rawClients().filter((client) => client.description.toLowerCase().includes(query))
-    );
-  });
-
-  protected readonly totalClientsCount = computed(() => this.filteredClients().length);
-
-  // 5️⃣ معالجات أفعال الشريط العلوي (PageHeader Actions Dispatcher)
-  protected onSearchAction(key: any): void {
-    console.log('Search Action:', key);
-  }
-
-  // 6️⃣ معالجات أفعال الجدول (Table Event Handlers)
-  protected onTableActionTrigger(event: TableActionEvent<IActivityLog>): void {
-    const client = event.row;
-
-    switch (event.action) {
-      case 'delete':
-        this.deleteClient(client.id);
-        break;
-      case 'edit':
-        this.openEditClientModal(client);
-        break;
-    }
-  }
-
-  protected onRowsSelected(selectedClients: IActivityLog[]): void {
-    console.log('Selected clients:', selectedClients);
-  }
-
-  protected onPageParamsChange(event: any): void {
-    this.currentPage.set(event.page);
-    this.pageSize.set(event.pageSize);
-  }
-
-  private deleteClient(id: number): void {
-    this.rawClients.update((current) => current.filter((client) => client.id !== id));
-  }
-
-  private openAddClientModal(): void {
-    console.log('Opening Add Client Modal...');
-  }
-
-  private openEditClientModal(client: IActivityLog): void {
-    console.log('Opening Edit Client Modal for:', client);
-  }
-
-  private exportClients(): void {
-    console.log('Exporting client list to PDF...');
-  }
+      totalItems: this.rawActivityLogs().length,
+    },
+  }));
 }

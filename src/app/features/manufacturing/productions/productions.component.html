@@ -1,27 +1,2 @@
-<div class="page-container">
-  <div class="toolbar">
-    <app-page-header [buttons]="headerButtons" (actionClicked)="onHeaderAction($event)">
-      <app-input
-        search-zone
-        placeholder="Search bills invoices by client name..."
-        [value]="searchQuery()"
-        (valueChange)="searchQuery.set($event)"
-      />
-    </app-page-header>
-  </div>
-
-  <app-table
-    [data]="filteredProductions()"
-    [columns]="tableColumns"
-    [actions]="tableActions"
-    [selectable]="true"
-    [totalItems]="totalBillsInvoicesCount()"
-    [pageSize]="pageSize()"
-    [currentPage]="currentPage()"
-    (actionClick)="onTableActionTrigger($event)"
-    (selectionChange)="onRowsSelected($event)"
-    (pageChange)="onPageParamsChange($event)"
-    [emptyMessage]="'No bills invoices found.'"
-  >
-  </app-table>
-</div>
+<!-- src/app/features/manufacturing/productions/productions.component.html -->
+<app-data-page [config]="dataPageConfig()" />

@@ -1,25 +1,30 @@
+// src/app/features/warehouse/warranties/warranties.component.ts
+
 import { Component, computed, signal } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
-import { LucideAngularModule } from 'lucide-angular';
 
-// 🏛️ Shared Components
-import { PageHeaderComponent } from '@components/page-header/page-header.component';
-import { InputComponent } from '@components/input/input.component';
-import { TableComponent } from '@components/table/table.component';
+// Core
+import { DataPageComponent } from '@core/data-page/data-page.component';
+import { IDataPageConfig } from '@core/data-page/data-page.types';
 
-import { TableActionEvent } from '@components/table/table.types';
 import { IWarranty } from './warranties.types';
 
-// 📐 constants
-import { TABLE_COLUMNS, HEADER_BUTTONS, TABLE_ACTIONS } from './warranties.constant';
+// Constants
+import { DATA_PAGE_CONFIG } from './warranties.constants';
+
 @Component({
-  selector: 'app-client',
+  selector: 'app-warranties',
   standalone: true,
-  imports: [CommonModule, PageHeaderComponent, InputComponent, TableComponent, LucideAngularModule],
+  imports: [CommonModule, DataPageComponent],
   templateUrl: './warranties.component.html',
   styleUrl: './warranties.component.css',
 })
 export class WarrantiesComponent {
+  // =====================================================
+  // DATA
+  // =====================================================
+
   private readonly rawWarranties = signal<IWarranty[]>([
     {
       id: 1,
@@ -58,76 +63,19 @@ export class WarrantiesComponent {
     },
   ]);
 
-  protected readonly tableColumns = TABLE_COLUMNS;
-  protected readonly headerButtons = HEADER_BUTTONS;
-  protected readonly tableActions = TABLE_ACTIONS;
+  // =====================================================
+  // DATA PAGE CONFIG
+  // =====================================================
 
-  protected readonly searchQuery = signal<string>('');
-  protected readonly pageSize = signal<number>(10);
-  protected readonly currentPage = signal<number>(1);
+  protected readonly dataPageConfig = computed<IDataPageConfig<IWarranty>>(() => ({
+    ...DATA_PAGE_CONFIG,
 
-  protected readonly filteredBranches = computed(() => {
-    const query = this.searchQuery().toLowerCase().trim();
+    table: {
+      ...DATA_PAGE_CONFIG.table,
 
-    if (!query) {
-      return this.rawWarranties();
-    }
+      data: this.rawWarranties(),
 
-    return this.rawWarranties().filter((branch) => branch.name.toLowerCase().includes(query));
-  });
-
-  protected readonly totalClientsCount = computed(() => this.filteredBranches().length);
-
-  // 5️⃣ معالجات أفعال الشريط العلوي (PageHeader Actions Dispatcher)
-  protected onHeaderAction(key: any): void {
-    switch (key) {
-      case 'add-product':
-        this.openAddBranchModal();
-        break;
-      case 'export-pdf':
-        this.exportBranches();
-        break;
-      default:
-        console.warn(`Unhandled action key: ${key}`);
-    }
-  }
-
-  // 6️⃣ معالجات أفعال الجدول (Table Event Handlers)
-  protected onTableActionTrigger(event: TableActionEvent<IWarranty>): void {
-    const client = event.row;
-
-    switch (event.action) {
-      case 'delete':
-        this.deleteBranch(client.id);
-        break;
-      case 'edit':
-        this.openEditBranchModal(client);
-        break;
-    }
-  }
-
-  protected onRowsSelected(selectedClients: IWarranty[]): void {
-    console.log('Selected clients:', selectedClients);
-  }
-
-  protected onPageParamsChange(event: any): void {
-    this.currentPage.set(event.page);
-    this.pageSize.set(event.pageSize);
-  }
-
-  private deleteBranch(id: number): void {
-    this.rawWarranties.update((current) => current.filter((branch) => branch.id !== id));
-  }
-
-  private openAddBranchModal(): void {
-    console.log('Opening Add Branch Modal...');
-  }
-
-  private openEditBranchModal(client: IWarranty): void {
-    console.log('Opening Edit Branch Modal for:', client);
-  }
-
-  private exportBranches(): void {
-    console.log('Exporting Branch list to PDF...');
-  }
+      totalItems: this.rawWarranties().length,
+    },
+  }));
 }

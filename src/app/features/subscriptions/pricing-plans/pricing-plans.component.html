@@ -31,16 +31,7 @@
 
         <!-- Using Shared Button Component -->
         <div class="card-action">
-          <app-button
-            [variant]="plan.buttonConfig.variant!"
-            [disabled]="plan.buttonConfig.disabled!"
-            [icon]="plan.buttonConfig.icon!"
-            [fullWidth]="plan.buttonConfig.fullWidth!"
-            [type]="plan.buttonConfig.type!"
-            (clicked)="onSelectPlan(plan)"
-          >
-            {{ plan.buttonText }}
-          </app-button>
+          <app-button [config]="plan.buttonConfig" />
         </div>
 
         <div class="card-features-list">

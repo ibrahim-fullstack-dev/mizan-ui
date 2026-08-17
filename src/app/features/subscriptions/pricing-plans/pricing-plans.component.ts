@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PRICING_PLANS_DATA } from './pricing-plans-constants';
+import { PRICING_PLANS_DATA } from './pricing-plans.constants';
 import { IPricingPlan } from './pricing-plans.types';
 import { ButtonComponent } from '@shared/components/button/button.component';
 

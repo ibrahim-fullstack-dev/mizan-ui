@@ -8,35 +8,30 @@ import { CommonModule } from '@angular/common';
 import { DataPageComponent } from '@core/data-page/data-page.component';
 import { IDataPageConfig } from '@core/data-page/data-page.types';
 
-import { IProduction } from './productions.types';
+import { IManufacturingEquation } from './manufacturing-equations.types';
 
 // Constants
-import { DATA_PAGE_CONFIG } from './productions.constants';
+import { DATA_PAGE_CONFIG } from './manufacturing-equations.constants';
 
 @Component({
-  selector: 'app-productions',
+  selector: 'app-manufacturing-equations',
   standalone: true,
   imports: [CommonModule, DataPageComponent],
-  templateUrl: './productions.component.html',
-  styleUrl: './productions.component.css',
+  templateUrl: './manufacturing-equations.component.html',
+  styleUrl: './manufacturing-equations.component.css',
 })
-export class ProductionsComponent {
+export class ManufacturingEquationsComponent {
   // =====================================================
   // DATA
   // =====================================================
 
-  private readonly rawProductions = signal<IProduction[]>([
+  private readonly rawManufacturingEquations = signal<IManufacturingEquation[]>([
     {
       id: 1,
-      operatingNumber: '12345678',
-      ManufacturingEquationName: 'ManufacturingEquationName 1',
-      productionDate: '2022-01-01',
-      fromBranch: 'fromBranch 1',
-      toBranch: 'toBranch 1',
-      toWarehouse: 'toWarehouse 1',
-      quantity: 10,
-      unitPrice: 100,
-      totalPrice: 1000,
+      name: 'Name 1',
+      manufacturingType: 'Manufacturing Type 1',
+      product: 'Product 1',
+      productType: 'Product Type 1',
     },
   ]);
 
@@ -44,15 +39,15 @@ export class ProductionsComponent {
   // DATA PAGE CONFIG
   // =====================================================
 
-  protected readonly dataPageConfig = computed<IDataPageConfig<IProduction>>(() => ({
+  protected readonly dataPageConfig = computed<IDataPageConfig<IManufacturingEquation>>(() => ({
     ...DATA_PAGE_CONFIG,
 
     table: {
       ...DATA_PAGE_CONFIG.table,
 
-      data: this.rawProductions(),
+      data: this.rawManufacturingEquations(),
 
-      totalItems: this.rawProductions().length,
+      totalItems: this.rawManufacturingEquations().length,
     },
   }));
 }

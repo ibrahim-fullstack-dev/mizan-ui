@@ -1,26 +1,31 @@
+// src/app/features/settings/tickets/tickets.component.ts
+
 import { Component, computed, signal } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
-import { LucideAngularModule } from 'lucide-angular';
 
-// 🏛️ Shared Components
-import { PageHeaderComponent } from '@components/page-header/page-header.component';
-import { InputComponent } from '@components/input/input.component';
-import { TableComponent } from '@components/table/table.component';
+// Core
+import { DataPageComponent } from '@core/data-page/data-page.component';
+import { IDataPageConfig } from '@core/data-page/data-page.types';
 
-import { TableActionEvent } from '@components/table/table.types';
 import { ITicket } from './tickets.types';
 
-// 📐 constants
-import { TABLE_COLUMNS, HEADER_BUTTONS, TABLE_ACTIONS } from './tickets.constants';
+// Constants
+import { DATA_PAGE_CONFIG } from './tickets.constants';
+
 @Component({
   selector: 'app-tickets',
   standalone: true,
-  imports: [CommonModule, PageHeaderComponent, InputComponent, TableComponent, LucideAngularModule],
+  imports: [CommonModule, DataPageComponent],
   templateUrl: './tickets.component.html',
   styleUrl: './tickets.component.css',
 })
 export class TicketsComponent {
-  private readonly rawRoles = signal<ITicket[]>([
+  // =====================================================
+  // DATA
+  // =====================================================
+
+  private readonly rawTickets = signal<ITicket[]>([
     {
       id: 1,
       subject: 'University of California',
@@ -55,76 +60,19 @@ export class TicketsComponent {
     },
   ]);
 
-  protected readonly tableColumns = TABLE_COLUMNS;
-  protected readonly headerButtons = HEADER_BUTTONS;
-  protected readonly tableActions = TABLE_ACTIONS;
+  // =====================================================
+  // DATA PAGE CONFIG
+  // =====================================================
 
-  protected readonly searchQuery = signal<string>('');
-  protected readonly pageSize = signal<number>(10);
-  protected readonly currentPage = signal<number>(1);
+  protected readonly dataPageConfig = computed<IDataPageConfig<ITicket>>(() => ({
+    ...DATA_PAGE_CONFIG,
 
-  protected readonly filteredClients = computed(() => {
-    const query = this.searchQuery().toLowerCase().trim();
+    table: {
+      ...DATA_PAGE_CONFIG.table,
 
-    if (!query) {
-      return this.rawRoles();
-    }
+      data: this.rawTickets(),
 
-    return this.rawRoles().filter((client) => client.subject.toLowerCase().includes(query));
-  });
-
-  protected readonly totalClientsCount = computed(() => this.filteredClients().length);
-
-  // 5️⃣ معالجات أفعال الشريط العلوي (PageHeader Actions Dispatcher)
-  protected onHeaderAction(key: any): void {
-    switch (key) {
-      case 'add-client':
-        this.openAddClientModal();
-        break;
-      case 'export-pdf':
-        this.exportClients();
-        break;
-      default:
-        console.warn(`Unhandled action key: ${key}`);
-    }
-  }
-
-  // 6️⃣ معالجات أفعال الجدول (Table Event Handlers)
-  protected onTableActionTrigger(event: TableActionEvent<ITicket>): void {
-    const client = event.row;
-
-    switch (event.action) {
-      case 'delete':
-        this.deleteClient(client.id);
-        break;
-      case 'edit':
-        this.openEditClientModal(client);
-        break;
-    }
-  }
-
-  protected onRowsSelected(selectedClients: ITicket[]): void {
-    console.log('Selected clients:', selectedClients);
-  }
-
-  protected onPageParamsChange(event: any): void {
-    this.currentPage.set(event.page);
-    this.pageSize.set(event.pageSize);
-  }
-
-  private deleteClient(id: number): void {
-    this.rawRoles.update((current) => current.filter((role) => role.id !== id));
-  }
-
-  private openAddClientModal(): void {
-    console.log('Opening Add Client Modal...');
-  }
-
-  private openEditClientModal(client: ITicket): void {
-    console.log('Opening Edit Client Modal for:', client);
-  }
-
-  private exportClients(): void {
-    console.log('Exporting client list to PDF...');
-  }
+      totalItems: this.rawTickets().length,
+    },
+  }));
 }

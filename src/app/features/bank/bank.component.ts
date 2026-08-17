@@ -1,21 +1,31 @@
-import { Component, signal } from '@angular/core';
-import { ColumnsChartComponent } from '../../shared/components/analytics-columns-chart/analytics.columns.chart.component';
-import { TableComponent } from '../../shared/components/table/table.component';
-import { ChartGroupItem } from '../../shared/components/analytics-columns-chart/analytics.columns.chart.types';
+import { Component, computed, signal } from '@angular/core';
+
+// Shared Components
+import { ColumnsChartComponent } from '@components/analytics-columns-chart/analytics.columns.chart.component';
+import { TableComponent } from '@components/table/table.component';
+
+// Types
+import { ChartGroupItem } from '@components/analytics-columns-chart/analytics.columns.chart.types';
+import { TableConfig, TableActionEvent, TablePageEvent } from '@components/table/table.types';
+
 import { IBank } from './bank.types';
-import { BANK_TABLE_COLUMNS, ACCTIONS_BANK_TABLE_COLUMNS } from './bank.constant';
+
+// Constants
+import { BANK_TABLE_COLUMNS, BANK_TABLE_ACTIONS } from './bank.constants';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-bank',
   standalone: true,
   imports: [ColumnsChartComponent, TableComponent],
   templateUrl: './bank.component.html',
   styleUrl: './bank.component.css',
 })
 export class BankComponent {
-  protected readonly bankTableColumns = BANK_TABLE_COLUMNS;
-  protected readonly acctionsBankTableColumns = ACCTIONS_BANK_TABLE_COLUMNS;
-  protected readonly alerts = signal<IBank[]>([
+  // =====================================================
+  // BANK DATA
+  // =====================================================
+
+  protected readonly banks = signal<IBank[]>([
     {
       id: 1,
       accountName: 'Account 1',
@@ -24,6 +34,38 @@ export class BankComponent {
       balance: 100,
     },
   ]);
+
+  // =====================================================
+  // TABLE CONFIG
+  // =====================================================
+
+  protected readonly tableConfig = computed<TableConfig<IBank>>(() => ({
+    data: this.banks(),
+
+    columns: BANK_TABLE_COLUMNS,
+
+    actions: BANK_TABLE_ACTIONS,
+
+    selectable: true,
+
+    showActions: true,
+
+    showPagination: true,
+
+    emptyMessage: 'No bank accounts found.',
+
+    totalItems: this.banks().length,
+
+    pageSize: 10,
+
+    currentPage: 1,
+
+    trackByProperty: 'id',
+  }));
+
+  // =====================================================
+  // ANALYTICS DATA
+  // =====================================================
 
   protected readonly analyticsData = signal<ChartGroupItem[]>([
     {
@@ -45,6 +87,42 @@ export class BankComponent {
     },
   ]);
 
-  protected readonly isAnimated = signal<boolean>(true);
-  protected readonly showGrid = signal<boolean>(true);
+  // =====================================================
+  // CHART OPTIONS
+  // =====================================================
+
+  protected readonly isAnimated = signal(true);
+  protected readonly showGrid = signal(true);
+
+  // =====================================================
+  // TABLE EVENTS
+  // =====================================================
+
+  protected onRowsSelected(selectedBankIds: IBank['id'][]): void {
+    console.log('Selected bank IDs:', selectedBankIds);
+  }
+
+  protected onTableAction(event: TableActionEvent<IBank>): void {
+    switch (event.action) {
+      case 'view':
+        console.log('View bank:', event.id);
+        break;
+
+      case 'edit':
+        console.log('Edit bank:', event.id);
+        break;
+
+      case 'delete':
+        console.log('Delete bank:', event.id);
+        break;
+
+      default:
+        console.warn(`Unhandled action: ${event.id}`);
+    }
+  }
+
+  protected onPageChange(event: TablePageEvent): void {
+    console.log('Page:', event.page);
+    console.log('Page size:', event.pageSize);
+  }
 }
