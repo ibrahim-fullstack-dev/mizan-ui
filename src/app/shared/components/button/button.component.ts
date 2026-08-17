@@ -1,44 +1,48 @@
-// src/app/shared/components/button/button.component.ts
 import { Component, input, output, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ButtonVariant, ButtonType } from './button.types';
-import { LucideAngularModule, type LucideIconData } from 'lucide-angular';
+import { ButtonConfig } from './button.types';
+import { LucideAngularModule } from 'lucide-angular';
 
 @Component({
-  // Component Metadata.
   selector: 'app-button',
   imports: [CommonModule, LucideAngularModule],
   templateUrl: './button.component.html',
-  styleUrls: ['./button.component.css'],
+  styleUrl: './button.component.css',
 })
-// Component Class.
 export class ButtonComponent {
-  variant = input<ButtonVariant>('primary');
-  type = input<ButtonType>('button');
-  disabled = input<boolean>(false);
-  loading = input<boolean>(false);
-  icon = input<LucideIconData | undefined>(undefined);
-  fullWidth = input<boolean>(false);
+  config = input<ButtonConfig>({});
 
   btnClick = output<MouseEvent>();
 
+  // Resolved Config
+  protected resolvedConfig = computed(() => {
+    const cfg = this.config();
+    return {
+      label: cfg.label ?? '',
+      variant: cfg.variant ?? 'primary',
+      type: cfg.type ?? 'button',
+      disabled: !!cfg.disabled,
+      loading: !!cfg.loading,
+      fullWidth: !!cfg.fullWidth,
+      icon: cfg.icon,
+    };
+  });
+
+  // Button Classes
   buttonClasses = computed(() => {
-    const classes = ['btn'];
-    classes.push(`btn-${this.variant()}`);
+    const cfg = this.resolvedConfig();
+    const classes = ['btn', `btn-${cfg.variant}`];
 
-    if (this.fullWidth()) {
-      classes.push('btn-full-width');
-    }
-
-    if (this.loading()) {
-      classes.push('btn-loading');
-    }
+    if (cfg.fullWidth) classes.push('btn-full-width');
+    if (cfg.loading) classes.push('btn-loading');
 
     return classes.join(' ');
   });
 
+  // Button Click Handler
   onClick(event: MouseEvent) {
-    if (this.disabled() || this.loading()) {
+    const cfg = this.resolvedConfig();
+    if (cfg.disabled || cfg.loading) {
       event.preventDefault();
       event.stopPropagation();
       return;

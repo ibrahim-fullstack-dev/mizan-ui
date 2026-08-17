@@ -1,17 +1,65 @@
-// src/app/features/clients/clients.constant.ts
-import { TableColumn } from '@components/table/table.types';
-import { PageHeaderButton } from '@components/page-header/page-header.types';
-import { ISelectConfig } from '@components/select/select.types';
-import { Search, Hash, FileText, Type, ArrowUpDown, Calendar } from 'lucide-angular';
+// src/app/features/settings/activity-log/activity-log.constants.ts
 
-export const TABLE_COLUMNS: TableColumn[] = [
-  { key: 'logName', label: 'Log Name', icon: Hash },
-  { key: 'description', label: 'Description', icon: FileText },
-  { key: 'subjectType', label: 'Subject Type', icon: Type },
-  { key: 'event', label: 'Event', icon: ArrowUpDown },
-  { key: 'createdDate', label: 'Created Date', icon: Calendar },
-  { key: 'updatedDate', label: 'Updated Date', icon: Calendar },
+import { TableColumn } from '@components/table/table.types';
+
+import { IDataPageConfig, IPageLayout } from '@core/data-page/data-page.types';
+
+import { ISelectConfig } from '@components/select/select.types';
+
+import { Hash, FileText, Type, ArrowUpDown, Calendar } from 'lucide-angular';
+
+import { IActivityLog } from './activity-log.types';
+
+// =====================================================
+// PAGE LAYOUT
+// =====================================================
+
+export const PAGE_LAYOUT: IPageLayout = {
+  showToolbar: true,
+  showTabs: false,
+  showTable: true,
+};
+
+// =====================================================
+// TABLE COLUMNS
+// =====================================================
+
+export const TABLE_COLUMNS: TableColumn<IActivityLog>[] = [
+  {
+    key: 'logName',
+    label: 'Log Name',
+    icon: Hash,
+  },
+  {
+    key: 'description',
+    label: 'Description',
+    icon: FileText,
+  },
+  {
+    key: 'subjectType',
+    label: 'Subject Type',
+    icon: Type,
+  },
+  {
+    key: 'event',
+    label: 'Event',
+    icon: ArrowUpDown,
+  },
+  {
+    key: 'createdDate',
+    label: 'Created Date',
+    icon: Calendar,
+  },
+  {
+    key: 'updatedDate',
+    label: 'Updated Date',
+    icon: Calendar,
+  },
 ];
+
+// =====================================================
+// FILTERS
+// =====================================================
 
 export const SUBJECT_SELECT_OPTIONS: ISelectConfig = {
   label: 'Subject',
@@ -54,11 +102,22 @@ export const SUBJECT_SELECT_OPTIONS: ISelectConfig = {
     { label: 'Integration', value: 'Integration' },
     { label: 'Ledger', value: 'Ledger' },
     { label: 'Manufacturing Equation', value: 'Manufacturing Equation' },
-    { label: 'Manufacturing Equation Expense', value: 'Manufacturing Equation Expense' },
-    { label: 'Manufacturing Equation Item', value: 'Manufacturing Equation Item' },
-    { label: 'Manufacturing Equation Spoilage', value: 'Manufacturing Equation Spoilage' },
-    { label: 'Manufacturing Equation Support Item', value: 'Manufacturing Equation Support Item' },
-
+    {
+      label: 'Manufacturing Equation Expense',
+      value: 'Manufacturing Equation Expense',
+    },
+    {
+      label: 'Manufacturing Equation Item',
+      value: 'Manufacturing Equation Item',
+    },
+    {
+      label: 'Manufacturing Equation Spoilage',
+      value: 'Manufacturing Equation Spoilage',
+    },
+    {
+      label: 'Manufacturing Equation Support Item',
+      value: 'Manufacturing Equation Support Item',
+    },
     { label: 'Media', value: 'Media' },
     { label: 'Number Group', value: 'Number Group' },
     { label: 'OTP Verification', value: 'OTP Verification' },
@@ -130,7 +189,7 @@ export const EVENT_SELECT_OPTIONS: ISelectConfig = {
 
 export const PERIOD_SELECT_OPTIONS: ISelectConfig = {
   label: 'Period',
-  placeholder: 'Select an period...',
+  placeholder: 'Select a period...',
   required: true,
   options: [
     { label: 'today', value: 'Today' },
@@ -144,4 +203,28 @@ export const PERIOD_SELECT_OPTIONS: ISelectConfig = {
     { label: 'last year', value: 'Last Year' },
     { label: 'custom', value: 'Custom' },
   ],
+};
+
+// =====================================================
+// DATA PAGE CONFIG
+// =====================================================
+
+export const DATA_PAGE_CONFIG: IDataPageConfig<IActivityLog> = {
+  layout: PAGE_LAYOUT,
+
+  headerButtons: [],
+
+  tabs: [],
+
+  table: {
+    columns: TABLE_COLUMNS,
+
+    selectable: true,
+
+    showActions: false,
+
+    showPagination: true,
+
+    emptyMessage: 'No activity logs found.',
+  },
 };

@@ -11,7 +11,8 @@ export const routes: Routes = [
   // 2. مسار لوحة التحكم (Dashboard) باستخدام الـ Lazy Loading
   {
     path: APP_ROUTES.dashboard,
-    loadComponent: () => import('./features/dashboard/dashboard').then((m) => m.DashboardComponent),
+    loadComponent: () =>
+      import('./features/dashboard/dashboard.component').then((m) => m.DashboardComponent),
   },
 
   {
@@ -175,9 +176,7 @@ export const routes: Routes = [
       {
         path: APP_ROUTES.warehouse.unitsLists,
         loadComponent: () =>
-          import('./features/warehouse/units/units.component').then(
-            (m) => m.TransferOrdersComponent,
-          ),
+          import('./features/warehouse/units/units.component').then((m) => m.UnitsComponent),
       },
       {
         path: APP_ROUTES.warehouse.brandLists,
@@ -197,8 +196,8 @@ export const routes: Routes = [
       {
         path: APP_ROUTES.manufactures.manufacturingEquations,
         loadComponent: () =>
-          import('./features/manufacturing/manufacturing-quations/manufacturing-quations.component').then(
-            (m) => m.ManufacturingQuationsComponent,
+          import('./features/manufacturing/manufacturing-quations/manufacturing-equations.component').then(
+            (m) => m.ManufacturingEquationsComponent,
           ),
       },
       {
@@ -291,7 +290,7 @@ export const routes: Routes = [
       {
         path: APP_ROUTES.payments.supplierPayments,
         loadComponent: () =>
-          import('./features/payments/supplier-payments/supplier-payments.component').then(
+          import('./features/payments/supplier-payments/supplier-payments.components').then(
             (m) => m.SupplierPaymentsComponent,
           ),
       },
@@ -369,7 +368,7 @@ export const routes: Routes = [
         path: APP_ROUTES.costCenter.estimatedBudget,
         loadComponent: () =>
           import('./features/cost-center/estimated-budget/estimated-budget.component').then(
-            (m) => m.estimatedBudgetComponent,
+            (m) => m.EstimatedBudgetComponent,
           ),
       },
       {

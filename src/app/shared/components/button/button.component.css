@@ -1,3 +1,5 @@
+/* src/app/shared/components/button/button.component.css */
+
 /* ==========================================================================
    Enterprise Button Component Styles (Mizan System)
    ========================================================================== */
@@ -7,20 +9,41 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  font-family: var(--font-family);
+
+  min-width: 0;
+  max-width: 100%;
+
   padding: 0.5rem 1rem;
-  border-radius: var(--radius-md);
+
   border: 1px solid transparent;
-  cursor: pointer;
-  user-select: none;
-  white-space: nowrap;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  outline: none;
+  border-radius: var(--radius-md);
+
   background-color: transparent;
   color: var(--text-main);
+
+  font-family: var(--font-family);
+  font-size: 0.875rem;
+  font-weight: 500;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+
+  transition:
+    background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* ==========================================================================
+   Focus & Disabled States
+   ========================================================================== */
 
 .btn:focus-visible {
   box-shadow: 0 0 0 3px var(--ring-focus);
@@ -33,7 +56,9 @@
   pointer-events: none;
 }
 
-/* --- Variants (Using CSS Variables for Light/Dark support) --- */
+/* ==========================================================================
+   Variants
+   ========================================================================== */
 
 .btn-primary {
   background-color: var(--color-primary);
@@ -77,6 +102,11 @@
   border-color: var(--color-danger-hover);
 }
 
+.btn-danger:active:not(:disabled) {
+  background-color: var(--color-danger-hover);
+  border-color: var(--color-danger-hover);
+}
+
 .btn-outline {
   background-color: transparent;
   color: var(--color-primary);
@@ -87,6 +117,12 @@
   background-color: var(--bg-selected);
   border-color: var(--color-primary);
   color: var(--color-primary);
+}
+
+.btn-outline:active:not(:disabled) {
+  background-color: var(--bg-selected);
+  border-color: var(--color-primary-active);
+  color: var(--color-primary-active);
 }
 
 .btn-text {
@@ -102,32 +138,47 @@
   color: var(--text-main);
 }
 
-/* --- Modifiers --- */
+.btn-text:active:not(:disabled) {
+  background-color: var(--bg-hover);
+  color: var(--text-main);
+}
+
+/* ==========================================================================
+   Modifiers
+   ========================================================================== */
 
 .btn-full-width {
   display: flex;
   width: 100%;
+  max-width: 100%;
 }
 
-.btn-spinner {
+.btn-loading {
   display: inline-block;
+
   width: 1rem;
   height: 1rem;
+  flex-shrink: 0;
+
   border: 2px solid currentColor;
   border-right-color: transparent;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
+
   animation: spin 0.75s linear infinite;
 }
 
-/* --- Icon Integration inside Button --- */
+/* ==========================================================================
+   Icon Integration
+   ========================================================================== */
 
 .btn-icon {
-  width: 18px;
-  height: 18px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
 }
 
 .btn-icon svg {
@@ -135,6 +186,20 @@
   height: 100%;
   stroke: currentColor;
 }
+
+/* ==========================================================================
+   Responsive Button Behavior
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .btn {
+    max-width: 100%;
+  }
+}
+
+/* ==========================================================================
+   Animation
+   ========================================================================== */
 
 @keyframes spin {
   to {

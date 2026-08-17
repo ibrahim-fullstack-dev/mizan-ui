@@ -1,19 +1,14 @@
-import { Component, ChangeDetectionStrategy, input, output, signal, computed } from '@angular/core';
-import { ButtonComponent } from '../../shared/components/button/button.component';
+// src/app/layout/navbar/navbar.component.ts
+
+import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
-import {
-  LucideAngularModule,
-  Menu,
-  Search,
-  Bell,
-  Zap,
-  Sun,
-  Moon,
-  User,
-  Settings,
-  LogOut,
-  ChevronDown,
-} from 'lucide-angular';
+import { LucideAngularModule, Moon, Sun } from 'lucide-angular';
+
+import { ButtonComponent } from '../../shared/components/button/button.component';
+
+// Constants
+import { NAVBAR_BUTTONS } from './navbar.constants';
 
 @Component({
   selector: 'app-navbar',
@@ -24,19 +19,15 @@ import {
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
-  readonly Menu = Menu;
-  readonly Search = Search;
-  readonly Bell = Bell;
-  readonly Zap = Zap;
-  readonly Sun = Sun;
-  readonly Moon = Moon;
-  readonly User = User;
-  readonly Settings = Settings;
-  readonly LogOut = LogOut;
-  readonly ChevronDown = ChevronDown;
+  readonly buttons = NAVBAR_BUTTONS;
 
   readonly pageTitle = input<string>('Dashboard');
-  readonly user = input<{ name: string; email: string; avatar?: string }>({
+
+  readonly user = input<{
+    name: string;
+    email: string;
+    avatar?: string;
+  }>({
     name: 'Ibrahim Al-herby',
     email: 'ibrahim@mizan.com',
   });
@@ -48,7 +39,7 @@ export class NavbarComponent {
   readonly notificationClicked = output<void>();
   readonly profileAction = output<string>();
 
-  readonly isProfileMenuOpen = signal<boolean>(false);
+  readonly isProfileMenuOpen = signal(false);
 
   readonly isDark = signal<boolean>(
     document.documentElement.classList.contains('dark') ||
@@ -56,6 +47,11 @@ export class NavbarComponent {
   );
 
   readonly isDarkMode = computed(() => this.isDark());
+
+  readonly themeButtonConfig = computed(() => ({
+    ...this.buttons.themeToggle,
+    icon: this.isDarkMode() ? Moon : Sun,
+  }));
 
   onToggleSidebar(): void {
     this.toggleSidebar.emit();
@@ -81,7 +77,6 @@ export class NavbarComponent {
       localStorage.setItem('mizan_theme', 'light');
     }
 
-    // إذا كنت تريد أيضاً إعلام الأب بأن زر الثيم تم ضغطه (اختياري)
     this.themeToggleClicked.emit();
   }
 }

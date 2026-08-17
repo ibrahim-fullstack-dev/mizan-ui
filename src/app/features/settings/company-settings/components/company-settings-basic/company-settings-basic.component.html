@@ -127,7 +127,7 @@
 
   <!-- Form Actions (Save & Cancel Buttons) -->
   <div class="form-actions">
-    <app-button [variant]="'secondary'" (click)="onCancel()"> Cancel </app-button>
-    <app-button [variant]="'primary'" (click)="onSave()"> Save Changes </app-button>
+    <app-button [config]="buttons.cancel" (btnClick)="onCancel()" />
+    <app-button [config]="buttons.save" (btnClick)="onSave()" />
   </div>
 </div>

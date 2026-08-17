@@ -20,12 +20,10 @@
 
   <section class="bank-tables-grid">
     <app-table
-      [data]="alerts()"
-      [columns]="bankTableColumns"
-      [actions]="acctionsBankTableColumns"
-      [selectable]="true"
-      [emptyMessage]="'No alerts found.'"
-      [showPagination]="false"
-    ></app-table>
+      [config]="tableConfig()"
+      (selectionChange)="onRowsSelected($event)"
+      (actionClick)="onTableAction($event)"
+      (pageChange)="onPageChange($event)"
+    />
   </section>
 </div>

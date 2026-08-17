@@ -1,9 +1,9 @@
-export interface ICreditNotes {
+export interface ICreditNote {
   id: number;
   invoiceNumber: string;
   clientName: string;
   totalAmount: number;
-  Balance: number;
+  balance: number;
   status: string;
   date: string;
 }

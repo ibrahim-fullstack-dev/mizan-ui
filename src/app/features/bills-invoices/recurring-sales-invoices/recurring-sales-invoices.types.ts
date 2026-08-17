@@ -1,4 +1,4 @@
-export interface IRecurringSalesInvoices {
+export interface IRecurringSalesInvoice {
   id: number;
   invoiceNumber: string;
   status: string;

@@ -4,7 +4,7 @@ export interface IDamage {
   name: string;
   branch: string;
   warehouse: string;
-  TotalAmountRecovered: number;
+  totalAmountRecovered: number;
   date: string;
   notes: string;
 }

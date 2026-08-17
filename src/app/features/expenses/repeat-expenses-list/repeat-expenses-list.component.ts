@@ -1,25 +1,30 @@
+// src/app/features/expenses/repeat-expenses-list/repeat-expenses-list.component.ts
+
 import { Component, computed, signal } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
-import { LucideAngularModule } from 'lucide-angular';
 
-// 🏛️ Shared Components
-import { PageHeaderComponent } from '@components/page-header/page-header.component';
-import { InputComponent } from '@components/input/input.component';
-import { TableComponent } from '@components/table/table.component';
+// Core
+import { DataPageComponent } from '@core/data-page/data-page.component';
+import { IDataPageConfig } from '@core/data-page/data-page.types';
 
-import { TableActionEvent } from '@components/table/table.types';
 import { IRepeatExpense } from './repeat-expenses-list.types';
 
-// 📐 constants
-import { TABLE_COLUMNS, HEADER_BUTTONS, TABLE_ACTIONS } from './repeat-expenses-list.constant';
+// Constants
+import { DATA_PAGE_CONFIG } from './repeat-expenses-list.constants';
+
 @Component({
-  selector: 'app-client',
+  selector: 'app-repeat-expenses-list',
   standalone: true,
-  imports: [CommonModule, PageHeaderComponent, InputComponent, TableComponent, LucideAngularModule],
+  imports: [CommonModule, DataPageComponent],
   templateUrl: './repeat-expenses-list.component.html',
   styleUrl: './repeat-expenses-list.component.css',
 })
 export class RepeatExpensesListComponent {
+  // =====================================================
+  // DATA
+  // =====================================================
+
   private readonly rawExpenses = signal<IRepeatExpense[]>([
     {
       id: 1,
@@ -33,7 +38,7 @@ export class RepeatExpensesListComponent {
     },
     {
       id: 2,
-      referenceNumber: '1234567890',
+      referenceNumber: '1234567891',
       expenseCategory: 'Rent',
       active: true,
       startDate: '2023-01-01',
@@ -43,7 +48,7 @@ export class RepeatExpensesListComponent {
     },
     {
       id: 3,
-      referenceNumber: '1234567890',
+      referenceNumber: '1234567892',
       expenseCategory: 'Rent',
       active: true,
       startDate: '2023-01-01',
@@ -53,7 +58,7 @@ export class RepeatExpensesListComponent {
     },
     {
       id: 4,
-      referenceNumber: '1234567890',
+      referenceNumber: '1234567893',
       expenseCategory: 'Rent',
       active: true,
       startDate: '2023-01-01',
@@ -63,7 +68,7 @@ export class RepeatExpensesListComponent {
     },
     {
       id: 5,
-      referenceNumber: '1234567890',
+      referenceNumber: '1234567894',
       expenseCategory: 'Rent',
       active: true,
       startDate: '2023-01-01',
@@ -73,78 +78,19 @@ export class RepeatExpensesListComponent {
     },
   ]);
 
-  protected readonly tableColumns = TABLE_COLUMNS;
-  protected readonly headerButtons = HEADER_BUTTONS;
-  protected readonly tableActions = TABLE_ACTIONS;
+  // =====================================================
+  // DATA PAGE CONFIG
+  // =====================================================
 
-  protected readonly searchQuery = signal<string>('');
-  protected readonly pageSize = signal<number>(10);
-  protected readonly currentPage = signal<number>(1);
+  protected readonly dataPageConfig = computed<IDataPageConfig<IRepeatExpense>>(() => ({
+    ...DATA_PAGE_CONFIG,
 
-  protected readonly filteredExpenses = computed(() => {
-    const query = this.searchQuery().toLowerCase().trim();
+    table: {
+      ...DATA_PAGE_CONFIG.table,
 
-    if (!query) {
-      return this.rawExpenses();
-    }
+      data: this.rawExpenses(),
 
-    return this.rawExpenses().filter((client) =>
-      client.expenseCategory.toLowerCase().includes(query),
-    );
-  });
-
-  protected readonly totalClientsCount = computed(() => this.filteredExpenses().length);
-
-  // 5️⃣ معالجات أفعال الشريط العلوي (PageHeader Actions Dispatcher)
-  protected onHeaderAction(key: any): void {
-    switch (key) {
-      case 'add-client':
-        this.openAddClientModal();
-        break;
-      case 'export-pdf':
-        this.exportClients();
-        break;
-      default:
-        console.warn(`Unhandled action key: ${key}`);
-    }
-  }
-
-  // 6️⃣ معالجات أفعال الجدول (Table Event Handlers)
-  protected onTableActionTrigger(event: TableActionEvent<IRepeatExpense>): void {
-    const client = event.row;
-
-    switch (event.action) {
-      case 'delete':
-        this.deleteClient(client.id);
-        break;
-      case 'edit':
-        this.openEditClientModal(client);
-        break;
-    }
-  }
-
-  protected onRowsSelected(selectedClients: IRepeatExpense[]): void {
-    console.log('Selected clients:', selectedClients);
-  }
-
-  protected onPageParamsChange(event: any): void {
-    this.currentPage.set(event.page);
-    this.pageSize.set(event.pageSize);
-  }
-
-  private deleteClient(id: number): void {
-    this.rawExpenses.update((current) => current.filter((client) => client.id !== id));
-  }
-
-  private openAddClientModal(): void {
-    console.log('Opening Add Client Modal...');
-  }
-
-  private openEditClientModal(client: IRepeatExpense): void {
-    console.log('Opening Edit Client Modal for:', client);
-  }
-
-  private exportClients(): void {
-    console.log('Exporting client list to PDF...');
-  }
+      totalItems: this.rawExpenses().length,
+    },
+  }));
 }

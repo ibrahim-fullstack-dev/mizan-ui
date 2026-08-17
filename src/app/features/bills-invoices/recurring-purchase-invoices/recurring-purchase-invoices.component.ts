@@ -1,25 +1,31 @@
-import { Component, signal } from '@angular/core';
+// src/app/features/bills-invoices/recurring-purchase-invoices/recurring-purchase-invoices.component.ts
+
+import { Component, computed, signal } from '@angular/core';
+
 import { CommonModule } from '@angular/common';
-import { LucideAngularModule } from 'lucide-angular';
 
-// 🏛️ Shared Components
-import { ButtonComponent } from '@components/button/button.component';
-import { TableComponent } from '@components/table/table.component';
+// Core
+import { DataPageComponent } from '@core/data-page/data-page.component';
+import { IDataPageConfig } from '@core/data-page/data-page.types';
 
-import { TableActionEvent } from '@components/table/table.types';
-import { IRecurringPurchaseInvoices } from './recurring-purchase-invoices.types';
+import { IRecurringPurchaseInvoice } from './recurring-purchase-invoices.types';
 
-// 📐 constants
-import { TABLE_COLUMNS, TABLE_ACTIONS } from './recurring-purchase-invoices.constant';
+// Constants
+import { DATA_PAGE_CONFIG } from './recurring-purchase-invoices.constants';
+
 @Component({
-  selector: 'app-recurring-sales-invoices',
+  selector: 'app-recurring-purchase-invoices',
   standalone: true,
-  imports: [CommonModule, TableComponent, LucideAngularModule, ButtonComponent],
+  imports: [CommonModule, DataPageComponent],
   templateUrl: './recurring-purchase-invoices.component.html',
   styleUrl: './recurring-purchase-invoices.component.css',
 })
 export class RecurringPurchaseInvoicesComponent {
-  protected readonly rawRecurringSalesInvoices = signal<IRecurringPurchaseInvoices[]>([
+  // =====================================================
+  // DATA
+  // =====================================================
+
+  private readonly rawRecurringPurchaseInvoices = signal<IRecurringPurchaseInvoice[]>([
     {
       id: 1,
       invoiceNumber: '12345678',
@@ -31,7 +37,7 @@ export class RecurringPurchaseInvoicesComponent {
     },
     {
       id: 2,
-      invoiceNumber: '12345678',
+      invoiceNumber: '12345679',
       status: 'Unpaid',
       repeat: 'Daily',
       startDate: '2022-01-01',
@@ -40,7 +46,7 @@ export class RecurringPurchaseInvoicesComponent {
     },
     {
       id: 3,
-      invoiceNumber: '12345678',
+      invoiceNumber: '12345680',
       status: 'Unpaid',
       repeat: 'Daily',
       startDate: '2022-01-01',
@@ -49,7 +55,7 @@ export class RecurringPurchaseInvoicesComponent {
     },
     {
       id: 4,
-      invoiceNumber: '12345678',
+      invoiceNumber: '12345681',
       status: 'Unpaid',
       repeat: 'Daily',
       startDate: '2022-01-01',
@@ -58,7 +64,7 @@ export class RecurringPurchaseInvoicesComponent {
     },
     {
       id: 5,
-      invoiceNumber: '12345678',
+      invoiceNumber: '12345682',
       status: 'Unpaid',
       repeat: 'Daily',
       startDate: '2022-01-01',
@@ -67,43 +73,19 @@ export class RecurringPurchaseInvoicesComponent {
     },
   ]);
 
-  protected readonly tableColumns = TABLE_COLUMNS;
-  protected readonly tableActions = TABLE_ACTIONS;
+  // =====================================================
+  // DATA PAGE CONFIG
+  // =====================================================
 
-  protected readonly searchQuery = signal<string>('');
-  protected readonly pageSize = signal<number>(10);
-  protected readonly currentPage = signal<number>(1);
+  protected readonly dataPageConfig = computed<IDataPageConfig<IRecurringPurchaseInvoice>>(() => ({
+    ...DATA_PAGE_CONFIG,
 
-  // 6️⃣ معالجات أفعال الجدول (Table Event Handlers)
-  protected onTableActionTrigger(event: TableActionEvent<IRecurringPurchaseInvoices>): void {
-    const client = event.row;
+    table: {
+      ...DATA_PAGE_CONFIG.table,
 
-    switch (event.action) {
-      case 'delete':
-        this.deleteClient(client.id);
-        break;
-      case 'edit':
-        this.openEditClientModal(client);
-        break;
-    }
-  }
+      data: this.rawRecurringPurchaseInvoices(),
 
-  protected onRowsSelected(selectedClients: IRecurringPurchaseInvoices[]): void {
-    console.log('Selected clients:', selectedClients);
-  }
-
-  protected onPageParamsChange(event: any): void {
-    this.currentPage.set(event.page);
-    this.pageSize.set(event.pageSize);
-  }
-
-  private deleteClient(id: number): void {
-    this.rawRecurringSalesInvoices.update((current) =>
-      current.filter((recurringSalesInvoices) => recurringSalesInvoices.id !== id),
-    );
-  }
-
-  private openEditClientModal(client: IRecurringPurchaseInvoices): void {
-    console.log('Opening Edit Client Modal for:', client);
-  }
+      totalItems: this.rawRecurringPurchaseInvoices().length,
+    },
+  }));
 }

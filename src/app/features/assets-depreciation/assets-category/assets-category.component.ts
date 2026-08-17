@@ -1,26 +1,30 @@
+// src/app/features/assets-depreciation/assets-category/assets-category.component.ts
+
 import { Component, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LucideAngularModule } from 'lucide-angular';
 
-// 🏛️ Shared Components
-import { PageHeaderComponent } from '@components/page-header/page-header.component';
-import { InputComponent } from '@components/input/input.component';
-import { TableComponent } from '@components/table/table.component';
+// Core
+import { DataPageComponent } from '@core/data-page/data-page.component';
+import { IDataPageConfig } from '@core/data-page/data-page.types';
 
-import { TableActionEvent } from '@components/table/table.types';
 import { IAssetCategory } from './assets-category.types';
 
-// 📐 constants
-import { TABLE_COLUMNS, HEADER_BUTTONS, TABLE_ACTIONS } from './assets-category.constant';
+// Constants
+import { DATA_PAGE_CONFIG } from './assets-category.constants';
+
 @Component({
-  selector: 'app-purchase-payments',
+  selector: 'app-assets-category',
   standalone: true,
-  imports: [CommonModule, PageHeaderComponent, InputComponent, TableComponent, LucideAngularModule],
+  imports: [CommonModule, DataPageComponent],
   templateUrl: './assets-category.component.html',
   styleUrl: './assets-category.component.css',
 })
 export class AssetsCategoryComponent {
-  private readonly rawExpenses = signal<IAssetCategory[]>([
+  // =====================================================
+  // DATA
+  // =====================================================
+
+  private readonly rawAssetCategories = signal<IAssetCategory[]>([
     {
       id: 1,
       name: 'Category 1',
@@ -29,76 +33,19 @@ export class AssetsCategoryComponent {
     },
   ]);
 
-  protected readonly tableColumns = TABLE_COLUMNS;
-  protected readonly headerButtons = HEADER_BUTTONS;
-  protected readonly tableActions = TABLE_ACTIONS;
+  // =====================================================
+  // DATA PAGE CONFIG
+  // =====================================================
 
-  protected readonly searchQuery = signal<string>('');
-  protected readonly pageSize = signal<number>(10);
-  protected readonly currentPage = signal<number>(1);
+  protected readonly dataPageConfig = computed<IDataPageConfig<IAssetCategory>>(() => ({
+    ...DATA_PAGE_CONFIG,
 
-  protected readonly filteredsales = computed(() => {
-    const query = this.searchQuery().toLowerCase().trim();
+    table: {
+      ...DATA_PAGE_CONFIG.table,
 
-    if (!query) {
-      return this.rawExpenses();
-    }
+      data: this.rawAssetCategories(),
 
-    return this.rawExpenses().filter((client) => client.name.toLowerCase().includes(query));
-  });
-
-  protected readonly totalClientsCount = computed(() => this.filteredsales().length);
-
-  // 5️⃣ معالجات أفعال الشريط العلوي (PageHeader Actions Dispatcher)
-  protected onHeaderAction(key: any): void {
-    switch (key) {
-      case 'add-client':
-        this.openAddClientModal();
-        break;
-      case 'export-pdf':
-        this.exportClients();
-        break;
-      default:
-        console.warn(`Unhandled action key: ${key}`);
-    }
-  }
-
-  // 6️⃣ معالجات أفعال الجدول (Table Event Handlers)
-  protected onTableActionTrigger(event: TableActionEvent<IAssetCategory>): void {
-    const client = event.row;
-
-    switch (event.action) {
-      case 'delete':
-        this.deleteClient(client.id);
-        break;
-      case 'edit':
-        this.openEditClientModal(client);
-        break;
-    }
-  }
-
-  protected onRowsSelected(selectedClients: IAssetCategory[]): void {
-    console.log('Selected clients:', selectedClients);
-  }
-
-  protected onPageParamsChange(event: any): void {
-    this.currentPage.set(event.page);
-    this.pageSize.set(event.pageSize);
-  }
-
-  private deleteClient(id: number): void {
-    this.rawExpenses.update((current) => current.filter((client) => client.id !== id));
-  }
-
-  private openAddClientModal(): void {
-    console.log('Opening Add Client Modal...');
-  }
-
-  private openEditClientModal(client: IAssetCategory): void {
-    console.log('Opening Edit Client Modal for:', client);
-  }
-
-  private exportClients(): void {
-    console.log('Exporting client list to PDF...');
-  }
+      totalItems: this.rawAssetCategories().length,
+    },
+  }));
 }

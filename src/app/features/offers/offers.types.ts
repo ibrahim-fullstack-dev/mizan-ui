@@ -1,15 +1,10 @@
-import { ButtonConfig } from '@components/button/button.types';
-export interface IOffers {
+export interface IOffer {
   id: number;
   invoiceNumber: string;
   clientName: string;
   date: string;
   expiryDate: string;
-  Balance: number;
+  totalAmount: number;
+  balance: number;
   status: string;
-}
-export interface IPageNavigationItem {
-  key: string;
-  buttonConfig: ButtonConfig;
-  content: string;
 }

@@ -1,0 +1,47 @@
+<div class="dashboard-wrapper">
+  <!-- 1. قسم البطاقات الإحصائية العلوية (KPI Cards) -->
+  <section class="analytics-row-container">
+    <div class="analytics-grid">
+      @for (card of analyticsCards(); track card.id) {
+        <app-analytics-card [card]="card"></app-analytics-card>
+      }
+    </div>
+  </section>
+
+  <!-- 2. القسم الأوسط: الرسم البياني بجانب الأزرار السريعة -->
+  <section class="dashboard-mid-section">
+    <div class="chart-card">
+      <app-columns-chart [data]="analyticsData()" [animations]="true" [showGridLines]="true">
+      </app-columns-chart>
+    </div>
+
+    <div class="actions-card">
+      <app-button-group
+        [buttonGroup]="buttonGroup"
+        [girdprops]="{
+          gridTitle: 'Urgent Actions',
+          size: 'small',
+          showDescription: false,
+        }"
+      ></app-button-group>
+    </div>
+  </section>
+
+  <!-- 3. الجداول جنباً إلى جنب في صف واحد -->
+  <section class="dashboard-tables-row">
+    <div class="table-card">
+      <app-table [config]="alertsTableConfig()" />
+    </div>
+
+    <div class="table-card">
+      <app-table [config]="alertsTableConfig()" />
+    </div>
+  </section>
+
+  <!-- 4. العنصر الكبير في الأسفل (مثلاً جدول أو تقرير واسع إضافي إذا رغبت) -->
+  <section class="dashboard-bottom-full-section">
+    <div class="table-card">
+      <app-table [config]="unpaidSalesTableConfig()" />
+    </div>
+  </section>
+</div>
