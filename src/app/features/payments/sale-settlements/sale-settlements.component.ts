@@ -2,21 +2,20 @@
 
 import { Component, computed, signal } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
+import { PageLayoutComponent } from '@shared/components/page-layout/page-layout.component';
+import { InputComponent } from '@components/input/input.component';
+import { TableComponent } from '@components/table/table.component';
 
-// Core
-import { DataPageComponent } from '@core/data-page/data-page.component';
-import { IDataPageConfig } from '@core/data-page/data-page.types';
+import { TablePageEvent } from '@components/table/table.types';
 
 import { ISaleSettlement } from './sale-settlements.types';
 
-// Constants
-import { DATA_PAGE_CONFIG } from './sale-settlements.constants';
+import { DATA_PAGE_CONFIG, SEARCH_INPUT, TABLE_CONFIG } from './sale-settlements.constants';
 
 @Component({
   selector: 'app-sale-settlements',
   standalone: true,
-  imports: [CommonModule, DataPageComponent],
+  imports: [PageLayoutComponent, InputComponent, TableComponent],
   templateUrl: './sale-settlements.component.html',
   styleUrl: './sale-settlements.component.css',
 })
@@ -43,18 +42,41 @@ export class SaleSettlementsComponent {
   ]);
 
   // =====================================================
-  // DATA PAGE CONFIG
+  // UI STATE
   // =====================================================
 
-  protected readonly dataPageConfig = computed<IDataPageConfig<ISaleSettlement>>(() => ({
-    ...DATA_PAGE_CONFIG,
+  protected readonly searchQuery = signal('');
 
-    table: {
-      ...DATA_PAGE_CONFIG.table,
+  // =====================================================
+  // CONFIG
+  // =====================================================
 
-      data: this.rawSaleSettlements(),
+  protected readonly dataPageConfig = DATA_PAGE_CONFIG;
+  protected readonly searchInput = SEARCH_INPUT;
 
-      totalItems: this.rawSaleSettlements().length,
-    },
+  // =====================================================
+  // TABLE CONFIG
+  // =====================================================
+
+  protected readonly tableConfig = computed(() => ({
+    ...TABLE_CONFIG,
+    data: this.rawSaleSettlements(),
+    totalItems: this.rawSaleSettlements().length,
   }));
+
+  // =====================================================
+  // TABLE PAGINATION
+  // =====================================================
+
+  protected onTablePageChange(event: TablePageEvent): void {
+    console.log('Page changed:', event);
+  }
+
+  // =====================================================
+  // TABLE SELECTION
+  // =====================================================
+
+  protected onTableSelectionChange(selectedIds: ISaleSettlement['id'][]): void {
+    console.log('Selected sale settlement IDs:', selectedIds);
+  }
 }
