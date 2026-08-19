@@ -1,2 +1,25 @@
 <!-- src/app/features/manufacturing/productions-invoices/productions-invoices.component.html -->
-<app-data-page [config]="dataPageConfig()" />
+
+<app-page-layout [config]="dataPageConfig">
+  <!-- Search -->
+  <div toolbar-search-zone>
+    <app-input [config]="searchInput" [(value)]="searchQuery" />
+  </div>
+
+  <!-- Header Actions -->
+  <div toolbar-actions-zone>
+    @for (button of headerButtons; track button.key) {
+      <app-button [config]="button.buttonConfig" (btnClick)="onHeaderAction(button.key)" />
+    }
+  </div>
+
+  <!-- Table -->
+  <div table-zone>
+    <app-table
+      [config]="tableConfig()"
+      (actionClick)="onTableAction($event)"
+      (selectionChange)="onTableSelectionChange($event)"
+      (pageChange)="onTablePageChange($event)"
+    />
+  </div>
+</app-page-layout>

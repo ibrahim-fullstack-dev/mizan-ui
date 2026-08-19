@@ -1,10 +1,11 @@
 // src/app/features/bills-invoices/recurring-sales-invoices/recurring-sales-invoices.constants.ts
 
 import { TableColumn, TableAction } from '@components/table/table.types';
+import { InputConfig } from '@components/input/input.types';
 
-import { IDataPageConfig, IPageLayout } from '@core/data-page/data-page.types';
+import { IPageLayoutConfig, IPageLayout } from '@shared/components/page-layout/page-layout.types';
 
-import { Pencil, Trash2, Calendar, Repeat, Eye, Info, ReceiptText } from 'lucide-angular';
+import { Pencil, Trash2, Calendar, Repeat, Eye, Info, ReceiptText, Search } from 'lucide-angular';
 
 import { IRecurringSalesInvoice } from './recurring-sales-invoices.types';
 
@@ -16,6 +17,16 @@ export const PAGE_LAYOUT: IPageLayout = {
   showToolbar: true,
   showTabs: false,
   showTable: true,
+};
+
+// =====================================================
+// SEARCH INPUT
+// =====================================================
+
+export const SEARCH_INPUT: InputConfig = {
+  type: 'text',
+  placeholder: 'Search recurring sales invoices...',
+  icon: Search,
 };
 
 // =====================================================
@@ -87,27 +98,22 @@ export const TABLE_ACTIONS: TableAction[] = [
 ];
 
 // =====================================================
+// TABLE CONFIG
+// =====================================================
+
+export const TABLE_CONFIG = {
+  columns: TABLE_COLUMNS,
+  actions: TABLE_ACTIONS,
+  selectable: true,
+  showActions: true,
+  showPagination: true,
+  emptyMessage: 'No recurring sales invoices found.',
+};
+
+// =====================================================
 // DATA PAGE CONFIG
 // =====================================================
 
-export const DATA_PAGE_CONFIG: IDataPageConfig<IRecurringSalesInvoice> = {
+export const DATA_PAGE_CONFIG: IPageLayoutConfig = {
   layout: PAGE_LAYOUT,
-
-  headerButtons: [],
-
-  tabs: [],
-
-  table: {
-    columns: TABLE_COLUMNS,
-
-    actions: TABLE_ACTIONS,
-
-    selectable: true,
-
-    showActions: true,
-
-    showPagination: true,
-
-    emptyMessage: 'No recurring sales invoices found.',
-  },
 };

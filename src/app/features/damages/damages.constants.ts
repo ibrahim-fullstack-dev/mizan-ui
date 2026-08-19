@@ -1,8 +1,13 @@
 // src/app/features/damages/damages.constants.ts
 
 import { TableColumn, TableAction } from '@components/table/table.types';
+import { InputConfig } from '@components/input/input.types';
 
-import { IDataPageConfig, IPageAction, IPageLayout } from '@core/data-page/data-page.types';
+import {
+  IPageLayoutConfig,
+  IPageAction,
+  IPageLayout,
+} from '@shared/components/page-layout/page-layout.types';
 
 import {
   UserPlus,
@@ -17,6 +22,7 @@ import {
   Calendar,
   NotebookPen,
   Eye,
+  Search,
 } from 'lucide-angular';
 
 import { IDamage } from './damages.types';
@@ -29,6 +35,16 @@ export const PAGE_LAYOUT: IPageLayout = {
   showToolbar: true,
   showTabs: false,
   showTable: true,
+};
+
+// =====================================================
+// SEARCH INPUT
+// =====================================================
+
+export const SEARCH_INPUT: InputConfig = {
+  type: 'text',
+  placeholder: 'Search damages...',
+  icon: Search,
 };
 
 // =====================================================
@@ -139,27 +155,22 @@ export const TABLE_ACTIONS: TableAction[] = [
 ];
 
 // =====================================================
+// TABLE CONFIG
+// =====================================================
+
+export const TABLE_CONFIG = {
+  columns: TABLE_COLUMNS,
+  actions: TABLE_ACTIONS,
+  selectable: true,
+  showActions: true,
+  showPagination: true,
+  emptyMessage: 'No damages found.',
+};
+
+// =====================================================
 // DATA PAGE CONFIG
 // =====================================================
 
-export const DATA_PAGE_CONFIG: IDataPageConfig<IDamage> = {
+export const DATA_PAGE_CONFIG: IPageLayoutConfig = {
   layout: PAGE_LAYOUT,
-
-  headerButtons: HEADER_BUTTONS,
-
-  tabs: [],
-
-  table: {
-    columns: TABLE_COLUMNS,
-
-    actions: TABLE_ACTIONS,
-
-    selectable: true,
-
-    showActions: true,
-
-    showPagination: true,
-
-    emptyMessage: 'No damages found.',
-  },
 };

@@ -1,2 +1,23 @@
 <!-- src/app/features/settings/activity-log/activity-log.component.html -->
-<app-data-page [config]="dataPageConfig()" />
+
+<app-page-layout [config]="dataPageConfig">
+  <!-- Search / Filters -->
+  <div toolbar-search-zone class="activity-log-filters">
+    <app-input [config]="searchInput" [(value)]="searchQuery" />
+    <!-- [(value)]="subjectFilter" -->
+    <app-select [config]="subjectSelect" />
+    <!-- [(value)]="eventFilter" -->
+    <app-select [config]="eventSelect" />
+    <!-- [(value)]="periodFilter" -->
+    <app-select [config]="periodSelect" />
+  </div>
+
+  <!-- Table -->
+  <div table-zone>
+    <app-table
+      [config]="tableConfig()"
+      (selectionChange)="onTableSelectionChange($event)"
+      (pageChange)="onTablePageChange($event)"
+    />
+  </div>
+</app-page-layout>

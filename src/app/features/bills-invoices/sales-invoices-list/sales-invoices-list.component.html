@@ -1,2 +1,36 @@
 <!-- src/app/features/bills-invoices/sales-invoices-list/sales-invoices-list.component.html -->
-<app-data-page [config]="dataPageConfig()" />
+
+<app-page-layout [config]="dataPageConfig">
+  <!-- Search -->
+  <div toolbar-search-zone>
+    <app-input [config]="searchInput" [(value)]="searchQuery" />
+  </div>
+
+  <!-- Header Actions -->
+  <div toolbar-actions-zone>
+    @for (button of headerButtons; track button.key) {
+      <app-button [config]="button.buttonConfig" (btnClick)="onHeaderAction(button.key)" />
+    }
+  </div>
+
+  <!-- Tabs -->
+  <div tabs-zone>
+    @for (tab of tabs; track tab.key) {
+      <app-button
+        [config]="tab.buttonConfig"
+        [class.active]="activeTab() === tab.key"
+        (btnClick)="onTabClick(tab.key)"
+      />
+    }
+  </div>
+
+  <!-- Table -->
+  <div table-zone>
+    <app-table
+      [config]="tableConfig()"
+      (actionClick)="onTableAction($event)"
+      (selectionChange)="onTableSelectionChange($event)"
+      (pageChange)="onTablePageChange($event)"
+    />
+  </div>
+</app-page-layout>

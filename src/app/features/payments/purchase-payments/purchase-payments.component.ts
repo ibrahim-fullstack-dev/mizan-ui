@@ -2,21 +2,26 @@
 
 import { Component, computed, signal } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
+import { PageLayoutComponent } from '@shared/components/page-layout/page-layout.component';
+import { InputComponent } from '@components/input/input.component';
+import { ButtonComponent } from '@components/button/button.component';
+import { TableComponent } from '@components/table/table.component';
 
-// Core
-import { DataPageComponent } from '@core/data-page/data-page.component';
-import { IDataPageConfig } from '@core/data-page/data-page.types';
+import { TableActionEvent, TablePageEvent } from '@components/table/table.types';
 
 import { IPurchasePayment } from './purchase-payments.types';
 
-// Constants
-import { DATA_PAGE_CONFIG } from './purchase-payments.constants';
+import {
+  DATA_PAGE_CONFIG,
+  SEARCH_INPUT,
+  HEADER_BUTTONS,
+  TABLE_CONFIG,
+} from './purchase-payments.constants';
 
 @Component({
   selector: 'app-purchase-payments',
   standalone: true,
-  imports: [CommonModule, DataPageComponent],
+  imports: [PageLayoutComponent, InputComponent, ButtonComponent, TableComponent],
   templateUrl: './purchase-payments.component.html',
   styleUrl: './purchase-payments.component.css',
 })
@@ -40,18 +45,116 @@ export class PurchasePaymentsComponent {
   ]);
 
   // =====================================================
-  // DATA PAGE CONFIG
+  // UI STATE
   // =====================================================
 
-  protected readonly dataPageConfig = computed<IDataPageConfig<IPurchasePayment>>(() => ({
-    ...DATA_PAGE_CONFIG,
+  protected readonly searchQuery = signal('');
 
-    table: {
-      ...DATA_PAGE_CONFIG.table,
+  // =====================================================
+  // CONFIG
+  // =====================================================
 
-      data: this.rawPurchasePayments(),
+  protected readonly dataPageConfig = DATA_PAGE_CONFIG;
+  protected readonly searchInput = SEARCH_INPUT;
+  protected readonly headerButtons = HEADER_BUTTONS;
 
-      totalItems: this.rawPurchasePayments().length,
-    },
+  // =====================================================
+  // TABLE CONFIG
+  // =====================================================
+
+  protected readonly tableConfig = computed(() => ({
+    ...TABLE_CONFIG,
+    data: this.rawPurchasePayments(),
+    totalItems: this.rawPurchasePayments().length,
   }));
+
+  // =====================================================
+  // HEADER ACTIONS
+  // =====================================================
+
+  protected onHeaderAction(key: string): void {
+    switch (key) {
+      case 'add':
+        this.openAddForm();
+        break;
+
+      case 'delete-all':
+        this.deleteAll();
+        break;
+
+      case 'export-pdf':
+        this.exportPdf();
+        break;
+
+      default:
+        console.warn(`Unhandled header action: ${key}`);
+    }
+  }
+
+  // =====================================================
+  // TABLE ACTIONS
+  // =====================================================
+
+  protected onTableAction(event: TableActionEvent<IPurchasePayment>): void {
+    switch (event.action) {
+      case 'view':
+        this.viewPurchasePayment(event.id);
+        break;
+
+      case 'edit':
+        this.editPurchasePayment(event.id);
+        break;
+
+      case 'delete':
+        this.deletePurchasePayment(event.id);
+        break;
+
+      default:
+        console.warn(`Unhandled table action: ${event.action}`);
+    }
+  }
+
+  // =====================================================
+  // TABLE SELECTION
+  // =====================================================
+
+  protected onTableSelectionChange(selectedIds: IPurchasePayment['id'][]): void {
+    console.log('Selected purchase payment IDs:', selectedIds);
+  }
+
+  // =====================================================
+  // TABLE PAGINATION
+  // =====================================================
+
+  protected onTablePageChange(event: TablePageEvent): void {
+    console.log('Page changed:', event);
+  }
+
+  // =====================================================
+  // ACTIONS
+  // =====================================================
+
+  private openAddForm(): void {
+    console.log('Open Add Purchase Payment form');
+  }
+
+  private viewPurchasePayment(id: IPurchasePayment['id']): void {
+    console.log('View purchase payment:', id);
+  }
+
+  private editPurchasePayment(id: IPurchasePayment['id']): void {
+    console.log('Edit purchase payment:', id);
+  }
+
+  private deletePurchasePayment(id: IPurchasePayment['id']): void {
+    this.rawPurchasePayments.update((payments) => payments.filter((payment) => payment.id !== id));
+  }
+
+  private deleteAll(): void {
+    this.rawPurchasePayments.set([]);
+  }
+
+  private exportPdf(): void {
+    console.log('Exporting purchase payments to PDF...');
+  }
 }

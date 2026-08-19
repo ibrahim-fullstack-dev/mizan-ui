@@ -1,2 +1,41 @@
 <!-- src/app/features/clients/clients.component.html -->
-<app-data-page [config]="dataPageConfig()" />
+
+<app-page-layout [config]="dataPageConfig">
+  <!-- =====================================================
+       SEARCH
+       ===================================================== -->
+
+  <app-input toolbar-search-zone [config]="searchInput" [(value)]="searchQuery" />
+
+  <!-- =====================================================
+       HEADER ACTIONS
+       ===================================================== -->
+
+  @for (button of headerButtons; track button.key) {
+    <app-button
+      toolbar-actions-zone
+      [config]="button.buttonConfig"
+      (btnClick)="onHeaderAction(button.key)"
+    />
+  }
+
+  <!-- =====================================================
+       TABLE
+       ===================================================== -->
+
+  <app-table
+    table-zone
+    [config]="tableConfig()"
+    (actionClick)="onTableAction($event)"
+    (selectionChange)="onTableSelectionChange($event)"
+    (pageChange)="onTablePageChange($event)"
+  />
+
+  <!-- =====================================================
+       ADD FORM
+       ===================================================== -->
+
+  @if (isAddFormOpen()) {
+    <app-add-form (close)="closeAddForm()" />
+  }
+</app-page-layout>

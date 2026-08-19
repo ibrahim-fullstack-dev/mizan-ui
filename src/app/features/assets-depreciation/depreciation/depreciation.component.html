@@ -1,2 +1,13 @@
 <!-- src/app/features/assets-depreciation/depreciation/depreciation.component.html -->
-<app-data-page [config]="dataPageConfig()" />
+
+<app-page-layout [config]="dataPageConfig">
+  <!-- Search -->
+  <div toolbar-search-zone>
+    <app-input [config]="searchInput" [(value)]="searchQuery" />
+  </div>
+
+  <!-- Table -->
+  <div table-zone>
+    <app-table [config]="tableConfig()" (pageChange)="onTablePageChange($event)" />
+  </div>
+</app-page-layout>
