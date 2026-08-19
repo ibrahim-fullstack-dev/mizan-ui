@@ -1,0 +1,13 @@
+<app-form-slide [config]="formSlide">
+  <app-button form-header-actions [config]="closeButton" (btnClick)="onClose()" />
+
+  <app-input form-content [config]="inputs.name" />
+  <app-input form-content [config]="inputs.contactNumber" />
+  <app-input form-content [config]="inputs.taxNumber" />
+  <app-input form-content [config]="inputs.otherIdType" />
+  <app-input form-content [config]="inputs.otherIdNumber" />
+
+  <app-button form-footer-actions [config]="footerButtons.cancel" (btnClick)="onCancel()" />
+
+  <app-button form-footer-actions [config]="footerButtons.save" (btnClick)="onSave()" />
+</app-form-slide>

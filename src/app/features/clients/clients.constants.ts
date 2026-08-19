@@ -1,10 +1,15 @@
 // src/app/features/clients/clients.constants.ts
 
 import { TableColumn, TableAction } from '@components/table/table.types';
+import { InputConfig } from '@components/input/input.types';
 
-import { IDataPageConfig, IPageAction, IPageLayout } from '@core/data-page/data-page.types';
+import {
+  IPageLayoutConfig,
+  IPageLayout,
+  IPageAction,
+} from '@shared/components/page-layout/page-layout.types';
 
-import { Download, Pencil, Trash2, User, Mail, Phone, Plus, Eye } from 'lucide-angular';
+import { Download, Pencil, Trash2, User, Mail, Phone, Plus, Eye, Search } from 'lucide-angular';
 
 import { IClient } from './clients.types';
 
@@ -16,6 +21,7 @@ export const PAGE_LAYOUT: IPageLayout = {
   showToolbar: true,
   showTabs: false,
   showTable: true,
+  showPageHeader: true,
 };
 
 // =====================================================
@@ -75,6 +81,16 @@ export const HEADER_BUTTONS: IPageAction[] = [
 ];
 
 // =====================================================
+// SEARCH INPUT
+// =====================================================
+
+export const SEARCH_INPUT: InputConfig = {
+  type: 'text',
+  placeholder: 'Search clients...',
+  icon: Search,
+};
+
+// =====================================================
 // TABLE ACTIONS
 // =====================================================
 
@@ -106,27 +122,24 @@ export const TABLE_ACTIONS: TableAction[] = [
 ];
 
 // =====================================================
+// TABLE CONFIG
+// =====================================================
+
+export const TABLE_CONFIG = {
+  columns: TABLE_COLUMNS,
+  actions: TABLE_ACTIONS,
+  selectable: true,
+  showActions: true,
+  showPagination: true,
+  emptyMessage: 'No clients found.',
+};
+
+// =====================================================
 // DATA PAGE CONFIG
 // =====================================================
 
-export const DATA_PAGE_CONFIG: IDataPageConfig<IClient> = {
+export const DATA_PAGE_CONFIG: IPageLayoutConfig = {
   layout: PAGE_LAYOUT,
-
-  headerButtons: HEADER_BUTTONS,
-
-  tabs: [],
-
-  table: {
-    columns: TABLE_COLUMNS,
-
-    actions: TABLE_ACTIONS,
-
-    selectable: true,
-
-    showActions: true,
-
-    showPagination: true,
-
-    emptyMessage: 'No clients found.',
-  },
+  title: 'Clients',
+  subtitle: 'Manage your clients here.',
 };

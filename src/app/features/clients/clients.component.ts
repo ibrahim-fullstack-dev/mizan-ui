@@ -2,21 +2,24 @@
 
 import { Component, computed, signal } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
+import { PageLayoutComponent } from '@shared/components/page-layout/page-layout.component';
+import { IPageLayoutConfig } from '@shared/components/page-layout/page-layout.types';
+import { InputComponent } from '@shared/components/input/input.component';
+import { ButtonComponent } from '@shared/components/button/button.component';
+import { TableComponent } from '@shared/components/table/table.component';
 
-// Core
-import { DataPageComponent } from '@core/data-page/data-page.component';
-import { IDataPageConfig } from '@core/data-page/data-page.types';
+import { TableActionEvent, TablePageEvent } from '@components/table/table.types';
+
+import { AddFormComponent } from './components/add-form/add-form.component';
 
 import { IClient } from './clients.types';
 
-// Constants
-import { DATA_PAGE_CONFIG } from './clients.constants';
+import { DATA_PAGE_CONFIG, HEADER_BUTTONS, TABLE_CONFIG, SEARCH_INPUT } from './clients.constants';
 
 @Component({
   selector: 'app-clients',
   standalone: true,
-  imports: [CommonModule, DataPageComponent],
+  imports: [PageLayoutComponent, InputComponent, ButtonComponent, TableComponent, AddFormComponent],
   templateUrl: './clients.component.html',
   styleUrl: './clients.component.css',
 })
@@ -59,18 +62,105 @@ export class ClientsComponent {
   ]);
 
   // =====================================================
-  // DATA PAGE CONFIG
+  // UI STATE
   // =====================================================
 
-  protected readonly dataPageConfig = computed<IDataPageConfig<IClient>>(() => ({
-    ...DATA_PAGE_CONFIG,
+  protected readonly isAddFormOpen = signal(false);
+  protected readonly searchQuery = signal('');
 
-    table: {
-      ...DATA_PAGE_CONFIG.table,
+  // =====================================================
+  // CONFIG
+  // =====================================================
 
-      data: this.rawClients(),
+  protected readonly dataPageConfig: IPageLayoutConfig = DATA_PAGE_CONFIG;
+  protected readonly searchInput = SEARCH_INPUT;
+  protected readonly headerButtons = HEADER_BUTTONS;
 
-      totalItems: this.rawClients().length,
-    },
+  // =====================================================
+  // TABLE
+  // =====================================================
+
+  protected readonly tableConfig = computed(() => ({
+    ...TABLE_CONFIG,
+    data: this.rawClients(),
+    totalItems: this.rawClients().length,
   }));
+
+  protected onTableAction(event: TableActionEvent<IClient>): void {
+    switch (event.action) {
+      case 'view':
+        console.log('View client:', event.id);
+        break;
+
+      case 'edit':
+        console.log('Edit client:', event.id);
+        break;
+
+      case 'delete':
+        this.deleteClient(event.id);
+        break;
+
+      default:
+        console.warn(`Unhandled table action: ${event.action}`);
+    }
+  }
+
+  protected onTableSelectionChange(selectedIds: IClient['id'][]): void {
+    console.log('Selected client IDs:', selectedIds);
+  }
+
+  protected onTablePageChange(event: TablePageEvent): void {
+    console.log('Page changed:', event);
+  }
+
+  // =====================================================
+  // HEADER ACTIONS
+  // =====================================================
+
+  protected onHeaderAction(key: string): void {
+    switch (key) {
+      case 'add':
+        this.openAddForm();
+        break;
+
+      case 'delete-all':
+        this.deleteAll();
+        break;
+
+      case 'export-pdf':
+        this.exportPdf();
+        break;
+
+      default:
+        console.warn(`Unhandled header action: ${key}`);
+    }
+  }
+
+  // =====================================================
+  // ADD FORM VISIBILITY
+  // =====================================================
+
+  protected openAddForm(): void {
+    this.isAddFormOpen.set(true);
+  }
+
+  protected closeAddForm(): void {
+    this.isAddFormOpen.set(false);
+  }
+
+  // =====================================================
+  // OTHER ACTIONS
+  // =====================================================
+
+  private deleteClient(id: IClient['id']): void {
+    this.rawClients.update((clients) => clients.filter((client) => client.id !== id));
+  }
+
+  private deleteAll(): void {
+    this.rawClients.set([]);
+  }
+
+  private exportPdf(): void {
+    console.log('Exporting clients to PDF...');
+  }
 }
