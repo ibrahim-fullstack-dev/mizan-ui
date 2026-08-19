@@ -2,17 +2,24 @@
 
 import { TableColumn, TableAction } from '@components/table/table.types';
 
-import { IPageAction, IDataPageConfig, IPageLayout } from '@core/data-page/data-page.types';
+import {
+  IPageAction,
+  IPageLayoutConfig,
+  IPageLayout,
+} from '@shared/components/page-layout/page-layout.types';
+
+import { InputConfig } from '@components/input/input.types';
 
 import {
   Pencil,
   Trash2,
   Eye,
-  Hash,
+  Tag,
   Plus,
   ChartColumnStacked,
   CircleDollarSign,
   Building2,
+  Search,
 } from 'lucide-angular';
 
 import { IAsset } from './assets.types';
@@ -28,6 +35,16 @@ export const PAGE_LAYOUT: IPageLayout = {
 };
 
 // =====================================================
+// SEARCH INPUT
+// =====================================================
+
+export const SEARCH_INPUT: InputConfig = {
+  type: 'text',
+  placeholder: 'Search assets...',
+  icon: Search,
+};
+
+// =====================================================
 // TABLE COLUMNS
 // =====================================================
 
@@ -35,7 +52,7 @@ export const TABLE_COLUMNS: TableColumn<IAsset>[] = [
   {
     key: 'name',
     label: 'Name',
-    icon: Hash,
+    icon: Tag,
   },
   {
     key: 'branch',
@@ -116,27 +133,22 @@ export const TABLE_ACTIONS: TableAction[] = [
 ];
 
 // =====================================================
+// TABLE CONFIG
+// =====================================================
+
+export const TABLE_CONFIG = {
+  columns: TABLE_COLUMNS,
+  actions: TABLE_ACTIONS,
+  selectable: true,
+  showActions: true,
+  showPagination: true,
+  emptyMessage: 'No assets found.',
+};
+
+// =====================================================
 // DATA PAGE CONFIG
 // =====================================================
 
-export const DATA_PAGE_CONFIG: IDataPageConfig<IAsset> = {
+export const DATA_PAGE_CONFIG: IPageLayoutConfig = {
   layout: PAGE_LAYOUT,
-
-  headerButtons: HEADER_BUTTONS,
-
-  tabs: [],
-
-  table: {
-    columns: TABLE_COLUMNS,
-
-    actions: TABLE_ACTIONS,
-
-    selectable: true,
-
-    showActions: true,
-
-    showPagination: true,
-
-    emptyMessage: 'No assets found.',
-  },
 };

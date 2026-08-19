@@ -1,21 +1,21 @@
 // src/app/features/assets-depreciation/depreciation/depreciation.component.ts
 
 import { Component, computed, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
-// Core
-import { DataPageComponent } from '@core/data-page/data-page.component';
-import { IDataPageConfig } from '@core/data-page/data-page.types';
+import { PageLayoutComponent } from '@shared/components/page-layout/page-layout.component';
+import { InputComponent } from '@components/input/input.component';
+import { TableComponent } from '@components/table/table.component';
+
+import { TablePageEvent } from '@components/table/table.types';
 
 import { IDepreciation } from './depreciation.types';
 
-// Constants
-import { DATA_PAGE_CONFIG } from './depreciation.constants';
+import { DATA_PAGE_CONFIG, SEARCH_INPUT, TABLE_CONFIG } from './depreciation.constants';
 
 @Component({
   selector: 'app-assets-depreciation',
   standalone: true,
-  imports: [CommonModule, DataPageComponent],
+  imports: [PageLayoutComponent, InputComponent, TableComponent],
   templateUrl: './depreciation.component.html',
   styleUrl: './depreciation.component.css',
 })
@@ -34,18 +34,29 @@ export class DepreciationComponent {
   ]);
 
   // =====================================================
-  // DATA PAGE CONFIG
+  // UI STATE
   // =====================================================
 
-  protected readonly dataPageConfig = computed<IDataPageConfig<IDepreciation>>(() => ({
-    ...DATA_PAGE_CONFIG,
+  protected readonly searchQuery = signal('');
 
-    table: {
-      ...DATA_PAGE_CONFIG.table,
+  // =====================================================
+  // CONFIG
+  // =====================================================
 
-      data: this.rawDepreciations(),
+  protected readonly dataPageConfig = DATA_PAGE_CONFIG;
+  protected readonly searchInput = SEARCH_INPUT;
 
-      totalItems: this.rawDepreciations().length,
-    },
+  protected readonly tableConfig = computed(() => ({
+    ...TABLE_CONFIG,
+    data: this.rawDepreciations(),
+    totalItems: this.rawDepreciations().length,
   }));
+
+  // =====================================================
+  // TABLE
+  // =====================================================
+
+  protected onTablePageChange(event: TablePageEvent): void {
+    console.log('Page changed:', event);
+  }
 }

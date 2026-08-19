@@ -2,9 +2,24 @@
 
 import { TableColumn, TableAction } from '@components/table/table.types';
 
-import { IPageAction, IDataPageConfig, IPageLayout } from '@core/data-page/data-page.types';
+import {
+  IPageAction,
+  IPageLayoutConfig,
+  IPageLayout,
+} from '@shared/components/page-layout/page-layout.types';
 
-import { Pencil, Trash2, Eye, Tag, Plus, CircleUserRound, Calculator } from 'lucide-angular';
+import { InputConfig } from '@components/input/input.types';
+
+import {
+  Pencil,
+  Trash2,
+  Eye,
+  Tag,
+  Plus,
+  CircleUserRound,
+  Calculator,
+  Search,
+} from 'lucide-angular';
 
 import { IAssetCategory } from './assets-category.types';
 
@@ -16,6 +31,16 @@ export const PAGE_LAYOUT: IPageLayout = {
   showToolbar: true,
   showTabs: false,
   showTable: true,
+};
+
+// =====================================================
+// SEARCH INPUT
+// =====================================================
+
+export const SEARCH_INPUT: InputConfig = {
+  type: 'text',
+  placeholder: 'Search asset categories...',
+  icon: Search,
 };
 
 // =====================================================
@@ -97,27 +122,22 @@ export const TABLE_ACTIONS: TableAction[] = [
 ];
 
 // =====================================================
+// TABLE CONFIG
+// =====================================================
+
+export const TABLE_CONFIG = {
+  columns: TABLE_COLUMNS,
+  actions: TABLE_ACTIONS,
+  selectable: true,
+  showActions: true,
+  showPagination: true,
+  emptyMessage: 'No asset categories found.',
+};
+
+// =====================================================
 // DATA PAGE CONFIG
 // =====================================================
 
-export const DATA_PAGE_CONFIG: IDataPageConfig<IAssetCategory> = {
+export const DATA_PAGE_CONFIG: IPageLayoutConfig = {
   layout: PAGE_LAYOUT,
-
-  headerButtons: HEADER_BUTTONS,
-
-  tabs: [],
-
-  table: {
-    columns: TABLE_COLUMNS,
-
-    actions: TABLE_ACTIONS,
-
-    selectable: true,
-
-    showActions: true,
-
-    showPagination: true,
-
-    emptyMessage: 'No asset categories found.',
-  },
 };
