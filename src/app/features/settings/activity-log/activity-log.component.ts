@@ -2,21 +2,30 @@
 
 import { Component, computed, signal } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
+import { PageLayoutComponent } from '@shared/components/page-layout/page-layout.component';
+import { InputComponent } from '@components/input/input.component';
+import { SelectComponent } from '@components/select/select.component';
+import { TableComponent } from '@components/table/table.component';
 
-// Core
-import { DataPageComponent } from '@core/data-page/data-page.component';
-import { IDataPageConfig } from '@core/data-page/data-page.types';
+import { TablePageEvent } from '@components/table/table.types';
+
+import { IPageLayoutConfig } from '@shared/components/page-layout/page-layout.types';
+
+import {
+  SEARCH_INPUT,
+  SUBJECT_SELECT_OPTIONS,
+  EVENT_SELECT_OPTIONS,
+  PERIOD_SELECT_OPTIONS,
+  DATA_PAGE_CONFIG,
+  TABLE_CONFIG,
+} from './activity-log.constants';
 
 import { IActivityLog } from './activity-log.types';
-
-// Constants
-import { DATA_PAGE_CONFIG } from './activity-log.constants';
 
 @Component({
   selector: 'app-activity-log',
   standalone: true,
-  imports: [CommonModule, DataPageComponent],
+  imports: [PageLayoutComponent, InputComponent, SelectComponent, TableComponent],
   templateUrl: './activity-log.component.html',
   styleUrl: './activity-log.component.css',
 })
@@ -74,18 +83,64 @@ export class ActivityLogComponent {
   ]);
 
   // =====================================================
-  // DATA PAGE CONFIG
+  // UI STATE
   // =====================================================
 
-  protected readonly dataPageConfig = computed<IDataPageConfig<IActivityLog>>(() => ({
-    ...DATA_PAGE_CONFIG,
+  protected readonly searchQuery = signal('');
+  protected readonly subjectFilter = signal('');
+  protected readonly eventFilter = signal('');
+  protected readonly periodFilter = signal('');
 
-    table: {
-      ...DATA_PAGE_CONFIG.table,
+  // =====================================================
+  // CONFIG
+  // =====================================================
 
-      data: this.rawActivityLogs(),
+  protected readonly dataPageConfig = DATA_PAGE_CONFIG;
+  protected readonly searchInput = SEARCH_INPUT;
 
-      totalItems: this.rawActivityLogs().length,
-    },
+  protected readonly subjectSelect = SUBJECT_SELECT_OPTIONS;
+  protected readonly eventSelect = EVENT_SELECT_OPTIONS;
+  protected readonly periodSelect = PERIOD_SELECT_OPTIONS;
+
+  // =====================================================
+  // TABLE CONFIG
+  // =====================================================
+
+  protected readonly tableConfig = computed(() => ({
+    ...TABLE_CONFIG,
+    data: this.rawActivityLogs(),
+    totalItems: this.rawActivityLogs().length,
   }));
+
+  // =====================================================
+  // FILTERS
+  // =====================================================
+
+  protected onSubjectChange(value: string): void {
+    this.subjectFilter.set(value);
+  }
+
+  protected onEventChange(value: string): void {
+    this.eventFilter.set(value);
+  }
+
+  protected onPeriodChange(value: string): void {
+    this.periodFilter.set(value);
+  }
+
+  // =====================================================
+  // TABLE PAGINATION
+  // =====================================================
+
+  protected onTablePageChange(event: TablePageEvent): void {
+    console.log('Page changed:', event);
+  }
+
+  // =====================================================
+  // TABLE SELECTION
+  // =====================================================
+
+  protected onTableSelectionChange(selectedIds: IActivityLog['id'][]): void {
+    console.log('Selected activity log IDs:', selectedIds);
+  }
 }

@@ -1,12 +1,12 @@
 // src/app/features/settings/activity-log/activity-log.constants.ts
 
 import { TableColumn } from '@components/table/table.types';
-
-import { IDataPageConfig, IPageLayout } from '@core/data-page/data-page.types';
-
+import { InputConfig } from '@components/input/input.types';
 import { ISelectConfig } from '@components/select/select.types';
 
-import { Hash, FileText, Type, ArrowUpDown, Calendar } from 'lucide-angular';
+import { IPageLayoutConfig, IPageLayout } from '@shared/components/page-layout/page-layout.types';
+
+import { Hash, FileText, Type, ArrowUpDown, Calendar, Search } from 'lucide-angular';
 
 import { IActivityLog } from './activity-log.types';
 
@@ -18,6 +18,16 @@ export const PAGE_LAYOUT: IPageLayout = {
   showToolbar: true,
   showTabs: false,
   showTable: true,
+};
+
+// =====================================================
+// SEARCH INPUT
+// =====================================================
+
+export const SEARCH_INPUT: InputConfig = {
+  type: 'text',
+  placeholder: 'Search activity logs...',
+  icon: Search,
 };
 
 // =====================================================
@@ -206,25 +216,21 @@ export const PERIOD_SELECT_OPTIONS: ISelectConfig = {
 };
 
 // =====================================================
+// TABLE CONFIG
+// =====================================================
+
+export const TABLE_CONFIG = {
+  columns: TABLE_COLUMNS,
+  selectable: true,
+  showActions: false,
+  showPagination: true,
+  emptyMessage: 'No activity logs found.',
+};
+
+// =====================================================
 // DATA PAGE CONFIG
 // =====================================================
 
-export const DATA_PAGE_CONFIG: IDataPageConfig<IActivityLog> = {
+export const DATA_PAGE_CONFIG: IPageLayoutConfig = {
   layout: PAGE_LAYOUT,
-
-  headerButtons: [],
-
-  tabs: [],
-
-  table: {
-    columns: TABLE_COLUMNS,
-
-    selectable: true,
-
-    showActions: false,
-
-    showPagination: true,
-
-    emptyMessage: 'No activity logs found.',
-  },
 };
