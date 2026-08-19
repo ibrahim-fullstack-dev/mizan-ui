@@ -2,21 +2,27 @@
 
 import { Component, computed, signal } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
+import { PageLayoutComponent } from '@shared/components/page-layout/page-layout.component';
+import { InputComponent } from '@components/input/input.component';
+import { ButtonComponent } from '@components/button/button.component';
+import { TableComponent } from '@components/table/table.component';
 
-// Core
-import { DataPageComponent } from '@core/data-page/data-page.component';
-import { IDataPageConfig } from '@core/data-page/data-page.types';
+import { TableActionEvent, TablePageEvent } from '@components/table/table.types';
 
 import { ICostCenterRule } from './cost-center-rules.types';
 
-// Constants
-import { DATA_PAGE_CONFIG } from './cost-center-rules.constants';
+import {
+  DATA_PAGE_CONFIG,
+  SEARCH_INPUT,
+  HEADER_BUTTONS,
+  TABS,
+  TABLE_CONFIG,
+} from './cost-center-rules.constants';
 
 @Component({
   selector: 'app-cost-center-rules',
   standalone: true,
-  imports: [CommonModule, DataPageComponent],
+  imports: [PageLayoutComponent, InputComponent, ButtonComponent, TableComponent],
   templateUrl: './cost-center-rules.component.html',
   styleUrl: './cost-center-rules.component.css',
 })
@@ -74,18 +80,128 @@ export class CostCenterRulesComponent {
   ]);
 
   // =====================================================
-  // DATA PAGE CONFIG
+  // UI STATE
   // =====================================================
 
-  protected readonly dataPageConfig = computed<IDataPageConfig<ICostCenterRule>>(() => ({
-    ...DATA_PAGE_CONFIG,
+  protected readonly searchQuery = signal('');
+  protected readonly activeTab = signal('all');
 
-    table: {
-      ...DATA_PAGE_CONFIG.table,
+  // =====================================================
+  // CONFIG
+  // =====================================================
 
-      data: this.rawCostCenterRules(),
+  protected readonly dataPageConfig = DATA_PAGE_CONFIG;
+  protected readonly searchInput = SEARCH_INPUT;
+  protected readonly headerButtons = HEADER_BUTTONS;
+  protected readonly tabs = TABS;
 
-      totalItems: this.rawCostCenterRules().length,
-    },
+  // =====================================================
+  // TABLE CONFIG
+  // =====================================================
+
+  protected readonly tableConfig = computed(() => ({
+    ...TABLE_CONFIG,
+    data: this.rawCostCenterRules(),
+    totalItems: this.rawCostCenterRules().length,
   }));
+
+  // =====================================================
+  // HEADER ACTIONS
+  // =====================================================
+
+  protected onHeaderAction(key: string): void {
+    switch (key) {
+      case 'add':
+        this.openAddForm();
+        break;
+
+      case 'delete-all':
+        this.deleteAll();
+        break;
+
+      case 'export-pdf':
+        this.exportPdf();
+        break;
+
+      default:
+        console.warn(`Unhandled header action: ${key}`);
+    }
+  }
+
+  // =====================================================
+  // TAB ACTIONS
+  // =====================================================
+
+  protected onTabClick(key: string): void {
+    this.activeTab.set(key);
+
+    // Apply rule-status filtering here when needed.
+  }
+
+  // =====================================================
+  // TABLE ACTIONS
+  // =====================================================
+
+  protected onTableAction(event: TableActionEvent<ICostCenterRule>): void {
+    switch (event.action) {
+      case 'view':
+        this.viewRule(event.id);
+        break;
+
+      case 'edit':
+        this.editRule(event.id);
+        break;
+
+      case 'delete':
+        this.deleteRule(event.id);
+        break;
+
+      default:
+        console.warn(`Unhandled table action: ${event.action}`);
+    }
+  }
+
+  // =====================================================
+  // TABLE SELECTION
+  // =====================================================
+
+  protected onTableSelectionChange(selectedIds: ICostCenterRule['id'][]): void {
+    console.log('Selected cost center rule IDs:', selectedIds);
+  }
+
+  // =====================================================
+  // TABLE PAGINATION
+  // =====================================================
+
+  protected onTablePageChange(event: TablePageEvent): void {
+    console.log('Page changed:', event);
+  }
+
+  // =====================================================
+  // ACTIONS
+  // =====================================================
+
+  private openAddForm(): void {
+    console.log('Open Add Cost Center Rule form');
+  }
+
+  private viewRule(id: ICostCenterRule['id']): void {
+    console.log('View cost center rule:', id);
+  }
+
+  private editRule(id: ICostCenterRule['id']): void {
+    console.log('Edit cost center rule:', id);
+  }
+
+  private deleteRule(id: ICostCenterRule['id']): void {
+    this.rawCostCenterRules.update((rules) => rules.filter((rule) => rule.id !== id));
+  }
+
+  private deleteAll(): void {
+    this.rawCostCenterRules.set([]);
+  }
+
+  private exportPdf(): void {
+    console.log('Exporting cost center rules to PDF...');
+  }
 }

@@ -1,8 +1,13 @@
 // src/app/features/cost-center/estimated-budget/estimated-budget.constants.ts
 
 import { TableColumn, TableAction } from '@components/table/table.types';
+import { InputConfig } from '@components/input/input.types';
 
-import { IDataPageConfig, IPageAction, IPageLayout } from '@core/data-page/data-page.types';
+import {
+  IPageLayoutConfig,
+  IPageAction,
+  IPageLayout,
+} from '@shared/components/page-layout/page-layout.types';
 
 import {
   UserPlus,
@@ -15,6 +20,7 @@ import {
   Info,
   SquareSquare,
   FileText,
+  Search,
 } from 'lucide-angular';
 
 import { IEstimatedBudget } from './estimated-budget.types';
@@ -27,6 +33,16 @@ export const PAGE_LAYOUT: IPageLayout = {
   showToolbar: true,
   showTabs: false,
   showTable: true,
+};
+
+// =====================================================
+// SEARCH INPUT
+// =====================================================
+
+export const SEARCH_INPUT: InputConfig = {
+  type: 'text',
+  placeholder: 'Search estimated budgets...',
+  icon: Search,
 };
 
 // =====================================================
@@ -133,27 +149,22 @@ export const TABLE_ACTIONS: TableAction[] = [
 ];
 
 // =====================================================
+// TABLE CONFIG
+// =====================================================
+
+export const TABLE_CONFIG = {
+  columns: TABLE_COLUMNS,
+  actions: TABLE_ACTIONS,
+  selectable: true,
+  showActions: true,
+  showPagination: true,
+  emptyMessage: 'No estimated budgets found.',
+};
+
+// =====================================================
 // DATA PAGE CONFIG
 // =====================================================
 
-export const DATA_PAGE_CONFIG: IDataPageConfig<IEstimatedBudget> = {
+export const DATA_PAGE_CONFIG: IPageLayoutConfig = {
   layout: PAGE_LAYOUT,
-
-  headerButtons: HEADER_BUTTONS,
-
-  tabs: [],
-
-  table: {
-    columns: TABLE_COLUMNS,
-
-    actions: TABLE_ACTIONS,
-
-    selectable: true,
-
-    showActions: true,
-
-    showPagination: true,
-
-    emptyMessage: 'No estimated budgets found.',
-  },
 };
