@@ -19,6 +19,7 @@ export class ButtonComponent {
     const cfg = this.config();
     return {
       label: cfg.label ?? '',
+      ariaLabel: cfg.ariaLabel ?? '',
       variant: cfg.variant ?? 'primary',
       type: cfg.type ?? 'button',
       disabled: !!cfg.disabled,

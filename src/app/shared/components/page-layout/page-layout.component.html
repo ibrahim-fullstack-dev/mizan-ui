@@ -1,0 +1,42 @@
+<!-- src/app/shared/components/page-layout/page-layout.component.html -->
+
+<div class="page-container">
+  @if (config().layout.showPageHeader) {
+    <header class="page-header">
+      <div class="page-heading">
+        <h1 class="page-title">
+          {{ config().title }}
+        </h1>
+
+        @if (config().subtitle) {
+          <p class="page-subtitle">
+            {{ config().subtitle }}
+          </p>
+        }
+      </div>
+    </header>
+  }
+
+  @if (config().layout.showToolbar) {
+    <div class="toolbar">
+      <ng-content select="[toolbar-search-zone]" />
+
+      <div class="toolbar-actions">
+        <ng-content select="[toolbar-actions-zone]" />
+      </div>
+    </div>
+  }
+
+  @if (config().layout.showTabs) {
+    <div class="tabs-buttons">
+      <ng-content select="[tabs-zone]" />
+    </div>
+  }
+
+  @if (config().layout.showTable) {
+    <ng-content select="[table-zone]" />
+  }
+
+  <!-- Default slot: any additional projected content -->
+  <ng-content />
+</div>

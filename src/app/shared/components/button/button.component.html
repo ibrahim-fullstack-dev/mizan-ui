@@ -2,6 +2,7 @@
   [type]="resolvedConfig().type"
   [disabled]="resolvedConfig().disabled || resolvedConfig().loading"
   [className]="buttonClasses()"
+  [aria-label]="resolvedConfig().ariaLabel"
   (click)="onClick($event)"
 >
   @if (resolvedConfig().loading) {
@@ -12,9 +13,7 @@
     }
 
     <span class="btn-content">
-      <ng-content>
-        {{ resolvedConfig().label }}
-      </ng-content>
+      {{ resolvedConfig().label }}
     </span>
   }
 </button>

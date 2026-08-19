@@ -8,6 +8,7 @@ type ButtonType = 'button' | 'submit' | 'reset';
 
 export interface ButtonConfig {
   label?: string;
+  ariaLabel?: string;
   variant?: ButtonVariant;
   type?: ButtonType;
   icon?: LucideIconData;
