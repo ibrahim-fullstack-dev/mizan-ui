@@ -2,21 +2,26 @@
 
 import { Component, computed, signal } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
+import { PageLayoutComponent } from '@shared/components/page-layout/page-layout.component';
+import { InputComponent } from '@components/input/input.component';
+import { ButtonComponent } from '@components/button/button.component';
+import { TableComponent } from '@components/table/table.component';
 
-// Core
-import { DataPageComponent } from '@core/data-page/data-page.component';
-import { IDataPageConfig } from '@core/data-page/data-page.types';
+import { TableActionEvent, TablePageEvent } from '@components/table/table.types';
 
 import { IWarranty } from './warranties.types';
 
-// Constants
-import { DATA_PAGE_CONFIG } from './warranties.constants';
+import {
+  DATA_PAGE_CONFIG,
+  SEARCH_INPUT,
+  HEADER_BUTTONS,
+  TABLE_CONFIG,
+} from './warranties.constants';
 
 @Component({
   selector: 'app-warranties',
   standalone: true,
-  imports: [CommonModule, DataPageComponent],
+  imports: [PageLayoutComponent, InputComponent, ButtonComponent, TableComponent],
   templateUrl: './warranties.component.html',
   styleUrl: './warranties.component.css',
 })
@@ -64,18 +69,108 @@ export class WarrantiesComponent {
   ]);
 
   // =====================================================
-  // DATA PAGE CONFIG
+  // UI STATE
   // =====================================================
 
-  protected readonly dataPageConfig = computed<IDataPageConfig<IWarranty>>(() => ({
-    ...DATA_PAGE_CONFIG,
+  protected readonly searchQuery = signal('');
 
-    table: {
-      ...DATA_PAGE_CONFIG.table,
+  // =====================================================
+  // CONFIG
+  // =====================================================
 
-      data: this.rawWarranties(),
+  protected readonly dataPageConfig = DATA_PAGE_CONFIG;
+  protected readonly searchInput = SEARCH_INPUT;
+  protected readonly headerButtons = HEADER_BUTTONS;
 
-      totalItems: this.rawWarranties().length,
-    },
+  // =====================================================
+  // TABLE CONFIG
+  // =====================================================
+
+  protected readonly tableConfig = computed(() => ({
+    ...TABLE_CONFIG,
+    data: this.rawWarranties(),
+    totalItems: this.rawWarranties().length,
   }));
+
+  // =====================================================
+  // HEADER ACTIONS
+  // =====================================================
+
+  protected onHeaderAction(key: string): void {
+    switch (key) {
+      case 'add':
+        this.openAddForm();
+        break;
+
+      case 'delete-all':
+        this.deleteAll();
+        break;
+
+      default:
+        console.warn(`Unhandled header action: ${key}`);
+    }
+  }
+
+  // =====================================================
+  // TABLE ACTIONS
+  // =====================================================
+
+  protected onTableAction(event: TableActionEvent<IWarranty>): void {
+    switch (event.action) {
+      case 'view':
+        this.viewWarranty(event.id);
+        break;
+
+      case 'edit':
+        this.editWarranty(event.id);
+        break;
+
+      case 'delete':
+        this.deleteWarranty(event.id);
+        break;
+
+      default:
+        console.warn(`Unhandled table action: ${event.action}`);
+    }
+  }
+
+  // =====================================================
+  // TABLE SELECTION
+  // =====================================================
+
+  protected onTableSelectionChange(selectedIds: IWarranty['id'][]): void {
+    console.log('Selected warranty IDs:', selectedIds);
+  }
+
+  // =====================================================
+  // TABLE PAGINATION
+  // =====================================================
+
+  protected onTablePageChange(event: TablePageEvent): void {
+    console.log('Page changed:', event);
+  }
+
+  // =====================================================
+  // ACTIONS
+  // =====================================================
+
+  private openAddForm(): void {
+    console.log('Open Add Warranty form');
+  }
+
+  private viewWarranty(id: IWarranty['id']): void {
+    console.log('View warranty:', id);
+  }
+
+  private editWarranty(id: IWarranty['id']): void {
+    console.log('Edit warranty:', id);
+  }
+
+  private deleteWarranty(id: IWarranty['id']): void {
+    this.rawWarranties.update((warranties) => warranties.filter((warranty) => warranty.id !== id));
+  }
+
+  private deleteAll(): void {
+    this.rawWarranties.set([]);
+  }
 }

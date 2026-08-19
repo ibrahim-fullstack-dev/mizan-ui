@@ -2,21 +2,26 @@
 
 import { Component, computed, signal } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
+import { PageLayoutComponent } from '@shared/components/page-layout/page-layout.component';
+import { InputComponent } from '@components/input/input.component';
+import { ButtonComponent } from '@components/button/button.component';
+import { TableComponent } from '@components/table/table.component';
 
-// Core
-import { DataPageComponent } from '@core/data-page/data-page.component';
-import { IDataPageConfig } from '@core/data-page/data-page.types';
+import { TableActionEvent, TablePageEvent } from '@components/table/table.types';
 
 import { ITransferOrder } from './transfer-orders.types';
 
-// Constants
-import { DATA_PAGE_CONFIG } from './transfer-orders.constants';
+import {
+  DATA_PAGE_CONFIG,
+  SEARCH_INPUT,
+  HEADER_BUTTONS,
+  TABLE_CONFIG,
+} from './transfer-orders.constants';
 
 @Component({
   selector: 'app-transfer-orders',
   standalone: true,
-  imports: [CommonModule, DataPageComponent],
+  imports: [PageLayoutComponent, InputComponent, ButtonComponent, TableComponent],
   templateUrl: './transfer-orders.component.html',
   styleUrl: './transfer-orders.component.css',
 })
@@ -40,18 +45,108 @@ export class TransferOrdersComponent {
   ]);
 
   // =====================================================
-  // DATA PAGE CONFIG
+  // UI STATE
   // =====================================================
 
-  protected readonly dataPageConfig = computed<IDataPageConfig<ITransferOrder>>(() => ({
-    ...DATA_PAGE_CONFIG,
+  protected readonly searchQuery = signal('');
 
-    table: {
-      ...DATA_PAGE_CONFIG.table,
+  // =====================================================
+  // CONFIG
+  // =====================================================
 
-      data: this.rawTransferOrders(),
+  protected readonly dataPageConfig = DATA_PAGE_CONFIG;
+  protected readonly searchInput = SEARCH_INPUT;
+  protected readonly headerButtons = HEADER_BUTTONS;
 
-      totalItems: this.rawTransferOrders().length,
-    },
+  // =====================================================
+  // TABLE CONFIG
+  // =====================================================
+
+  protected readonly tableConfig = computed(() => ({
+    ...TABLE_CONFIG,
+    data: this.rawTransferOrders(),
+    totalItems: this.rawTransferOrders().length,
   }));
+
+  // =====================================================
+  // HEADER ACTIONS
+  // =====================================================
+
+  protected onHeaderAction(key: string): void {
+    switch (key) {
+      case 'add':
+        this.openAddForm();
+        break;
+
+      case 'delete-all':
+        this.deleteAll();
+        break;
+
+      default:
+        console.warn(`Unhandled header action: ${key}`);
+    }
+  }
+
+  // =====================================================
+  // TABLE ACTIONS
+  // =====================================================
+
+  protected onTableAction(event: TableActionEvent<ITransferOrder>): void {
+    switch (event.action) {
+      case 'view':
+        this.viewTransferOrder(event.id);
+        break;
+
+      case 'edit':
+        this.editTransferOrder(event.id);
+        break;
+
+      case 'delete':
+        this.deleteTransferOrder(event.id);
+        break;
+
+      default:
+        console.warn(`Unhandled table action: ${event.action}`);
+    }
+  }
+
+  // =====================================================
+  // TABLE SELECTION
+  // =====================================================
+
+  protected onTableSelectionChange(selectedIds: ITransferOrder['id'][]): void {
+    console.log('Selected transfer order IDs:', selectedIds);
+  }
+
+  // =====================================================
+  // TABLE PAGINATION
+  // =====================================================
+
+  protected onTablePageChange(event: TablePageEvent): void {
+    console.log('Page changed:', event);
+  }
+
+  // =====================================================
+  // ACTIONS
+  // =====================================================
+
+  private openAddForm(): void {
+    console.log('Open Add Transfer Order form');
+  }
+
+  private viewTransferOrder(id: ITransferOrder['id']): void {
+    console.log('View transfer order:', id);
+  }
+
+  private editTransferOrder(id: ITransferOrder['id']): void {
+    console.log('Edit transfer order:', id);
+  }
+
+  private deleteTransferOrder(id: ITransferOrder['id']): void {
+    this.rawTransferOrders.update((orders) => orders.filter((order) => order.id !== id));
+  }
+
+  private deleteAll(): void {
+    this.rawTransferOrders.set([]);
+  }
 }
