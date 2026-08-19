@@ -1,10 +1,15 @@
 // src/app/features/manufactures/manufacturing-equations/manufacturing-equations.constants.ts
 
 import { TableColumn, TableAction } from '@components/table/table.types';
+import { InputConfig } from '@components/input/input.types';
 
-import { IDataPageConfig, IPageAction, IPageLayout } from '@core/data-page/data-page.types';
+import {
+  IPageLayoutConfig,
+  IPageAction,
+  IPageLayout,
+} from '@shared/components/page-layout/page-layout.types';
 
-import { Download, Pencil, Trash2, Hash, Plus, Eye, Type } from 'lucide-angular';
+import { Download, Pencil, Trash2, Hash, Plus, Eye, Type, Search } from 'lucide-angular';
 
 import { IManufacturingEquation } from './manufacturing-equations.types';
 
@@ -16,6 +21,16 @@ export const PAGE_LAYOUT: IPageLayout = {
   showToolbar: true,
   showTabs: false,
   showTable: true,
+};
+
+// =====================================================
+// SEARCH INPUT
+// =====================================================
+
+export const SEARCH_INPUT: InputConfig = {
+  type: 'text',
+  placeholder: 'Search manufacturing equations...',
+  icon: Search,
 };
 
 // =====================================================
@@ -60,7 +75,7 @@ export const HEADER_BUTTONS: IPageAction[] = [
     },
   },
   {
-    key: 'delete',
+    key: 'delete-all',
     buttonConfig: {
       label: 'Delete All',
       variant: 'danger',
@@ -87,7 +102,6 @@ export const TABLE_ACTIONS: TableAction[] = [
   {
     action: 'view',
     button: {
-      label: 'View',
       icon: Eye,
       variant: 'text',
       type: 'button',
@@ -96,7 +110,6 @@ export const TABLE_ACTIONS: TableAction[] = [
   {
     action: 'edit',
     button: {
-      label: 'Edit',
       icon: Pencil,
       variant: 'text',
       type: 'button',
@@ -105,7 +118,6 @@ export const TABLE_ACTIONS: TableAction[] = [
   {
     action: 'delete',
     button: {
-      label: 'Delete',
       icon: Trash2,
       variant: 'danger',
       type: 'button',
@@ -114,27 +126,22 @@ export const TABLE_ACTIONS: TableAction[] = [
 ];
 
 // =====================================================
+// TABLE CONFIG
+// =====================================================
+
+export const TABLE_CONFIG = {
+  columns: TABLE_COLUMNS,
+  actions: TABLE_ACTIONS,
+  selectable: true,
+  showActions: true,
+  showPagination: true,
+  emptyMessage: 'No manufacturing equations found.',
+};
+
+// =====================================================
 // DATA PAGE CONFIG
 // =====================================================
 
-export const DATA_PAGE_CONFIG: IDataPageConfig<IManufacturingEquation> = {
+export const DATA_PAGE_CONFIG: IPageLayoutConfig = {
   layout: PAGE_LAYOUT,
-
-  headerButtons: HEADER_BUTTONS,
-
-  tabs: [],
-
-  table: {
-    columns: TABLE_COLUMNS,
-
-    actions: TABLE_ACTIONS,
-
-    selectable: true,
-
-    showActions: true,
-
-    showPagination: true,
-
-    emptyMessage: 'No manufacturing equations found.',
-  },
 };
