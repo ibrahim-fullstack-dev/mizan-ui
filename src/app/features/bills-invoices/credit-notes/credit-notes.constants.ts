@@ -1,8 +1,13 @@
 // src/app/features/bills-invoices/credit-notes/credit-notes.constants.ts
 
 import { TableColumn, TableAction } from '@components/table/table.types';
+import { InputConfig } from '@components/input/input.types';
 
-import { IPageAction, IDataPageConfig, IPageLayout } from '@core/data-page/data-page.types';
+import {
+  IPageAction,
+  IPageLayoutConfig,
+  IPageLayout,
+} from '@shared/components/page-layout/page-layout.types';
 
 import {
   Download,
@@ -16,6 +21,7 @@ import {
   Calendar,
   Plus,
   Eye,
+  Search,
 } from 'lucide-angular';
 
 import { ICreditNote } from './credit-notes.types';
@@ -28,6 +34,16 @@ export const PAGE_LAYOUT: IPageLayout = {
   showToolbar: true,
   showTabs: false,
   showTable: true,
+};
+
+// =====================================================
+// SEARCH INPUT
+// =====================================================
+
+export const SEARCH_INPUT: InputConfig = {
+  type: 'text',
+  placeholder: 'Search credit notes...',
+  icon: Search,
 };
 
 // =====================================================
@@ -133,27 +149,22 @@ export const TABLE_ACTIONS: TableAction[] = [
 ];
 
 // =====================================================
+// TABLE CONFIG
+// =====================================================
+
+export const TABLE_CONFIG = {
+  columns: TABLE_COLUMNS,
+  actions: TABLE_ACTIONS,
+  selectable: true,
+  showActions: true,
+  showPagination: true,
+  emptyMessage: 'No credit notes found.',
+};
+
+// =====================================================
 // DATA PAGE CONFIG
 // =====================================================
 
-export const DATA_PAGE_CONFIG: IDataPageConfig<ICreditNote> = {
+export const DATA_PAGE_CONFIG: IPageLayoutConfig = {
   layout: PAGE_LAYOUT,
-
-  headerButtons: HEADER_BUTTONS,
-
-  tabs: [],
-
-  table: {
-    columns: TABLE_COLUMNS,
-
-    actions: TABLE_ACTIONS,
-
-    selectable: true,
-
-    showActions: true,
-
-    showPagination: true,
-
-    emptyMessage: 'No credit notes found.',
-  },
 };

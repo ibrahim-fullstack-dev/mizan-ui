@@ -2,21 +2,24 @@
 
 import { Component, computed, signal } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
+import { PageLayoutComponent } from '@shared/components/page-layout/page-layout.component';
+import { InputComponent } from '@components/input/input.component';
+import { TableComponent } from '@components/table/table.component';
 
-// Core
-import { DataPageComponent } from '@core/data-page/data-page.component';
-import { IDataPageConfig } from '@core/data-page/data-page.types';
+import { TableActionEvent, TablePageEvent } from '@components/table/table.types';
 
 import { IRecurringPurchaseInvoice } from './recurring-purchase-invoices.types';
 
-// Constants
-import { DATA_PAGE_CONFIG } from './recurring-purchase-invoices.constants';
+import {
+  DATA_PAGE_CONFIG,
+  SEARCH_INPUT,
+  TABLE_CONFIG,
+} from './recurring-purchase-invoices.constants';
 
 @Component({
   selector: 'app-recurring-purchase-invoices',
   standalone: true,
-  imports: [CommonModule, DataPageComponent],
+  imports: [PageLayoutComponent, InputComponent, TableComponent],
   templateUrl: './recurring-purchase-invoices.component.html',
   styleUrl: './recurring-purchase-invoices.component.css',
 })
@@ -74,18 +77,74 @@ export class RecurringPurchaseInvoicesComponent {
   ]);
 
   // =====================================================
-  // DATA PAGE CONFIG
+  // UI STATE
   // =====================================================
 
-  protected readonly dataPageConfig = computed<IDataPageConfig<IRecurringPurchaseInvoice>>(() => ({
-    ...DATA_PAGE_CONFIG,
+  protected readonly searchQuery = signal('');
 
-    table: {
-      ...DATA_PAGE_CONFIG.table,
+  // =====================================================
+  // CONFIG
+  // =====================================================
 
-      data: this.rawRecurringPurchaseInvoices(),
+  protected readonly dataPageConfig = DATA_PAGE_CONFIG;
+  protected readonly searchInput = SEARCH_INPUT;
 
-      totalItems: this.rawRecurringPurchaseInvoices().length,
-    },
+  // =====================================================
+  // TABLE CONFIG
+  // =====================================================
+
+  protected readonly tableConfig = computed(() => ({
+    ...TABLE_CONFIG,
+    data: this.rawRecurringPurchaseInvoices(),
+    totalItems: this.rawRecurringPurchaseInvoices().length,
   }));
+
+  // =====================================================
+  // TABLE ACTIONS
+  // =====================================================
+
+  protected onTableAction(event: TableActionEvent<IRecurringPurchaseInvoice>): void {
+    switch (event.action) {
+      case 'view':
+        this.viewInvoice(event.id);
+        break;
+
+      case 'edit':
+        this.editInvoice(event.id);
+        break;
+
+      case 'delete':
+        this.deleteInvoice(event.id);
+        break;
+
+      default:
+        console.warn(`Unhandled table action: ${event.action}`);
+    }
+  }
+
+  // =====================================================
+  // TABLE PAGINATION
+  // =====================================================
+
+  protected onTablePageChange(event: TablePageEvent): void {
+    console.log('Page changed:', event);
+  }
+
+  // =====================================================
+  // ACTIONS
+  // =====================================================
+
+  private viewInvoice(id: IRecurringPurchaseInvoice['id']): void {
+    console.log('View recurring purchase invoice:', id);
+  }
+
+  private editInvoice(id: IRecurringPurchaseInvoice['id']): void {
+    console.log('Edit recurring purchase invoice:', id);
+  }
+
+  private deleteInvoice(id: IRecurringPurchaseInvoice['id']): void {
+    this.rawRecurringPurchaseInvoices.update((invoices) =>
+      invoices.filter((invoice) => invoice.id !== id),
+    );
+  }
 }

@@ -1,2 +1,17 @@
 <!-- src/app/features/bills-invoices/recurring-purchase-invoices/recurring-purchase-invoices.component.html -->
-<app-data-page [config]="dataPageConfig()" />
+
+<app-page-layout [config]="dataPageConfig">
+  <!-- Search -->
+  <div toolbar-search-zone>
+    <app-input [config]="searchInput" [(value)]="searchQuery" />
+  </div>
+
+  <!-- Table -->
+  <div table-zone>
+    <app-table
+      [config]="tableConfig()"
+      (actionClick)="onTableAction($event)"
+      (pageChange)="onTablePageChange($event)"
+    />
+  </div>
+</app-page-layout>
