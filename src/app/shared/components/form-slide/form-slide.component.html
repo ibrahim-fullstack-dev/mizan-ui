@@ -1,0 +1,31 @@
+<!-- src/app/shared/components/form-slide/form-slide.component.html -->
+
+<div class="form-slide" [class.form-slide-fixed]="config().position === 'fixed'">
+  <header class="slide-header">
+    <div class="slide-heading">
+      <h3 class="slide-title">
+        {{ config().title }}
+      </h3>
+
+      @if (config().subtitle) {
+        <p class="slide-subtitle">
+          {{ config().subtitle }}
+        </p>
+      }
+    </div>
+
+    <div class="slide-header-actions">
+      <ng-content select="[form-header-actions]" />
+    </div>
+  </header>
+
+  <div class="slide-content">
+    <div class="form-grid">
+      <ng-content select="[form-content]" />
+    </div>
+  </div>
+
+  <footer class="slide-footer">
+    <ng-content select="[form-footer-actions]" />
+  </footer>
+</div>
