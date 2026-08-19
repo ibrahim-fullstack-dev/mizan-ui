@@ -2,21 +2,27 @@
 
 import { Component, computed, signal } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
+import { PageLayoutComponent } from '@shared/components/page-layout/page-layout.component';
+import { InputComponent } from '@components/input/input.component';
+import { ButtonComponent } from '@components/button/button.component';
+import { TableComponent } from '@components/table/table.component';
 
-// Core
-import { DataPageComponent } from '@core/data-page/data-page.component';
-import { IDataPageConfig } from '@core/data-page/data-page.types';
+import { TableActionEvent, TablePageEvent } from '@components/table/table.types';
 
 import { IOffer } from './offers.types';
 
-// Constants
-import { DATA_PAGE_CONFIG } from './offers.constants';
+import {
+  DATA_PAGE_CONFIG,
+  SEARCH_INPUT,
+  HEADER_BUTTONS,
+  TABS,
+  TABLE_CONFIG,
+} from './offers.constants';
 
 @Component({
   selector: 'app-offers',
   standalone: true,
-  imports: [CommonModule, DataPageComponent],
+  imports: [PageLayoutComponent, InputComponent, ButtonComponent, TableComponent],
   templateUrl: './offers.component.html',
   styleUrl: './offers.component.css',
 })
@@ -79,18 +85,128 @@ export class OffersComponent {
   ]);
 
   // =====================================================
-  // DATA PAGE CONFIG
+  // UI STATE
   // =====================================================
 
-  protected readonly dataPageConfig = computed<IDataPageConfig<IOffer>>(() => ({
-    ...DATA_PAGE_CONFIG,
+  protected readonly searchQuery = signal('');
+  protected readonly activeTab = signal('all');
 
-    table: {
-      ...DATA_PAGE_CONFIG.table,
+  // =====================================================
+  // CONFIG
+  // =====================================================
 
-      data: this.rawOffers(),
+  protected readonly dataPageConfig = DATA_PAGE_CONFIG;
+  protected readonly searchInput = SEARCH_INPUT;
+  protected readonly headerButtons = HEADER_BUTTONS;
+  protected readonly tabs = TABS;
 
-      totalItems: this.rawOffers().length,
-    },
+  // =====================================================
+  // TABLE CONFIG
+  // =====================================================
+
+  protected readonly tableConfig = computed(() => ({
+    ...TABLE_CONFIG,
+    data: this.rawOffers(),
+    totalItems: this.rawOffers().length,
   }));
+
+  // =====================================================
+  // HEADER ACTIONS
+  // =====================================================
+
+  protected onHeaderAction(key: string): void {
+    switch (key) {
+      case 'add':
+        this.openAddForm();
+        break;
+
+      case 'delete-all':
+        this.deleteAll();
+        break;
+
+      case 'export-pdf':
+        this.exportPdf();
+        break;
+
+      default:
+        console.warn(`Unhandled header action: ${key}`);
+    }
+  }
+
+  // =====================================================
+  // TAB ACTIONS
+  // =====================================================
+
+  protected onTabClick(key: string): void {
+    this.activeTab.set(key);
+
+    // Apply offer status filtering here when needed.
+  }
+
+  // =====================================================
+  // TABLE ACTIONS
+  // =====================================================
+
+  protected onTableAction(event: TableActionEvent<IOffer>): void {
+    switch (event.action) {
+      case 'view':
+        this.viewOffer(event.id);
+        break;
+
+      case 'edit':
+        this.editOffer(event.id);
+        break;
+
+      case 'delete':
+        this.deleteOffer(event.id);
+        break;
+
+      default:
+        console.warn(`Unhandled table action: ${event.action}`);
+    }
+  }
+
+  // =====================================================
+  // TABLE SELECTION
+  // =====================================================
+
+  protected onTableSelectionChange(selectedIds: IOffer['id'][]): void {
+    console.log('Selected offer IDs:', selectedIds);
+  }
+
+  // =====================================================
+  // TABLE PAGINATION
+  // =====================================================
+
+  protected onTablePageChange(event: TablePageEvent): void {
+    console.log('Page changed:', event);
+  }
+
+  // =====================================================
+  // ACTIONS
+  // =====================================================
+
+  private openAddForm(): void {
+    console.log('Open Add Offer form');
+  }
+
+  private viewOffer(id: IOffer['id']): void {
+    console.log('View offer:', id);
+  }
+
+  private editOffer(id: IOffer['id']): void {
+    console.log('Edit offer:', id);
+  }
+
+  private deleteOffer(id: IOffer['id']): void {
+    this.rawOffers.update((offers) => offers.filter((offer) => offer.id !== id));
+  }
+
+  private deleteAll(): void {
+    this.rawOffers.set([]);
+  }
+
+  private exportPdf(): void {
+    console.log('Exporting offers to PDF...');
+  }
 }

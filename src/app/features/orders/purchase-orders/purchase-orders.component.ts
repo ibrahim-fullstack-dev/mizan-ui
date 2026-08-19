@@ -2,21 +2,27 @@
 
 import { Component, computed, signal } from '@angular/core';
 
-import { CommonModule } from '@angular/common';
+import { PageLayoutComponent } from '@shared/components/page-layout/page-layout.component';
+import { InputComponent } from '@components/input/input.component';
+import { ButtonComponent } from '@components/button/button.component';
+import { TableComponent } from '@components/table/table.component';
 
-// Core
-import { DataPageComponent } from '@core/data-page/data-page.component';
-import { IDataPageConfig } from '@core/data-page/data-page.types';
+import { TableActionEvent, TablePageEvent } from '@components/table/table.types';
 
 import { IPurchaseOrder } from './purchase-orders.types';
 
-// Constants
-import { DATA_PAGE_CONFIG } from './purchase-orders.constants';
+import {
+  DATA_PAGE_CONFIG,
+  SEARCH_INPUT,
+  HEADER_BUTTONS,
+  TABS,
+  TABLE_CONFIG,
+} from './purchase-orders.constants';
 
 @Component({
   selector: 'app-purchase-orders',
   standalone: true,
-  imports: [CommonModule, DataPageComponent],
+  imports: [PageLayoutComponent, InputComponent, ButtonComponent, TableComponent],
   templateUrl: './purchase-orders.component.html',
   styleUrl: './purchase-orders.component.css',
 })
@@ -79,18 +85,128 @@ export class PurchaseOrdersComponent {
   ]);
 
   // =====================================================
-  // DATA PAGE CONFIG
+  // UI STATE
   // =====================================================
 
-  protected readonly dataPageConfig = computed<IDataPageConfig<IPurchaseOrder>>(() => ({
-    ...DATA_PAGE_CONFIG,
+  protected readonly searchQuery = signal('');
+  protected readonly activeTab = signal('all');
 
-    table: {
-      ...DATA_PAGE_CONFIG.table,
+  // =====================================================
+  // CONFIG
+  // =====================================================
 
-      data: this.rawPurchaseOrders(),
+  protected readonly dataPageConfig = DATA_PAGE_CONFIG;
+  protected readonly searchInput = SEARCH_INPUT;
+  protected readonly headerButtons = HEADER_BUTTONS;
+  protected readonly tabs = TABS;
 
-      totalItems: this.rawPurchaseOrders().length,
-    },
+  // =====================================================
+  // TABLE CONFIG
+  // =====================================================
+
+  protected readonly tableConfig = computed(() => ({
+    ...TABLE_CONFIG,
+    data: this.rawPurchaseOrders(),
+    totalItems: this.rawPurchaseOrders().length,
   }));
+
+  // =====================================================
+  // HEADER ACTIONS
+  // =====================================================
+
+  protected onHeaderAction(key: string): void {
+    switch (key) {
+      case 'add':
+        this.openAddForm();
+        break;
+
+      case 'delete-all':
+        this.deleteAll();
+        break;
+
+      case 'export-pdf':
+        this.exportPdf();
+        break;
+
+      default:
+        console.warn(`Unhandled header action: ${key}`);
+    }
+  }
+
+  // =====================================================
+  // TAB ACTIONS
+  // =====================================================
+
+  protected onTabClick(key: string): void {
+    this.activeTab.set(key);
+
+    // Apply purchase-order status filtering here when needed.
+  }
+
+  // =====================================================
+  // TABLE ACTIONS
+  // =====================================================
+
+  protected onTableAction(event: TableActionEvent<IPurchaseOrder>): void {
+    switch (event.action) {
+      case 'view':
+        this.viewPurchaseOrder(event.id);
+        break;
+
+      case 'edit':
+        this.editPurchaseOrder(event.id);
+        break;
+
+      case 'delete':
+        this.deletePurchaseOrder(event.id);
+        break;
+
+      default:
+        console.warn(`Unhandled table action: ${event.action}`);
+    }
+  }
+
+  // =====================================================
+  // TABLE SELECTION
+  // =====================================================
+
+  protected onTableSelectionChange(selectedIds: IPurchaseOrder['id'][]): void {
+    console.log('Selected purchase order IDs:', selectedIds);
+  }
+
+  // =====================================================
+  // TABLE PAGINATION
+  // =====================================================
+
+  protected onTablePageChange(event: TablePageEvent): void {
+    console.log('Page changed:', event);
+  }
+
+  // =====================================================
+  // ACTIONS
+  // =====================================================
+
+  private openAddForm(): void {
+    console.log('Open Add Purchase Order form');
+  }
+
+  private viewPurchaseOrder(id: IPurchaseOrder['id']): void {
+    console.log('View purchase order:', id);
+  }
+
+  private editPurchaseOrder(id: IPurchaseOrder['id']): void {
+    console.log('Edit purchase order:', id);
+  }
+
+  private deletePurchaseOrder(id: IPurchaseOrder['id']): void {
+    this.rawPurchaseOrders.update((orders) => orders.filter((order) => order.id !== id));
+  }
+
+  private deleteAll(): void {
+    this.rawPurchaseOrders.set([]);
+  }
+
+  private exportPdf(): void {
+    console.log('Exporting purchase orders to PDF...');
+  }
 }

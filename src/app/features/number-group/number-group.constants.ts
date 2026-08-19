@@ -1,8 +1,13 @@
 // src/app/features/number-group/number-group.constants.ts
 
 import { TableColumn, TableAction } from '@components/table/table.types';
+import { InputConfig } from '@components/input/input.types';
 
-import { IDataPageConfig, IPageAction, IPageLayout } from '@core/data-page/data-page.types';
+import {
+  IPageLayoutConfig,
+  IPageAction,
+  IPageLayout,
+} from '@shared/components/page-layout/page-layout.types';
 
 import {
   Plus,
@@ -14,6 +19,7 @@ import {
   Section,
   PanelLeftDashed,
   Ellipsis,
+  Search,
 } from 'lucide-angular';
 
 import { INumberGroup } from './number-group.types';
@@ -26,6 +32,16 @@ export const PAGE_LAYOUT: IPageLayout = {
   showToolbar: true,
   showTabs: false,
   showTable: true,
+};
+
+// =====================================================
+// SEARCH INPUT
+// =====================================================
+
+export const SEARCH_INPUT: InputConfig = {
+  type: 'text',
+  placeholder: 'Search number groups...',
+  icon: Search,
 };
 
 // =====================================================
@@ -113,7 +129,6 @@ export const TABLE_ACTIONS: TableAction[] = [
   {
     action: 'edit',
     button: {
-      label: 'Edit',
       icon: Pencil,
       variant: 'text',
       type: 'button',
@@ -122,7 +137,6 @@ export const TABLE_ACTIONS: TableAction[] = [
   {
     action: 'delete',
     button: {
-      label: 'Delete',
       icon: Trash2,
       variant: 'danger',
       type: 'button',
@@ -131,27 +145,22 @@ export const TABLE_ACTIONS: TableAction[] = [
 ];
 
 // =====================================================
+// TABLE CONFIG
+// =====================================================
+
+export const TABLE_CONFIG = {
+  columns: TABLE_COLUMNS,
+  actions: TABLE_ACTIONS,
+  selectable: true,
+  showActions: true,
+  showPagination: true,
+  emptyMessage: 'No number groups found.',
+};
+
+// =====================================================
 // DATA PAGE CONFIG
 // =====================================================
 
-export const DATA_PAGE_CONFIG: IDataPageConfig<INumberGroup> = {
+export const DATA_PAGE_CONFIG: IPageLayoutConfig = {
   layout: PAGE_LAYOUT,
-
-  headerButtons: HEADER_BUTTONS,
-
-  tabs: [],
-
-  table: {
-    columns: TABLE_COLUMNS,
-
-    actions: TABLE_ACTIONS,
-
-    selectable: true,
-
-    showActions: true,
-
-    showPagination: true,
-
-    emptyMessage: 'No number groups found.',
-  },
 };
